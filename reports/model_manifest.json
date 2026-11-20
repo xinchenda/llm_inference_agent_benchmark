@@ -1,0 +1,70 @@
+[
+  {
+    "display_name": "Qwen3-0.6B Q8_0",
+    "family": "Qwen3",
+    "parameters_billion": 0.6,
+    "quantization": "Q8_0",
+    "context_length": 32768,
+    "file": "models/Qwen3-0.6B-Q8_0.gguf",
+    "source": "https://huggingface.co/Qwen/Qwen3-0.6B-GGUF",
+    "revision": "main",
+    "license": "Apache-2.0",
+    "backend": "llama.cpp",
+    "default_context": 8192,
+    "model_id": "qwen3_0_6b_q8",
+    "local_bytes": 639446688,
+    "sha256": "9465e63a22add5354d9bb4b99e90117043c7124007664907259bd16d043bb031"
+  },
+  {
+    "display_name": "Qwen3-1.7B Q4_K_M",
+    "family": "Qwen3",
+    "parameters_billion": 1.7,
+    "quantization": "Q4_K_M",
+    "context_length": 32768,
+    "file": "models/Qwen3-1.7B-Q4_K_M.gguf",
+    "source": "https://huggingface.co/unsloth/Qwen3-1.7B-GGUF",
+    "revision": "main",
+    "upstream": "https://huggingface.co/Qwen/Qwen3-1.7B",
+    "license": "Apache-2.0",
+    "backend": "llama.cpp",
+    "default_context": 8192,
+    "model_id": "qwen3_1_7b_q4",
+    "local_bytes": 1107409472,
+    "sha256": "b139949c5bd74937ad8ed8c8cf3d9ffb1e99c866c823204dc42c0d91fa181897"
+  },
+  {
+    "display_name": "Qwen3-1.7B Q8_0",
+    "family": "Qwen3",
+    "parameters_billion": 1.7,
+    "quantization": "Q8_0",
+    "context_length": 32768,
+    "file": "models/Qwen3-1.7B-Q8_0.gguf",
+    "source": "https://huggingface.co/unsloth/Qwen3-1.7B-GGUF",
+    "revision": "main",
+    "upstream": "https://huggingface.co/Qwen/Qwen3-1.7B",
+    "license": "Apache-2.0",
+    "backend": "llama.cpp",
+    "default_context": 8192,
+    "model_id": "qwen3_1_7b_q8",
+    "local_bytes": 1834426944,
+    "sha256": "0becaa825564295d82e9af4d008bca5f8b7f5f73bf1c6a0b58f7c53ef26b47fd"
+  },
+  {
+    "id": "BAAI/bge-small-en-v1.5",
+    "license": "MIT",
+    "role": "dense retrieval",
+    "file": "models/bge-small-en-v1.5/model.safetensors",
+    "model_id": "bge_small_en",
+    "local_bytes": 133466304,
+    "sha256": "3c9f31665447c8911517620762200d2245a2518d6e7208acc78cd9db317e21ad"
+  },
+  {
+    "id": "cross-encoder/ms-marco-MiniLM-L-6-v2",
+    "license": "Apache-2.0",
+    "role": "reranking",
+    "file": "models/ms-marco-MiniLM-L-6-v2/model.safetensors",
+    "model_id": "ms_marco_minilm",
+    "local_bytes": 90870598,
+    "sha256": "821d1aa69520101d6e0737f78a042ae25b19e5cb9160701909d10434f4aeb0ae"
+  }
+]

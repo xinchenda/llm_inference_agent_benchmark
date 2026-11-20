@@ -1,0 +1,53 @@
+[build-system]
+requires = ["setuptools>=75", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "llm-inference-agent-benchmark"
+version = "0.1.0"
+description = "Reproducible local LLM inference, RAG, agent, and cost benchmark"
+readme = "README.md"
+requires-python = ">=3.12,<3.13"
+license = "MIT"
+authors = [{name = "Liu Sichen"}]
+dependencies = [
+  "fastapi>=0.115,<1",
+  "uvicorn[standard]>=0.30,<1",
+  "httpx>=0.27,<1",
+  "PyYAML>=6.0,<7",
+  "Jinja2>=3.1,<4",
+  "numpy>=2.0,<3",
+  "pandas>=2.2,<4",
+  "matplotlib>=3.9,<4",
+  "psutil>=6.0,<8",
+  "rank-bm25>=0.2.2,<1",
+  "sentence-transformers>=5.0,<6",
+  "python-multipart>=0.0.9,<1",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8.0,<10", "pytest-asyncio>=0.24,<2", "ruff>=0.8,<1"]
+
+[project.scripts]
+llm-bench = "llm_bench.cli:main"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "function"
+pythonpath = ["src"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP"]
+

@@ -1,0 +1,9 @@
+{
+  "recorded_at": "2026-11-20T22:45:39.851809+00:00",
+  "platform": "macOS-26.6.2-arm64-arm-64bit",
+  "machine": "arm64",
+  "logical_cores": 10,
+  "physical_cores": 10,
+  "memory_gb": 16.0,
+  "llama_server": "version: 1.0.0 (build 12359, commit b1b770d90)\nbuilt with AppleClang 21.0.0.21000401 for Darwin arm64"
+}

@@ -1,0 +1,12 @@
+services:
+  llm-bench:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      LLM_BENCH_API_TOKEN: "${LLM_BENCH_API_TOKEN:-}"
+    volumes:
+      - ./models:/app/models:ro
+      - ./artifacts:/app/artifacts
+    restart: unless-stopped
+
