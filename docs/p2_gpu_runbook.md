@@ -6,9 +6,9 @@ P2 covers a real vLLM path on an NVIDIA Linux host, serving metrics, comparable
 workload execution, optional Nsight Systems profiling, a lightweight Triton
 kernel experiment, and an optional SGLang comparison.
 
-The current Mac cannot execute NVIDIA CUDA workloads. A historical RTX 4090D
-training instance is recorded in another local project, but that instance was
-powered off and this repository contains no reusable endpoint or credential.
+The current Mac cannot execute NVIDIA CUDA workloads. No RTX 4090D execution
+environment is currently available, and this repository contains no reusable
+endpoint or credential.
 
 ## Capability categories
 

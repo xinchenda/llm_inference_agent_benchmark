@@ -37,9 +37,8 @@ Implemented:
 - Pinned Dockerfile and Compose definition for vLLM 0.34.0.
 - Official SGLang runtime-image runbook and RadixAttention smoke script.
 
-Execution status: **BLOCKED**. No reachable Linux/NVIDIA endpoint was found in
-the project. A historical AutoDL RTX 4090D training instance was powered off and
-is not a current serving host. No credentials, keys, or SSH configuration
+Execution status: **BLOCKED**. No Linux/NVIDIA execution environment is
+currently available to this project. No credentials, keys, or SSH configuration
 contents were read.
 
 ```bash
@@ -59,7 +58,9 @@ The primary operator experiment is fused-like row-wise RMSNorm:
 - PyTorch reference implementation.
 - Hand-written Triton CUDA kernel.
 - `torch.compile` comparison.
-- `torch.testing.assert_close` correctness gate at `atol=rtol=1e-4`.
+- fp32, fp16, and bf16 parameterized correctness gates.
+- weight and accumulation use `tl.float32`; the result is cast back to the
+  input/output dtype.
 - `triton.testing.do_bench`, speedups, and effective bandwidth.
 - Hard CUDA/Triton checks before execution.
 
@@ -79,13 +80,13 @@ The status file records:
 status: blocked
 cuda_available: false
 triton_kernel_executed: false
-cpu_reference_check: passed
+cpu_reference_checks: {fp32: passed, fp16: passed, bf16: passed}
 ```
 
 No Triton performance result is claimed.
 
 The local test suite executes the PyTorch reference functions and all backend
-command/HTTP contract mocks. Final local test count is 77.
+command/HTTP contract mocks. Final local test count is 80.
 
 ## Nsight Systems
 

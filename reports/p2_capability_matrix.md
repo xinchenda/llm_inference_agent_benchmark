@@ -17,13 +17,12 @@ Audited 2026-11-23 without reading or outputting credentials.
   `sha256:20fdb089454afbb324efa4110a2c025ff7b27cc1a086e07aa580b18df8ad1ce1`;
   it was not pulled or built locally.
 - Colima and Lima binaries installed; no running VM or instance.
-- Historical project record: an AutoDL RTX 4090D instance was used for training
-  and powered off. No currently reachable serving endpoint or execution entry
-  was found in this repository.
+- No currently available Linux/NVIDIA serving endpoint or execution entry was
+  found in this repository.
 
 | Capability | Local | Remote/current | Implemented | Execution status |
 | --- | --- | --- | --- | --- |
-| NVIDIA RTX 4090D | No | Historical only; not currently reachable | GPU profile/config | Blocked |
+| NVIDIA RTX 4090D | No | Not currently available | GPU profile/config | Blocked |
 | CUDA/NVCC | No | Not verified | Environment validator | Blocked |
 | vLLM | No | Not verified | Adapter, config, smoke script, metrics parser | Code ready; run blocked |
 | vLLM Serving Metrics | No live server | Not verified | `/metrics` parser and report fields | Run blocked |

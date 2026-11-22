@@ -145,6 +145,28 @@ def test_rmsnorm_reference_has_expected_normalization() -> None:
     torch.testing.assert_close(result, expected, atol=1e-5, rtol=1e-5)
 
 
+@pytest.mark.parametrize(
+    ("dtype", "tolerance"),
+    [
+        (torch.float32, 1e-4),
+        (torch.float16, 2e-2),
+        (torch.bfloat16, 2e-2),
+    ],
+)
+def test_rmsnorm_reference_supports_expected_dtypes(
+    dtype: torch.dtype,
+    tolerance: float,
+) -> None:
+    values = torch.ones((2, 8), dtype=dtype)
+    result = rmsnorm_reference(values, torch.ones(8, dtype=dtype))
+    torch.testing.assert_close(
+        result,
+        torch.ones_like(result),
+        atol=tolerance,
+        rtol=tolerance,
+    )
+
+
 def test_sglang_command_exposes_radix_and_runtime_flags() -> None:
     config = SGLangServerConfig(
         model_path="Qwen/Qwen3-1.7B",

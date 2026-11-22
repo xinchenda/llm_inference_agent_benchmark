@@ -370,8 +370,7 @@ Audited 2026-11-23 without reading or exposing credentials.
   SGLang 0.5.10.post1; no macOS Triton distribution was found.
 - Docker CLI 29.10.0 exists, but the daemon and Compose plugin are unavailable.
 - Colima and Lima are installed, but no VM is running.
-- A historical AutoDL RTX 4090D training record exists outside this repository;
-  it was powered off and is not a currently reachable serving environment.
+- No Linux/NVIDIA execution environment is currently available to this project.
 
 Implemented but not executed on NVIDIA hardware:
 

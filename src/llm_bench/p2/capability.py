@@ -105,7 +105,7 @@ def collect_capabilities() -> dict[str, Any]:
         },
         "notes": [
             "A GPU-capable Mac is not assumed to provide CUDA.",
-            "Historical RTX 4090D training does not imply a reachable serving host.",
+            "No RTX 4090D serving host is assumed without a verified connection.",
             "Credentials and SSH configuration are intentionally excluded from this audit.",
         ],
     }

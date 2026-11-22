@@ -3,6 +3,10 @@
   "status": "blocked",
   "cuda_available": false,
   "triton_kernel_executed": false,
-  "cpu_reference_check": "passed",
+  "cpu_reference_checks": {
+    "fp32": "passed",
+    "fp16": "passed",
+    "bf16": "passed"
+  },
   "reason": "CUDA is unavailable; no GPU benchmark was produced"
 }
