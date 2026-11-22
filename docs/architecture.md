@@ -213,3 +213,43 @@ LLM plan succeeded, failed validation, or timed out.
 - Add GPU memory and utilization counters when a Linux/NVIDIA backend is actually
   available; they are not inferred from the Mac RSS result.
 
+## P2 GPU backend boundary
+
+P2 adds a separate backend package under `src/llm_bench/p2/`:
+
+| Component | Responsibility |
+| --- | --- |
+| `capability.py` | Local/remote GPU, package, Docker, CUDA, Nsight, and Triton audit |
+| `backends.py` | Unified `llamacpp`, `vllm`, and `sglang` backend factory/protocol |
+| `vllm.py` | vLLM command construction, health, lifecycle, and metrics fetch |
+| `sglang.py` | SGLang lifecycle and RadixAttention/cache-report flags |
+| `metrics.py` | vLLM Prometheus text parser and prefix-cache rate |
+| `comparison.py` | Same-workload comparison with hardware-fingerprint gate |
+| `triton_ref.py` | CPU reference for the Triton correctness test |
+
+The vLLM adapter builds a bounded command containing:
+
+- `--max-model-len`
+- `--max-num-seqs`
+- `--max-num-batched-tokens`
+- `--gpu-memory-utilization`
+- `--tensor-parallel-size`
+- prefix-cache enable/disable
+- CUDA Graph default or explicit `--enforce-eager`
+
+The vLLM V1 continuous batching path is mandatory; the adapter rejects attempts
+to disable it. A server is healthy only after `/health` succeeds. Metrics are
+fetched from `/metrics`, not inferred from request timings. SGLang exposes
+RadixAttention through default-on caching and `--disable-radix-cache` as the
+controlled off switch; `--enable-cache-report` exposes its cache metrics.
+
+Backend comparison is hardware-aware:
+
+- Same workload and same hardware fingerprint: deterministic ratios are allowed.
+- Different hardware fingerprints: report rows separately and emit no ratio.
+- Model, context, output cap, concurrency, seed, and quality gate must match.
+
+The Mac cannot run the P2 CUDA path. Its capability audit is part of the release
+evidence. GPU claims remain blocked until a Linux/NVIDIA execution completes
+the smoke, metrics, Nsight, and Triton scripts.
+

@@ -1,0 +1,48 @@
+vllm:
+  qwen3_1_7b:
+    model: Qwen/Qwen3-1.7B
+    max_model_len: 4096
+    max_num_seqs: 8
+    max_num_batched_tokens: 8192
+    gpu_memory_utilization: 0.85
+    tensor_parallel_size: 1
+    continuous_batching: true
+    enable_prefix_caching: true
+    enable_cuda_graph: true
+    dtype: auto
+    kv_cache_dtype: auto
+  qwen3_1_7b_no_prefix:
+    model: Qwen/Qwen3-1.7B
+    max_model_len: 4096
+    max_num_seqs: 8
+    max_num_batched_tokens: 8192
+    gpu_memory_utilization: 0.85
+    tensor_parallel_size: 1
+    continuous_batching: true
+    enable_prefix_caching: false
+    enable_cuda_graph: true
+    dtype: auto
+    kv_cache_dtype: auto
+
+workloads:
+  interactive:
+    prompt_words: 64
+    output_tokens: 24
+    requests: 16
+    concurrency: 1
+  rag_shared_prefix:
+    prompt_words: 1024
+    output_tokens: 32
+    requests: 12
+    concurrency: 4
+    shared_prefix: true
+  batch_generation:
+    prompt_words: 256
+    output_tokens: 128
+    requests: 24
+    concurrency: 8
+
+hardware_profile:
+  expected_gpu: NVIDIA GeForce RTX 4090 D
+  expected_vram_gb: 24
+  note: This profile is an execution prerequisite, not measured evidence.

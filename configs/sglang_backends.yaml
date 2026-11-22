@@ -1,0 +1,29 @@
+sglang:
+  qwen3_1_7b_radix:
+    model_path: Qwen/Qwen3-1.7B
+    tp_size: 1
+    mem_fraction_static: 0.85
+    max_running_requests: 8
+    chunked_prefill_size: 8192
+    enable_radix_cache: true
+    enable_cache_report: true
+    enable_cuda_graph: true
+  qwen3_1_7b_no_radix:
+    model_path: Qwen/Qwen3-1.7B
+    tp_size: 1
+    mem_fraction_static: 0.85
+    max_running_requests: 8
+    chunked_prefill_size: 8192
+    enable_radix_cache: false
+    enable_cache_report: true
+    enable_cuda_graph: true
+
+workloads:
+  open_qps:
+    requests: 24
+    concurrency: 8
+    target_qps: 4
+  prefix_cache_rag:
+    contexts: 6
+    shared_prefix_tokens: 1024
+    final_questions: 4

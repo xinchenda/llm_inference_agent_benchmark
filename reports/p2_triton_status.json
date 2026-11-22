@@ -1,0 +1,8 @@
+{
+  "kernel": "triton_vector_add",
+  "status": "blocked",
+  "cuda_available": false,
+  "triton_kernel_executed": false,
+  "cpu_reference_check": "passed",
+  "reason": "CUDA is unavailable; no GPU timing was produced"
+}

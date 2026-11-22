@@ -1,0 +1,38 @@
+services:
+  vllm:
+    build:
+      context: ../..
+      dockerfile: docker/vllm/Dockerfile
+    image: llm-bench-vllm:0.34.0
+    ipc: host
+    shm_size: 16gb
+    ports:
+      - "8000:8000"
+    volumes:
+      - hf-cache:/root/.cache/huggingface
+    command:
+      - Qwen/Qwen3-1.7B
+      - --host
+      - 0.0.0.0
+      - --port
+      - "8000"
+      - --max-model-len
+      - "4096"
+      - --max-num-seqs
+      - "8"
+      - --max-num-batched-tokens
+      - "8192"
+      - --gpu-memory-utilization
+      - "0.85"
+      - --enable-prefix-caching
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities:
+                - gpu
+
+volumes:
+  hf-cache:

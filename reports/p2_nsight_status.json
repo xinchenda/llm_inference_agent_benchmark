@@ -1,0 +1,7 @@
+{
+  "status": "not_run",
+  "nsight_systems_available": false,
+  "nvidia_gpu_available": false,
+  "script": "scripts/profile_vllm_nsys.sh",
+  "reason": "No local NVIDIA GPU or Nsight Systems installation and no reachable RTX 4090D host."
+}

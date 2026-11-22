@@ -284,6 +284,12 @@ class LocalLLM:
             response.raise_for_status()
             return response.json()
 
+    def metrics_text(self, timeout_s: float = 10) -> str:
+        with httpx.Client(timeout=timeout_s) as client:
+            response = client.get(f"{self.base_url.removesuffix('/v1')}/metrics")
+            response.raise_for_status()
+            return response.text
+
 
 def strip_thinking(text: str) -> str:
     if "<｜end▁of▁thinking｜>" in text:

@@ -4,7 +4,7 @@ LLM_BENCH ?= ./llm-bench
 MODEL ?= qwen3_1_7b_q4
 PORT ?= 8000
 
-.PHONY: setup install models corpus index eval perf experiment experiment-report prefix-cache prefix-cache-report serve test lint all clean-results
+.PHONY: setup install models corpus index eval perf experiment experiment-report prefix-cache prefix-cache-report p2-audit p2-validate p2-vllm-smoke p2-sglang-smoke p2-triton p2-triton-rmsnorm serve test lint all clean-results
 
 setup:
 	python3.12 -m venv .venv
@@ -47,6 +47,24 @@ prefix-cache-report:
 	$(LLM_BENCH) --config configs/default.yaml experiment report \
 		--ledger artifacts/experiments/prefix_cache_ablation_20261123/ledger.sqlite \
 		--output reports/prefix_cache
+
+p2-audit:
+	PYTHONPATH=src $(PYTHON) scripts/audit_gpu_capabilities.py --output reports/p2_capability.json
+
+p2-validate:
+	PYTHONPATH=src $(PYTHON) scripts/validate_vllm_environment.py
+
+p2-vllm-smoke:
+	PYTHONPATH=src $(PYTHON) scripts/run_vllm_smoke.py
+
+p2-sglang-smoke:
+	PYTHONPATH=src $(PYTHON) scripts/run_sglang_smoke.py
+
+p2-triton:
+	PYTHONPATH=src $(PYTHON) scripts/triton_vector_add.py
+
+p2-triton-rmsnorm:
+	PYTHONPATH=src $(PYTHON) scripts/triton_rmsnorm.py
 
 report:
 	$(LLM_BENCH) --config configs/default.yaml report build

@@ -252,8 +252,10 @@ batch/context settings for each enabled/disabled pair:
 
 Both evidence-valid cache configurations had zero missing `cache_n`
 observations. These are local shared-prefix results, not universal cache-hit
-claims. Complete evidence is in [reports/experiments/experiment_report.md](reports/experiments/experiment_report.md)
-and [reports/prefix_cache/experiment_report.md](reports/prefix_cache/experiment_report.md).
+claims. The independent historical report is retained in
+[reports/prefix_cache/experiment_report.md](reports/prefix_cache/experiment_report.md).
+Its raw ledger was removed during the user-requested final artifact cleanup and
+was not rerun.
 
 ## Reproducibility and controls
 
@@ -282,6 +284,25 @@ and [reports/prefix_cache/experiment_report.md](reports/prefix_cache/experiment_
 - Goodput and p95 comparisons describe this Mac and this fixed local workload.
   They are not GPU-serving or production-SLA results.
 
+## P2 GPU readiness
+
+The local Mac has no NVIDIA GPU, CUDA, Nsight Systems, vLLM, SGLang, or Triton.
+Docker is installed as a client, but its daemon and Compose plugin are not
+available. A historical RTX 4090D training record does not provide a currently
+reachable serving endpoint.
+
+The repository now contains:
+
+- A validated vLLM lifecycle adapter with the required serving flags.
+- OpenAI-compatible smoke execution and Prometheus metrics parsing.
+- Docker/Compose definitions pinned to vLLM 0.34.0.
+- A same-workload comparison gate that refuses cross-hardware ratios.
+- Nsight Systems and Triton GPU validation scripts.
+- A capability audit and GPU-host runbook.
+
+No vLLM, CUDA Graph, Nsight, Triton, or RTX 4090D serving number is reported
+until the scripts execute on a Linux/NVIDIA host.
+
 ## Deliverables
 
 - [Validation report](reports/validation_report.md)
@@ -294,6 +315,8 @@ and [reports/prefix_cache/experiment_report.md](reports/prefix_cache/experiment_
 - [Pareto frontier](reports/experiments/pareto_frontier.csv)
 - [Best-so-far curves](reports/experiments/best_so_far.csv)
 - [Agent tool failure analysis](reports/agent_failure_analysis.md)
+- [P2 capability matrix](reports/p2_capability_matrix.md)
+- [P2 GPU runbook](docs/p2_gpu_runbook.md)
 - [Architecture and failure handling](docs/architecture.md)
 - [Open-source decision record](docs/open_source_research.md)
 - Per-question JSONL and aggregate JSON/CSV under `artifacts/`

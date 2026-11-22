@@ -1,0 +1,45 @@
+{
+  "platform": {
+    "system": "Darwin",
+    "machine": "arm64",
+    "release": "25.6.0",
+    "python": "3.12.15"
+  },
+  "tools": {
+    "nvidia-smi": null,
+    "nvcc": null,
+    "nsys": null,
+    "ncu": null,
+    "docker": "/opt/homebrew/bin/docker",
+    "colima": "/opt/homebrew/bin/colima",
+    "limactl": "/opt/homebrew/bin/limactl"
+  },
+  "python_packages": {
+    "vllm": false,
+    "sglang": false,
+    "triton": false,
+    "torch": true
+  },
+  "nvidia_gpu": {
+    "available": false,
+    "reason": "nvidia-smi not found"
+  },
+  "docker_daemon": {
+    "available": false,
+    "compose_plugin": false,
+    "returncode": 1,
+    "server_version": "\"\"",
+    "error": "failed to connect to the docker API at unix:///var/run/docker.sock; check if the path is correct and if the daemon is running: dial unix /var/run/docker.sock: connect: no such file or directory"
+  },
+  "classification": {
+    "local_cuda_execution": false,
+    "nsight_execution": false,
+    "triton_execution": false,
+    "docker_gpu_execution": false
+  },
+  "notes": [
+    "A GPU-capable Mac is not assumed to provide CUDA.",
+    "Historical RTX 4090D training does not imply a reachable serving host.",
+    "Credentials and SSH configuration are intentionally excluded from this audit."
+  ]
+}

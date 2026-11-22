@@ -285,6 +285,10 @@ measure approximately 1,573 cached prompt tokens. TTFT reduction is reported
 separately from the measured cache hit rate; neither is extrapolated beyond the
 local shared-prefix workload.
 
+The independent Prefix Cache report was accepted and is retained under
+`reports/prefix_cache/`. Its raw local ledger was removed as part of the
+user-requested final artifact cleanup. That experiment was not rerun.
+
 ### Extra llama.cpp parameters
 
 The same-model search passes and validates:
@@ -354,3 +358,38 @@ Derived outputs:
 
 P2, distributed serving, vLLM, SGLang, CUDA, and NPU were not run and are not
 reported as completed.
+
+## P2 capability audit
+
+Audited 2026-11-23 without reading or exposing credentials.
+
+- The local host is an Apple M4 running macOS arm64. PyTorch has MPS support but
+  `torch.cuda.is_available()` is false.
+- `nvidia-smi`, `nvcc`, `nsys`, and `ncu` are absent.
+- vLLM, SGLang, and Triton are not installed. PyPI advertises vLLM 0.34.0 and
+  SGLang 0.5.10.post1; no macOS Triton distribution was found.
+- Docker CLI 29.10.0 exists, but the daemon and Compose plugin are unavailable.
+- Colima and Lima are installed, but no VM is running.
+- A historical AutoDL RTX 4090D training record exists outside this repository;
+  it was powered off and is not a currently reachable serving environment.
+
+Implemented but not executed on NVIDIA hardware:
+
+- vLLM server lifecycle adapter and required serving flags.
+- OpenAI-compatible smoke probe and `/metrics` parser.
+- Dockerfile/Compose definitions pinned to `vllm/vllm-openai:v0.34.0`.
+- Same-workload llama.cpp/vLLM comparison with a hard hardware-fingerprint gate.
+- Nsight Systems profiling script.
+- Triton vector-add correctness/performance script.
+
+Blocked:
+
+- Building/running the CUDA container.
+- vLLM serving metrics and CUDA Graph validation.
+- RTX 4090D latency, throughput, and GPU memory measurements.
+- Nsight timeline and Triton kernel results.
+- Same-GPU llama.cpp/vLLM comparison.
+
+No P2 GPU performance result is claimed. The capability matrix is in
+`reports/p2_capability_matrix.md`; execution instructions are in
+`docs/p2_gpu_runbook.md`.

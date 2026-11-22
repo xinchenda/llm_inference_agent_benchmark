@@ -1,0 +1,8 @@
+{
+  "kernel": "triton_rmsnorm",
+  "status": "blocked",
+  "cuda_available": false,
+  "triton_kernel_executed": false,
+  "cpu_reference_check": "passed",
+  "reason": "CUDA is unavailable; no GPU benchmark was produced"
+}
