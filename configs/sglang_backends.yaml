@@ -1,6 +1,6 @@
 sglang:
   qwen3_0_6b_radix:
-    model_path: /root/autodl-tmp/models/Qwen3-0.6B
+    model_path: models/Qwen3-0.6B
     tp_size: 1
     mem_fraction_static: 0.8
     context_length: 4096
@@ -10,8 +10,10 @@ sglang:
     enable_cache_report: true
     enable_metrics: true
     enable_cuda_graph: true
+    attention_backend: triton
+    sampling_backend: pytorch
   qwen3_0_6b_no_radix:
-    model_path: /root/autodl-tmp/models/Qwen3-0.6B
+    model_path: models/Qwen3-0.6B
     tp_size: 1
     mem_fraction_static: 0.8
     context_length: 4096
@@ -21,6 +23,8 @@ sglang:
     enable_cache_report: true
     enable_metrics: true
     enable_cuda_graph: true
+    attention_backend: triton
+    sampling_backend: pytorch
 
 workloads:
   shared_prefix_rag:

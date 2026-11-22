@@ -25,6 +25,8 @@ class SGLangServerConfig:
     enable_cache_report: bool = True
     enable_metrics: bool = True
     enable_cuda_graph: bool = True
+    attention_backend: str | None = None
+    sampling_backend: str | None = None
 
     def validate(self) -> None:
         if not self.model_path.strip():
@@ -43,6 +45,10 @@ class SGLangServerConfig:
             )
         if self.context_length < 256:
             raise ValueError("context_length must be >= 256")
+        if self.attention_backend is not None and not self.attention_backend.strip():
+            raise ValueError("attention_backend must not be empty")
+        if self.sampling_backend is not None and not self.sampling_backend.strip():
+            raise ValueError("sampling_backend must not be empty")
 
     def command(self) -> list[str]:
         self.validate()
@@ -72,6 +78,10 @@ class SGLangServerConfig:
         if self.enable_metrics:
             command.append("--enable-metrics")
         command.extend(["--context-length", str(self.context_length)])
+        if self.attention_backend:
+            command.extend(["--attention-backend", self.attention_backend])
+        if self.sampling_backend:
+            command.extend(["--sampling-backend", self.sampling_backend])
         if not self.enable_cuda_graph:
             command.append("--disable-cuda-graph")
         return command

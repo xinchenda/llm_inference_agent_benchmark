@@ -175,6 +175,8 @@ def test_sglang_command_exposes_radix_and_runtime_flags() -> None:
         model_path="Qwen/Qwen3-1.7B",
         enable_radix_cache=True,
         enable_cache_report=True,
+        attention_backend="triton",
+        sampling_backend="pytorch",
     )
     command = config.command()
     assert "--enable-cache-report" in command
@@ -182,6 +184,8 @@ def test_sglang_command_exposes_radix_and_runtime_flags() -> None:
     assert command[command.index("--context-length") + 1] == "4096"
     assert "--disable-radix-cache" not in command
     assert command[command.index("--mem-fraction-static") + 1] == "0.85"
+    assert command[command.index("--attention-backend") + 1] == "triton"
+    assert command[command.index("--sampling-backend") + 1] == "pytorch"
     disabled = SGLangServerConfig(
         model_path="Qwen/Qwen3-1.7B",
         enable_radix_cache=False,
@@ -342,7 +346,25 @@ def test_tracked_remote_summaries_are_sanitized_and_complete() -> None:
         Path("reports/p2/sglang_summary.json").read_text(encoding="utf-8")
     )
     assert "/root" not in json.dumps(sglang)
-    assert sglang["run"]["serving_metrics_after"]["cache_hit_rate"] == pytest.approx(
-        0.99573,
-        abs=1e-5,
+    assert sglang["environment"]["isolated_environment"] is True
+    assert sglang["runs"]["radix_on"]["cache_hit_rate"] == pytest.approx(
+        0.995725,
+        abs=1e-6,
     )
+    assert sglang["runs"]["radix_off"]["cache_hit_rate"] == 0
+    assert sglang["radix_effect"]["client_ttft_mean_reduction_pct"] == pytest.approx(
+        28.78945,
+        abs=1e-4,
+    )
+
+    nsight = json.loads(
+        Path("reports/p2/nsight/summary.json").read_text(encoding="utf-8")
+    )
+    graph = nsight["traces"]["cuda_graph"]
+    eager = nsight["traces"]["eager"]
+    assert graph["raw_trace_sha256"] != eager["raw_trace_sha256"]
+    assert graph["cuda_launch_kernel"]["calls"] == 270
+    assert eager["cuda_launch_kernel"]["calls"] == 27189
+    assert nsight["cuda_graph_effect"][
+        "cuda_launch_kernel_call_reduction_pct"
+    ] == pytest.approx(99.00695, abs=1e-4)

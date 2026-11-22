@@ -396,15 +396,19 @@ the measured Qwen3-0.6B workload.
 | fp16 | 0.022723 | 2.08x | 0.88x | 0.0078125 |
 | bf16 | 0.021270 | 2.31x | 1.10x | 0.0625 |
 
-SGLang 0.5.10.post1 is installed in the shared environment, but that installation
-downgraded PyTorch to 2.9.1 and may have broken vLLM. SGLang timing and any new
-vLLM measurement in that environment remain pending. Nsight Systems install
-failed its dependency configuration and no timeline is claimed. Same-GPU
-llama.cpp CUDA versus vLLM comparison also remains pending.
+SGLang 0.5.10.post1 was later run in a clean isolated environment. Enabling
+RadixAttention reduced client mean TTFT by 28.79%, reduced mean E2E latency by
+16.63%, and increased measured output throughput by 19.94%; client p95 E2E
+latency was effectively unchanged. Nsight Systems 2025.3.1 captured CUDA Graph
+and eager vLLM traces. CUDA Graph reduced `cudaLaunchKernel` calls from 27,189 to
+270 in the measured run. Same-GPU llama.cpp CUDA versus vLLM comparison remains
+pending.
 
 Machine-readable evidence:
 
 - `reports/p2/vllm_summary.json`
 - `reports/p2/derived_comparisons.json`
 - `reports/p2/triton_rmsnorm_gpu.json`
+- `reports/p2/sglang_summary.json`
+- `reports/p2/nsight/summary.json`
 - `reports/p2_capability_matrix.md`

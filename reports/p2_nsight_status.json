@@ -1,8 +1,16 @@
 {
-  "status": "installed_profile_pending",
+  "status": "executed",
   "nsight_systems_version": "2025.3.1",
-  "nsight_systems_available": true,
-  "nvidia_gpu_available": true,
-  "script": "scripts/profile_vllm_nsys.sh",
-  "reason": "Nsight Systems is installed on the GPU host; no vLLM profile has been captured yet."
+  "gpu": "NVIDIA GeForce RTX 4090 D",
+  "model": "Qwen3-0.6B",
+  "modes": [
+    "cuda_graph",
+    "eager"
+  ],
+  "summary": "reports/p2/nsight/summary.json",
+  "raw_trace_sha256": {
+    "cuda_graph": "cfedcb06d66f65abb122b64c4fb68801de04a475574bb222500ddbe9928e861c",
+    "eager": "962fc2606ec4bc7f78c0bfe3d9cb1c6d2bf4a36c267ea75c9f821d1a7e7df71c"
+  },
+  "raw_traces_tracked_by_git": false
 }

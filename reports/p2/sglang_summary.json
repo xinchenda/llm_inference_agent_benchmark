@@ -1,98 +1,70 @@
 {
-  "hardware": {
+  "environment": {
     "gpu": "NVIDIA GeForce RTX 4090 D",
     "vram_gb": 24,
-    "driver": "595.71.05"
+    "sglang": "0.5.10.post1",
+    "torch": "2.9.1+cu128",
+    "isolated_environment": true,
+    "attention_backend": "triton",
+    "sampling_backend": "pytorch"
   },
-  "runtime": {
-    "version": "0.5.10.post1"
-  },
-  "run": {
-    "source": "sglang_radix.json",
-    "source_sha256": "01ee6170bc7e3e8b39aa92cd8d031a2940125fca0997919faad6bda24c4e589c",
-    "backend": "sglang",
+  "workload": {
     "model": "Qwen3-0.6B",
-    "config": {
-      "tp_size": 1,
-      "mem_fraction_static": 0.8,
-      "max_running_requests": 8,
-      "chunked_prefill_size": 8192,
-      "context_length": 4096,
-      "enable_radix_cache": true,
-      "enable_cache_report": true,
-      "enable_metrics": true,
-      "enable_cuda_graph": true
+    "requests": 8,
+    "shared_prefix_words": 1500,
+    "measured_prompt_tokens_per_request": 3041,
+    "max_output_tokens_per_request": 16,
+    "context_length": 4096,
+    "cuda_graph": true,
+    "request_execution": "sequential"
+  },
+  "runs": {
+    "radix_on": {
+      "source": "radix_on.json",
+      "source_sha256": "83547d98dd596695c0c837852b1e55d5f001b7e8f41183e5eabb8858377a7966",
+      "radix_attention": true,
+      "cold_start_s": 90.89363650232553,
+      "cache_hit_rate": 0.9957250904307794,
+      "client_ttft_mean_s": 0.057951106457039714,
+      "client_ttft_p50_s": 0.05124114453792572,
+      "client_ttft_p95_s": 0.09118339978158474,
+      "client_latency_mean_s": 0.09049072372727096,
+      "client_latency_p50_s": 0.08378708362579346,
+      "client_latency_p95_s": 0.1234818622469902,
+      "aggregate_output_tokens_per_s": 176.81370355951879,
+      "prompt_tokens_total": 24334.0,
+      "generation_tokens_total": 136.0
     },
-    "safe_command_flags": [
-      "-m",
-      "sglang.launch_server",
-      "--model-path",
-      "--host",
-      "127.0.0.1",
-      "--port",
-      "30000",
-      "--tp-size",
-      "1",
-      "--mem-fraction-static",
-      "0.8",
-      "--max-running-requests",
-      "8",
-      "--chunked-prefill-size",
-      "8192",
-      "--enable-cache-report",
-      "--enable-metrics",
-      "--context-length",
-      "4096"
-    ],
-    "cold_start_s": 56.715445660054684,
-    "request_count": 8,
-    "prefix_words": 1500,
-    "max_tokens": 16,
-    "radix_attention": true,
-    "responses": {
-      "requests": 8,
-      "ttft_s": {
-        "count": 8,
-        "mean": 0.12232487951405346,
-        "min": 0.0828943271189928,
-        "max": 0.32635095342993736
-      },
-      "latency_s": {
-        "count": 8,
-        "mean": 0.14960410119965672,
-        "min": 0.11397106572985649,
-        "max": 0.35766876116394997
-      },
-      "prompt_tokens": {
-        "count": 8,
-        "mean": 3045.0,
-        "min": 3045.0,
-        "max": 3045.0
-      },
-      "completion_tokens": {
-        "count": 8,
-        "mean": 16.0,
-        "min": 16.0,
-        "max": 16.0
-      },
-      "cache_n": {
-        "count": 0,
-        "mean": null,
-        "min": null,
-        "max": null
-      }
-    },
-    "serving_metrics_after": {
-      "num_running_reqs": 0.0,
-      "num_queue_reqs": 0.0,
-      "token_usage": 0.018820592669484194,
-      "cache_hit_rate": 0.9957307060755337,
-      "prompt_tokens_total": 24366.0,
-      "generation_tokens_total": 136.0,
-      "ttft_p50_s": 0.0642857142857143,
-      "ttft_p95_s": 0.3549999999999999,
-      "itl_mean_s": 0.0020635890774428844,
-      "e2e_latency_p95_s": 0.3549999999999999
+    "radix_off": {
+      "source": "radix_off.json",
+      "source_sha256": "1e61c658a1c2ba4e5dd70c0fb87d3b62f0fcaca5230567c8c65a644ec6b6a772",
+      "radix_attention": false,
+      "cold_start_s": 40.659973219037056,
+      "cache_hit_rate": 0.0,
+      "client_ttft_mean_s": 0.08137994655407965,
+      "client_ttft_p50_s": 0.07665949873626232,
+      "client_ttft_p95_s": 0.11791928298771381,
+      "client_latency_mean_s": 0.10853466647677124,
+      "client_latency_p50_s": 0.10715027153491974,
+      "client_latency_p95_s": 0.12260860204696655,
+      "aggregate_output_tokens_per_s": 147.41833664200135,
+      "prompt_tokens_total": 24334.0,
+      "generation_tokens_total": 136.0
     }
-  }
+  },
+  "radix_effect": {
+    "client_ttft_mean_reduction_pct": 28.78945131952219,
+    "client_ttft_p50_reduction_pct": 33.15747509096734,
+    "client_ttft_p95_reduction_pct": 22.67303746149366,
+    "client_latency_mean_reduction_pct": 16.62505016621769,
+    "client_latency_p50_reduction_pct": 21.80413318085931,
+    "client_latency_p95_reduction_pct": -0.7122340402259373,
+    "aggregate_output_tokens_per_s_change_pct": 19.940102152219186
+  },
+  "notes": [
+    "Both arms used the same isolated environment, model, request count, shared prefix, output limit, context length, CUDA Graph setting, attention backend, and sampling backend.",
+    "The Prometheus histogram includes the server startup warm-up request. Client latency quantiles use exactly the eight measured requests and are the primary comparison.",
+    "The p95 end-to-end latency was effectively unchanged (0.71% worse for RadixAttention), so the tail-latency result is not presented as an improvement.",
+    "SGLang cache_hit_rate and vLLM prefix-cache hit rate are framework-specific metrics and are not treated as numerically interchangeable."
+  ]
 }

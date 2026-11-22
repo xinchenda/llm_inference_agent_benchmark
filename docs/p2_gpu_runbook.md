@@ -3,12 +3,12 @@
 ## Scope
 
 P2 covers a real vLLM path on an NVIDIA Linux host, serving metrics, comparable
-workload execution, optional Nsight Systems profiling, a lightweight Triton
-kernel experiment, and an optional SGLang comparison.
+workload execution, Nsight Systems profiling, a lightweight Triton kernel
+experiment, and an isolated SGLang comparison.
 
-The current Mac cannot execute NVIDIA CUDA workloads. No RTX 4090D execution
-environment is currently available, and this repository contains no reusable
-endpoint or credential.
+The current Mac cannot execute NVIDIA CUDA workloads. The committed evidence
+was produced on an RTX 4090D execution host. The repository contains no
+reusable endpoint, account, credential, or host identity.
 
 ## Capability categories
 
@@ -17,14 +17,14 @@ endpoint or credential.
 | NVIDIA GPU / driver | No NVIDIA GPU | RTX 4090D 24 GB, driver 595.71.05 | GPU config | Executed remotely |
 | CUDA / NVCC | Not available | CUDA runtime used by torch 2.14+cu130 | Python runtime | Executed remotely |
 | vLLM | Not installed locally | vLLM 0.34.0 | Adapter, config, smoke script | Executed remotely |
-| SGLang | Not installed locally | 0.5.10.post1 installed in shared env | Adapter/config/smoke | Timing pending in clean env |
+| SGLang | Not installed locally | 0.5.10.post1 in an isolated environment | Adapter/config/smoke | Executed on/off |
 | Triton | No macOS distribution found | Real GPU run | Reference code and GPU script | Executed remotely |
-| Nsight Systems | Not installed | Not verified | Runbook and script | GPU execution blocked |
+| Nsight Systems | Not installed | 2025.3.1 | Runbook, script, and summaries | Executed |
 | Docker | CLI installed; daemon and Compose plugin absent | No GPU VM | Dockerfile/Compose | Build and run blocked |
 | Linux VM tooling | Colima/Lima installed, no instance | No | Setup commands | Not started |
 
-No passwords, private keys, API keys, or SSH configuration are read by the
-project audit.
+No passwords, private keys, API keys, account names, host addresses, or
+connection configuration are read by the project audit.
 
 ## Required remote environment
 
@@ -32,8 +32,8 @@ Provide one of:
 
 1. A Linux x86_64 GPU host with an RTX 4090 or RTX 4090D, NVIDIA driver, Docker
    with NVIDIA Container Toolkit, and enough disk for the model and image.
-2. An SSH-accessible Linux host where the user enters credentials interactively.
-   Do not send credentials in a prompt or commit them to the repository.
+2. A remotely accessible Linux host with interactive authentication. Never
+   send account credentials in a prompt or commit them to the repository.
 3. A temporary GPU instance with an HTTPS model-serving endpoint and a separate
    metrics endpoint. For full Nsight and Triton work, shell access is still
    required.
@@ -97,25 +97,28 @@ RTX 4090D vLLM results.
 Create a profile only on the GPU host:
 
 ```bash
-bash scripts/profile_vllm_nsys.sh Qwen/Qwen3-0.6B artifacts/p2/nsight/vllm_trace
+bash scripts/profile_vllm_nsys.sh \
+  Qwen/Qwen3-0.6B artifacts/p2/nsight/vllm_graph graph
+
+bash scripts/profile_vllm_nsys.sh \
+  Qwen/Qwen3-0.6B artifacts/p2/nsight/vllm_eager eager
 ```
 
-Generate workload traffic while the server starts. Analyze:
+The script starts the server, runs eight real shared-prefix requests, stops the
+server, and lets Nsight finalize the trace. Analyze:
 
 - CUDA kernel time and Graph launches.
 - Prefill/decode separation and NVTX ranges.
 - CPU gaps in request handling.
 - Memory transfer and synchronization.
 
-The repository will store the `.nsys-rep`, exported tables, hardware fingerprint,
-command, and workload settings. A timeline is not included if it was not
-actually captured.
+The repository stores a sanitized summary, workload settings, and raw trace
+hashes. Large `.nsys-rep` files remain outside Git.
 
 ## Optional SGLang comparison
 
-SGLang 0.5.10.post1 was installed in the shared P2 environment, but that changed
-PyTorch to 2.9.1 and may have invalidated vLLM. No SGLang timing is claimed from
-that environment. In a clean GPU environment, first capture:
+SGLang 0.5.10.post1 was installed in a dedicated virtual environment so it could
+not replace the validated vLLM/PyTorch dependency set. Before running:
 
 ```bash
 sglang --version
@@ -147,8 +150,8 @@ docker run --gpus all --ipc=host --shm-size 32g \
 ```
 
 RadixAttention is enabled by default in SGLang. Add `--disable-radix-cache`
-for the controlled off arm. Record the exact image digest and installed package
-version in the run manifest before comparing results.
+for the controlled off arm. Record the exact runtime versions before comparing
+results.
 
 ```bash
 python scripts/run_sglang_smoke.py \
@@ -193,7 +196,8 @@ The smaller vector-add smoke remains available as
 - VLLM command/config and unit contract tests.
 - Real vLLM smoke output and Prometheus metrics.
 - Same-hardware llama.cpp/vLLM comparison or clearly separate rows.
-- Nsight timeline and analysis, if captured.
+- Nsight CUDA Graph/eager summaries and trace hashes.
 - Triton correctness/performance JSON.
-- Optional SGLang result with a separate version and hardware fingerprint.
+- Paired isolated SGLang RadixAttention results with a separate runtime
+  fingerprint.
 - README and validation report updated only after real execution.

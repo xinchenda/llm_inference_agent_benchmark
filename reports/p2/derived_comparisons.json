@@ -29,25 +29,50 @@
   },
   "vllm_vs_sglang": {
     "vllm": {
-      "cache_hit_rate": 0.8652202498356345,
-      "response_ttft_mean_s": 0.11798681574873626,
-      "histogram_ttft_p50_s": 0.07333333333333333,
-      "histogram_ttft_p95_s": 0.096,
-      "response_latency_mean_s": 0.15021368418820202,
-      "e2e_p95_s": 0.285,
-      "cold_start_s": 34.25272692926228
+      "prefix_cache_off": {
+        "cache_hit_rate": 0.0,
+        "client_ttft_mean_s": 0.12329064309597015,
+        "client_ttft_p50_s": 0.12133137695491314,
+        "client_ttft_p95_s": 0.13033594749867916,
+        "client_latency_mean_s": 0.15471689589321613,
+        "client_latency_p95_s": 0.166177187114954,
+        "aggregate_output_tokens_per_s": 103.4146911210203
+      },
+      "prefix_cache_on": {
+        "cache_hit_rate": 0.8652202498356345,
+        "client_ttft_mean_s": 0.11798681574873626,
+        "client_ttft_p50_s": 0.11582031659781933,
+        "client_ttft_p95_s": 0.12791881524026394,
+        "client_latency_mean_s": 0.15021368418820202,
+        "client_latency_p95_s": 0.16083761304616928,
+        "aggregate_output_tokens_per_s": 106.51492962487808
+      }
     },
     "sglang": {
-      "cache_hit_rate": 0.9957307060755337,
-      "response_ttft_mean_s": 0.12232487951405346,
-      "histogram_ttft_p50_s": 0.0642857142857143,
-      "histogram_ttft_p95_s": 0.3549999999999999,
-      "response_latency_mean_s": 0.14960410119965672,
-      "e2e_p95_s": 0.3549999999999999,
-      "cold_start_s": 56.715445660054684
+      "radix_off": {
+        "cache_hit_rate": 0.0,
+        "client_ttft_mean_s": 0.08137994655407965,
+        "client_ttft_p50_s": 0.07665949873626232,
+        "client_ttft_p95_s": 0.11791928298771381,
+        "client_latency_mean_s": 0.10853466647677124,
+        "client_latency_p95_s": 0.12260860204696655,
+        "aggregate_output_tokens_per_s": 147.41833664200135
+      },
+      "radix_on": {
+        "cache_hit_rate": 0.9957250904307794,
+        "client_ttft_mean_s": 0.057951106457039714,
+        "client_ttft_p50_s": 0.05124114453792572,
+        "client_ttft_p95_s": 0.09118339978158474,
+        "client_latency_mean_s": 0.09049072372727096,
+        "client_latency_p95_s": 0.1234818622469902,
+        "aggregate_output_tokens_per_s": 176.81370355951879
+      }
     },
     "same_input": true,
+    "same_gpu": true,
+    "isolated_sglang_environment": true,
     "metric_names_differ": true,
-    "note": "Both runs used the same GPU, model, 8 requests, and 1500-word shared prefix. Cache metrics use framework-specific names."
+    "software_stacks_differ": true,
+    "note": "Both frameworks used the same GPU, model, request count, shared-prefix text shape, output limit, and context length. vLLM used vLLM 0.34.0; isolated SGLang used 0.5.10.post1 with Triton attention and PyTorch sampling. Cache metrics use framework-specific names and are not numerically interchangeable."
   }
 }

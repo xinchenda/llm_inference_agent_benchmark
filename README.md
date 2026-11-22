@@ -317,17 +317,18 @@ GPU Triton RMSNorm completed for fp32/fp16/bf16. Triton was `0.0388 ms`,
 speedups over PyTorch eager. Maximum absolute errors were `1.91e-6`, `0.0078125`,
 and `0.0625`.
 
-SGLang 0.5.10.post1 completed the same Qwen3-0.6B, 8-request, 1500-word
-RadixAttention workload. It reported cache hit rate `0.99573`, client TTFT mean
-`0.12232 s`, metrics p50 TTFT `0.06429 s`, p95 TTFT `0.355 s`, and E2E p95
-`0.355 s`. Relative to vLLM, SGLang had lower p50 TTFT but higher p95/E2E tail
-latency. The cache metrics use `sglang:cache_hit_rate`, not vLLM's
-hits/queries counters.
+SGLang 0.5.10.post1 then ran RadixAttention on/off in a clean isolated
+environment with the same Qwen3-0.6B workload. Enabling RadixAttention reduced
+client mean TTFT from `0.08138 s` to `0.05795 s`, mean E2E latency from
+`0.10853 s` to `0.09049 s`, and increased measured output throughput from
+`147.42` to `176.81` tokens/s. Client p95 E2E latency was effectively unchanged.
 
-The SGLang installation changed PyTorch to 2.9.1 in the shared environment and
-may have invalidated vLLM after measurement. Nsight Systems 2025.3.1 is
-installed, but no capture has completed. A same-GPU llama.cpp versus vLLM
-comparison remains pending.
+Nsight Systems 2025.3.1 captured CUDA Graph and eager vLLM traces. CUDA Graph
+reduced TTFT p95 from `0.2414 s` to `0.0960 s`, TPOT from `0.023289 s` to
+`0.002410 s`, E2E p95 from `0.490 s` to `0.285 s`, and host
+`cudaLaunchKernel` calls from `27,189` to `270`. The selected API summary did
+not expose a separate Graph Launch event count. A same-GPU llama.cpp versus
+vLLM comparison remains pending.
 
 ## Deliverables
 
@@ -347,6 +348,8 @@ comparison remains pending.
 - [Sanitized vLLM result summary](reports/p2/vllm_summary.json)
 - [Sanitized SGLang result summary](reports/p2/sglang_summary.json)
 - [Derived vLLM comparisons](reports/p2/derived_comparisons.json)
+- [Nsight Systems analysis](reports/p2/nsight/README.md)
+- [Machine-readable Nsight summary](reports/p2/nsight/summary.json)
 - [GPU Triton RMSNorm result](reports/p2/triton_rmsnorm_gpu.json)
 - [P2 GPU runbook](docs/p2_gpu_runbook.md)
 - [Architecture and failure handling](docs/architecture.md)

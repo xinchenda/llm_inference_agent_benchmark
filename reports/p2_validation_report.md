@@ -75,36 +75,66 @@ as evidence that the Mac cannot execute the CUDA path.
 
 ## SGLang
 
-SGLang 0.5.10.post1 completed a RadixAttention run with the same Qwen3-0.6B
-model, eight requests, and a 1500-word shared prefix. Context was 4096, CUDA
-Graph was enabled, and `--enable-cache-report` was active.
+SGLang 0.5.10.post1 was rerun in a clean isolated virtual environment with
+PyTorch 2.9.1+cu128. This prevented the SGLang dependency set from changing the
+already validated vLLM environment. The two controlled arms used Triton
+attention and PyTorch sampling with Qwen3-0.6B, context 4096, CUDA Graph,
+eight sequential requests, a 1500-word shared prefix, and 16 output tokens per
+request.
 
-| Backend | Cache hit metric | Client TTFT mean | Metrics TTFT p50 | Metrics TTFT p95 | E2E p95 | Cold start |
+| SGLang mode | Cache hit rate | Client TTFT mean | Client TTFT p95 | Client latency mean | Client latency p95 | Output tokens/s |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: |
-| vLLM + Prefix Cache | 0.86522 | 0.11799 s | 0.07333 s | 0.096 s | 0.285 s | 34.25 s |
-| SGLang + RadixAttention | 0.99573 | 0.12232 s | 0.06429 s | 0.355 s | 0.355 s | 56.72 s |
+| RadixAttention off | 0.00000 | 0.08138 s | 0.11792 s | 0.10853 s | 0.12261 s | 147.42 |
+| RadixAttention on | 0.99573 | 0.05795 s | 0.09118 s | 0.09049 s | 0.12348 s | 176.81 |
 
-SGLang used `sglang:cache_hit_rate`; vLLM used its `prefix_cache_hits` and
-`prefix_cache_queries` counters. The two values measure similar concepts but
-come from different framework metric implementations.
+Enabling RadixAttention reduced client mean TTFT by `28.79%`, median TTFT by
+`33.16%`, mean E2E latency by `16.63%`, and increased aggregate output
+throughput by `19.94%`. The p95 E2E latency was effectively unchanged and was
+`0.71%` worse in this sample.
 
-SGLang had the lower p50 TTFT, while vLLM had materially lower p95 TTFT and E2E
-tail latency. Its server log reports `#cached-token=3032` for repeated requests
-and eight successful `/v1/chat/completions` responses.
+### Same-GPU framework comparison
 
-The SGLang installation changed PyTorch to 2.9.1 in the shared environment and
-may have invalidated vLLM after the measurements. The recorded vLLM run is
-preserved; vLLM will not be rerun until its dedicated 0.34.0 environment is
-restored.
+| Framework arm | Cache hit rate | Client TTFT mean | Client TTFT p95 | Client E2E p95 | Output tokens/s |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| vLLM Prefix Cache off | 0.00000 | 0.12329 s | 0.13034 s | 0.16618 s | 103.41 |
+| vLLM Prefix Cache on | 0.86522 | 0.11799 s | 0.12792 s | 0.16084 s | 106.51 |
+| SGLang RadixAttention off | 0.00000 | 0.08138 s | 0.11792 s | 0.12261 s | 147.42 |
+| SGLang RadixAttention on | 0.99573 | 0.05795 s | 0.09118 s | 0.12348 s | 176.81 |
+
+Both frameworks used the same GPU, model, request count, prefix material,
+output limit, and context length. Their software stacks were intentionally
+isolated and differed, so the table compares complete serving configurations
+rather than a single kernel. vLLM reports prefix-cache hit counters; SGLang
+reports `sglang:cache_hit_rate`. Those metrics are not treated as numerically
+interchangeable.
 
 ## Nsight Systems
 
-Nsight Systems 2025.3.1 is now installed on the GPU host. A vLLM profile has not
-yet been captured. No timeline, kernel table, Graph-launch analysis, or
-memory-transfer claim is included.
+Nsight Systems 2025.3.1 captured two real vLLM traces on the same RTX 4090D.
+The workload was the same eight-request shared-prefix run used for the serving
+tests.
 
-`reports/p2_nsight_status.json` records the missing evidence. The executable
-command remains in `scripts/profile_vllm_nsys.sh`.
+| Mode | TTFT p95 | TPOT mean | E2E p95 | `cudaLaunchKernel` calls |
+| --- | ---: | ---: | ---: | ---: |
+| CUDA Graph | 0.0960 s | 0.002410 s | 0.285 s | 270 |
+| Eager | 0.2414 s | 0.023289 s | 0.490 s | 27,189 |
+
+CUDA Graph reduced TTFT p95 by `60.24%`, TPOT by `89.65%`, and E2E p95 by
+`41.84%`. It also reduced recorded host kernel-launch calls by `99.01%`.
+The trace contains 447 graph-creation and 149 executable-graph creation
+events. The selected API summary did not expose a separate Graph Launch event
+count, so that value is not inferred.
+
+The eager trace's highest-time kernels were BF16 GEMV, FlashAttention split-KV,
+and three Ampere BF16 GEMM variants. Graph-node kernels are represented
+differently at the default trace granularity, so reported kernel totals are not
+interpreted as the complete arithmetic workload. Host-to-device traffic was
+approximately `1.50 GB` in both traces. Eager mode additionally reported
+`7.35 MB` of device-to-device copies and `4.72 MB` of memset activity.
+
+Machine-readable results and trace hashes are in
+[`reports/p2/nsight/summary.json`](p2/nsight/summary.json). Raw `.nsys-rep`
+files remain outside Git.
 
 ## Local contract tests
 

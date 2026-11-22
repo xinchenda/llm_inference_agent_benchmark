@@ -1,0 +1,167 @@
+{
+  "environment": {
+    "gpu": "NVIDIA GeForce RTX 4090 D",
+    "vram_gb": 24,
+    "driver": "595.71.05",
+    "vllm": "0.34.0",
+    "torch": "2.14.0+cu130",
+    "nsight_systems": "2025.3.1",
+    "model": "Qwen3-0.6B"
+  },
+  "workload": {
+    "requests": 8,
+    "shared_prefix_words": 1500,
+    "measured_prompt_tokens_per_request": 3042,
+    "max_output_tokens_per_request": 16,
+    "context_length": 4096,
+    "prefix_cache": true,
+    "request_execution": "sequential"
+  },
+  "traces": {
+    "cuda_graph": {
+      "raw_trace": "vllm_graph.nsys-rep",
+      "raw_trace_sha256": "cfedcb06d66f65abb122b64c4fb68801de04a475574bb222500ddbe9928e861c",
+      "run_result_sha256": "73147d64b00b5c7bb28498ddb8f5c78384cfbaf76b34ff32c301f5fb37f1ed12",
+      "response_ttft_mean_s": 0.12991224648430943,
+      "ttft_p50_s": 0.07333333333333333,
+      "ttft_p95_s": 0.096,
+      "tpot_mean_s": 0.002409978055705627,
+      "response_latency_mean_s": 0.1598931874614209,
+      "e2e_p95_s": 0.285,
+      "cuda_launch_kernel": {
+        "calls": 270,
+        "time_ms": 49.413561
+      },
+      "gpu_kernel_instances_reported": 272,
+      "gpu_kernel_time_reported_ms": 0.29984,
+      "cuda_graph_events": {
+        "graph_creation": 447,
+        "graph_exec_creation": 149,
+        "graph_launch": null
+      },
+      "top_kernels": [
+        {
+          "name": "FillFunctor<c10::BFloat16>",
+          "instances": 114,
+          "time_ms": 0.106752
+        },
+        {
+          "name": "FillFunctor<float>",
+          "instances": 113,
+          "time_ms": 0.104576
+        },
+        {
+          "name": "FillFunctor<int>",
+          "instances": 21,
+          "time_ms": 0.022624
+        },
+        {
+          "name": "CatArrayBatchedCopy_vectorized",
+          "instances": 1,
+          "time_ms": 0.01312
+        },
+        {
+          "name": "bfloat16_copy_kernel_cuda",
+          "instances": 1,
+          "time_ms": 0.008224
+        }
+      ],
+      "memory_operations": {
+        "host_to_device": {
+          "count": 481,
+          "size_mb": 1503.266,
+          "time_ms": 286.099924
+        },
+        "device_to_host": {
+          "count": 2,
+          "size_mb": 622.33,
+          "time_ms": 335.222841
+        },
+        "device_to_device": null,
+        "memset": null
+      }
+    },
+    "eager": {
+      "raw_trace": "vllm_eager.nsys-rep",
+      "raw_trace_sha256": "962fc2606ec4bc7f78c0bfe3d9cb1c6d2bf4a36c267ea75c9f821d1a7e7df71c",
+      "run_result_sha256": "0b38bd1f40bea6d27b0f1fa361e44fc6ed89e5d2df3d3dffc5552687c1e54351",
+      "response_ttft_mean_s": 0.1638270418625325,
+      "ttft_p50_s": 0.16428571428571428,
+      "ttft_p95_s": 0.24142857142857144,
+      "tpot_mean_s": 0.023288835833470023,
+      "response_latency_mean_s": 0.5090404998045415,
+      "e2e_p95_s": 0.49,
+      "cuda_launch_kernel": {
+        "calls": 27189,
+        "time_ms": 342.773087
+      },
+      "gpu_kernel_instances_reported": 29237,
+      "gpu_kernel_time_reported_ms": 481.544349,
+      "cuda_graph_events": null,
+      "top_kernels": [
+        {
+          "name": "cublasLt GEMV BF16",
+          "instances": 6875,
+          "time_ms": 90.557138
+        },
+        {
+          "name": "FlashAttention split-KV forward",
+          "instances": 252,
+          "time_ms": 75.751844
+        },
+        {
+          "name": "ampere_bf16 GEMM 128x64",
+          "instances": 88,
+          "time_ms": 47.033704
+        },
+        {
+          "name": "ampere_bf16 GEMM 64x128",
+          "instances": 140,
+          "time_ms": 41.918896
+        },
+        {
+          "name": "ampere_bf16 GEMM 128x128",
+          "instances": 56,
+          "time_ms": 40.723856
+        }
+      ],
+      "memory_operations": {
+        "host_to_device": {
+          "count": 639,
+          "size_mb": 1503.423,
+          "time_ms": 273.424144
+        },
+        "device_to_host": {
+          "count": 183,
+          "size_mb": 623.053,
+          "time_ms": 322.866359
+        },
+        "device_to_device": {
+          "count": 1711,
+          "size_mb": 7.352,
+          "time_ms": 1.771198
+        },
+        "memset": {
+          "count": 108,
+          "size_mb": 4.723,
+          "time_ms": 0.123872
+        }
+      }
+    }
+  },
+  "cuda_graph_effect": {
+    "response_ttft_mean_reduction_pct": 20.70181598852237,
+    "ttft_p95_reduction_pct": 60.23668639053255,
+    "tpot_mean_reduction_pct": 89.65186040525668,
+    "response_latency_mean_reduction_pct": 68.58801491322719,
+    "e2e_p95_reduction_pct": 41.83673469387755,
+    "cuda_launch_kernel_call_reduction_pct": 99.00694939159279
+  },
+  "notes": [
+    "The traces were captured around the same eight measured requests after each server became healthy.",
+    "CUDA Graph creation and executable-graph creation events were present in the trace. The selected Nsight API report did not expose a separate Graph Launch event count; the 99.01% reduction in cudaLaunchKernel calls is the direct launch-overhead evidence.",
+    "Kernel instance and kernel-time totals differ in scope because graph-node activity is represented differently at the default graph tracing granularity. They are not interpreted as the complete arithmetic workload.",
+    "Cold start is omitted from the comparison because Nsight collection overhead dominated startup.",
+    "Large raw .nsys-rep files remain outside Git; source SHA256 values preserve trace identity."
+  ]
+}

@@ -13,6 +13,7 @@ local_notes/
 .p2_remote/
 reviews/
 reports/rsi_agent_project_card.md
+*_project_card.md
 *.log
 *.pid
 build/

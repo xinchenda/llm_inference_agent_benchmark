@@ -8,11 +8,20 @@ from pathlib import Path
 from typing import Any
 
 ROOT = Path(".p2_remote/extracted/artifacts/p2")
+SGLANG_ROOT = Path(".p2_remote/extracted/sglang")
 OUTPUT = Path("reports/p2")
 
 
 def sha256(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def nearest_rank(values: list[float], quantile: float) -> float | None:
+    if not values:
+        return None
+    ordered = sorted(values)
+    index = max(0, int(quantile * len(ordered) + 0.999999) - 1)
+    return ordered[min(index, len(ordered) - 1)]
 
 
 def response_summary(responses: list[dict[str, Any]]) -> dict[str, Any]:
@@ -27,6 +36,8 @@ def response_summary(responses: list[dict[str, Any]]) -> dict[str, Any]:
             "count": len(values),
             "mean": statistics.fmean(values) if values else None,
             "min": min(values) if values else None,
+            "p50": nearest_rank(values, 0.50),
+            "p95": nearest_rank(values, 0.95),
             "max": max(values) if values else None,
         }
     return output
@@ -67,6 +78,10 @@ def summarize_vllm(path: Path) -> dict[str, Any]:
         "prefix_words": payload.get("prefix_words"),
         "max_tokens": payload.get("max_tokens"),
         "responses": response_summary(payload.get("responses", [])),
+        "aggregate_output_tokens_per_s": (
+            sum(float(item["completion_tokens"]) for item in payload["responses"])
+            / sum(float(item["latency_s"]) for item in payload["responses"])
+        ),
         "log_facts": log_facts(path.with_suffix(".log")),
         "serving_metrics_after": {
             key: after.get(key)
@@ -145,6 +160,33 @@ def summarize_sglang(path: Path) -> dict[str, Any]:
     }
 
 
+def summarize_isolated_sglang(path: Path) -> dict[str, Any]:
+    payload = json.loads(path.read_text(encoding="utf-8"))
+    after = payload["metrics_after"]
+    return {
+        "source": path.name,
+        "source_sha256": sha256(path),
+        "radix_attention": payload["radix_attention"],
+        "cold_start_s": payload["cold_start_s"],
+        "cache_hit_rate": after["cache_hit_rate"],
+        "client_ttft_mean_s": payload["response_ttft_mean_s"],
+        "client_ttft_p50_s": after["client_ttft_p50_s"],
+        "client_ttft_p95_s": after["client_ttft_p95_s"],
+        "client_latency_mean_s": payload["response_latency_mean_s"],
+        "client_latency_p50_s": after["client_latency_p50_s"],
+        "client_latency_p95_s": after["client_latency_p95_s"],
+        "aggregate_output_tokens_per_s": after[
+            "aggregate_output_tokens_per_s"
+        ],
+        "prompt_tokens_total": after["prompt_tokens_total"],
+        "generation_tokens_total": after["generation_tokens_total"],
+    }
+
+
+def percentage_change(baseline: float, value: float) -> float:
+    return (value - baseline) / baseline * 100.0
+
+
 def main() -> None:
     OUTPUT.mkdir(parents=True, exist_ok=True)
     vllm = {}
@@ -171,13 +213,68 @@ def main() -> None:
         json.dumps(vllm_summary, indent=2, ensure_ascii=False) + "\n",
         encoding="utf-8",
     )
-    sglang_path = ROOT / "sglang_radix.json"
     sglang_summary = {}
-    if sglang_path.exists():
+    radix_on_path = SGLANG_ROOT / "radix_on.json"
+    radix_off_path = SGLANG_ROOT / "radix_off.json"
+    if not radix_on_path.exists() or not radix_off_path.exists():
+        raise FileNotFoundError(
+            "Both isolated SGLang radix_on.json and radix_off.json files "
+            "are required"
+        )
+    if radix_on_path.exists() and radix_off_path.exists():
+        radix_on = summarize_isolated_sglang(radix_on_path)
+        radix_off = summarize_isolated_sglang(radix_off_path)
         sglang_summary = {
-            "hardware": vllm_summary["hardware"],
-            "runtime": {"version": "0.5.10.post1"},
-            "run": summarize_sglang(sglang_path),
+            "environment": {
+                "gpu": vllm_summary["hardware"]["gpu"],
+                "vram_gb": vllm_summary["hardware"]["vram_gb"],
+                "sglang": "0.5.10.post1",
+                "torch": "2.9.1+cu128",
+                "isolated_environment": True,
+                "attention_backend": "triton",
+                "sampling_backend": "pytorch",
+            },
+            "workload": {
+                "model": "Qwen3-0.6B",
+                "requests": 8,
+                "shared_prefix_words": 1500,
+                "measured_prompt_tokens_per_request": 3041,
+                "max_output_tokens_per_request": 16,
+                "context_length": 4096,
+                "cuda_graph": True,
+                "request_execution": "sequential",
+            },
+            "runs": {"radix_on": radix_on, "radix_off": radix_off},
+            "radix_effect": {
+                "client_ttft_mean_reduction_pct": -percentage_change(
+                    radix_off["client_ttft_mean_s"],
+                    radix_on["client_ttft_mean_s"],
+                ),
+                "client_ttft_p50_reduction_pct": -percentage_change(
+                    radix_off["client_ttft_p50_s"],
+                    radix_on["client_ttft_p50_s"],
+                ),
+                "client_ttft_p95_reduction_pct": -percentage_change(
+                    radix_off["client_ttft_p95_s"],
+                    radix_on["client_ttft_p95_s"],
+                ),
+                "client_latency_mean_reduction_pct": -percentage_change(
+                    radix_off["client_latency_mean_s"],
+                    radix_on["client_latency_mean_s"],
+                ),
+                "client_latency_p50_reduction_pct": -percentage_change(
+                    radix_off["client_latency_p50_s"],
+                    radix_on["client_latency_p50_s"],
+                ),
+                "client_latency_p95_reduction_pct": -percentage_change(
+                    radix_off["client_latency_p95_s"],
+                    radix_on["client_latency_p95_s"],
+                ),
+                "aggregate_output_tokens_per_s_change_pct": percentage_change(
+                    radix_off["aggregate_output_tokens_per_s"],
+                    radix_on["aggregate_output_tokens_per_s"],
+                ),
+            },
         }
         (OUTPUT / "sglang_summary.json").write_text(
             json.dumps(sglang_summary, indent=2, ensure_ascii=False) + "\n",
@@ -261,50 +358,80 @@ def main() -> None:
             ),
         },
     }
-    if sglang_summary:
-        sglang_run = sglang_summary["run"]
+    if "runs" in sglang_summary:
+        sglang_on = sglang_summary["runs"]["radix_on"]
+        sglang_off = sglang_summary["runs"]["radix_off"]
         comparisons["vllm_vs_sglang"] = {
             "vllm": {
-                "cache_hit_rate": long_on["serving_metrics_after"][
-                    "prefix_cache_hit_rate"
-                ],
-                "response_ttft_mean_s": long_on["responses"]["ttft_s"]["mean"],
-                "histogram_ttft_p50_s": long_on["serving_metrics_after"][
-                    "ttft_p50_s"
-                ],
-                "histogram_ttft_p95_s": long_on["serving_metrics_after"][
-                    "ttft_p95_s"
-                ],
-                "response_latency_mean_s": long_on["responses"]["latency_s"]["mean"],
-                "e2e_p95_s": long_on["serving_metrics_after"][
-                    "e2e_latency_p95_s"
-                ],
-                "cold_start_s": long_on["cold_start_s"],
+                "prefix_cache_off": {
+                    "cache_hit_rate": long_off["serving_metrics_after"][
+                        "prefix_cache_hit_rate"
+                    ],
+                    "client_ttft_mean_s": long_off["responses"]["ttft_s"]["mean"],
+                    "client_ttft_p50_s": long_off["responses"]["ttft_s"]["p50"],
+                    "client_ttft_p95_s": long_off["responses"]["ttft_s"]["p95"],
+                    "client_latency_mean_s": long_off["responses"]["latency_s"][
+                        "mean"
+                    ],
+                    "client_latency_p95_s": long_off["responses"]["latency_s"][
+                        "p95"
+                    ],
+                    "aggregate_output_tokens_per_s": long_off[
+                        "aggregate_output_tokens_per_s"
+                    ],
+                },
+                "prefix_cache_on": {
+                    "cache_hit_rate": long_on["serving_metrics_after"][
+                        "prefix_cache_hit_rate"
+                    ],
+                    "client_ttft_mean_s": long_on["responses"]["ttft_s"]["mean"],
+                    "client_ttft_p50_s": long_on["responses"]["ttft_s"]["p50"],
+                    "client_ttft_p95_s": long_on["responses"]["ttft_s"]["p95"],
+                    "client_latency_mean_s": long_on["responses"]["latency_s"][
+                        "mean"
+                    ],
+                    "client_latency_p95_s": long_on["responses"]["latency_s"][
+                        "p95"
+                    ],
+                    "aggregate_output_tokens_per_s": long_on[
+                        "aggregate_output_tokens_per_s"
+                    ],
+                },
             },
             "sglang": {
-                "cache_hit_rate": sglang_run["serving_metrics_after"][
-                    "cache_hit_rate"
-                ],
-                "response_ttft_mean_s": sglang_run["responses"]["ttft_s"]["mean"],
-                "histogram_ttft_p50_s": sglang_run["serving_metrics_after"][
-                    "ttft_p50_s"
-                ],
-                "histogram_ttft_p95_s": sglang_run["serving_metrics_after"][
-                    "ttft_p95_s"
-                ],
-                "response_latency_mean_s": sglang_run["responses"]["latency_s"][
-                    "mean"
-                ],
-                "e2e_p95_s": sglang_run["serving_metrics_after"][
-                    "e2e_latency_p95_s"
-                ],
-                "cold_start_s": sglang_run["cold_start_s"],
+                "radix_off": {
+                    "cache_hit_rate": sglang_off["cache_hit_rate"],
+                    "client_ttft_mean_s": sglang_off["client_ttft_mean_s"],
+                    "client_ttft_p50_s": sglang_off["client_ttft_p50_s"],
+                    "client_ttft_p95_s": sglang_off["client_ttft_p95_s"],
+                    "client_latency_mean_s": sglang_off["client_latency_mean_s"],
+                    "client_latency_p95_s": sglang_off["client_latency_p95_s"],
+                    "aggregate_output_tokens_per_s": sglang_off[
+                        "aggregate_output_tokens_per_s"
+                    ],
+                },
+                "radix_on": {
+                    "cache_hit_rate": sglang_on["cache_hit_rate"],
+                    "client_ttft_mean_s": sglang_on["client_ttft_mean_s"],
+                    "client_ttft_p50_s": sglang_on["client_ttft_p50_s"],
+                    "client_ttft_p95_s": sglang_on["client_ttft_p95_s"],
+                    "client_latency_mean_s": sglang_on["client_latency_mean_s"],
+                    "client_latency_p95_s": sglang_on["client_latency_p95_s"],
+                    "aggregate_output_tokens_per_s": sglang_on[
+                        "aggregate_output_tokens_per_s"
+                    ],
+                },
             },
             "same_input": True,
+            "same_gpu": True,
+            "isolated_sglang_environment": True,
             "metric_names_differ": True,
+            "software_stacks_differ": True,
             "note": (
-                "Both runs used the same GPU, model, 8 requests, and 1500-word "
-                "shared prefix. Cache metrics use framework-specific names."
+                "Both frameworks used the same GPU, model, request count, "
+                "shared-prefix text shape, output limit, and context length. "
+                "Cache metrics use framework-specific names and are not "
+                "numerically interchangeable."
             ),
         }
     (OUTPUT / "derived_comparisons.json").write_text(
