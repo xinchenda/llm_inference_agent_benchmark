@@ -14,11 +14,11 @@ endpoint or credential.
 
 | Capability | Local Mac | Current remote | Can implement without GPU | Status |
 | --- | --- | --- | --- | --- |
-| NVIDIA GPU / driver | No NVIDIA GPU | No reachable endpoint | No | Blocked locally |
-| CUDA / NVCC | Not available | Not verified | No | Blocked locally |
-| vLLM | Not installed; PyPI advertises 0.34.0 | Not installed/verified | Yes | Adapter implemented, execution blocked |
-| SGLang | Not installed; PyPI advertises 0.5.10.post1 | Not installed/verified | Optional | Not selected for first P2 run |
-| Triton | No macOS distribution found | Not verified | Reference code and GPU script | CUDA execution blocked |
+| NVIDIA GPU / driver | No NVIDIA GPU | RTX 4090D 24 GB, driver 595.71.05 | GPU config | Executed remotely |
+| CUDA / NVCC | Not available | CUDA runtime used by torch 2.14+cu130 | Python runtime | Executed remotely |
+| vLLM | Not installed locally | vLLM 0.34.0 | Adapter, config, smoke script | Executed remotely |
+| SGLang | Not installed locally | 0.5.10.post1 installed in shared env | Adapter/config/smoke | Timing pending in clean env |
+| Triton | No macOS distribution found | Real GPU run | Reference code and GPU script | Executed remotely |
 | Nsight Systems | Not installed | Not verified | Runbook and script | GPU execution blocked |
 | Docker | CLI installed; daemon and Compose plugin absent | No GPU VM | Dockerfile/Compose | Build and run blocked |
 | Linux VM tooling | Colima/Lima installed, no instance | No | Setup commands | Not started |
@@ -43,7 +43,7 @@ Provide one of:
 ```bash
 python scripts/audit_gpu_capabilities.py
 python scripts/validate_vllm_environment.py
-python scripts/run_vllm_smoke.py --candidate qwen3_1_7b
+python scripts/run_vllm_smoke.py --candidate qwen3_0_6b_prefix
 ```
 
 Expected evidence:
@@ -97,7 +97,7 @@ RTX 4090D vLLM results.
 Create a profile only on the GPU host:
 
 ```bash
-bash scripts/profile_vllm_nsys.sh Qwen/Qwen3-1.7B artifacts/p2/nsight/vllm_trace
+bash scripts/profile_vllm_nsys.sh Qwen/Qwen3-0.6B artifacts/p2/nsight/vllm_trace
 ```
 
 Generate workload traffic while the server starts. Analyze:
@@ -113,8 +113,9 @@ actually captured.
 
 ## Optional SGLang comparison
 
-SGLang was not selected for the first P2 run because no reachable NVIDIA host
-is currently configured. On the eventual GPU host, first capture:
+SGLang 0.5.10.post1 was installed in the shared P2 environment, but that changed
+PyTorch to 2.9.1 and may have invalidated vLLM. No SGLang timing is claimed from
+that environment. In a clean GPU environment, first capture:
 
 ```bash
 sglang --version
@@ -149,7 +150,7 @@ version in the run manifest before comparing results.
 
 ```bash
 python scripts/run_sglang_smoke.py \
-  --candidate qwen3_1_7b_radix
+  --candidate qwen3_0_6b_radix
 ```
 
 ## Cross-hardware migration

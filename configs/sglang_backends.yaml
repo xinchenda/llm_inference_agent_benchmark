@@ -1,24 +1,31 @@
 sglang:
-  qwen3_1_7b_radix:
-    model_path: Qwen/Qwen3-1.7B
+  qwen3_0_6b_radix:
+    model_path: /root/autodl-tmp/models/Qwen3-0.6B
     tp_size: 1
     mem_fraction_static: 0.85
     max_running_requests: 8
     chunked_prefill_size: 8192
     enable_radix_cache: true
     enable_cache_report: true
+    enable_metrics: true
     enable_cuda_graph: true
-  qwen3_1_7b_no_radix:
-    model_path: Qwen/Qwen3-1.7B
+  qwen3_0_6b_no_radix:
+    model_path: /root/autodl-tmp/models/Qwen3-0.6B
     tp_size: 1
     mem_fraction_static: 0.85
     max_running_requests: 8
     chunked_prefill_size: 8192
     enable_radix_cache: false
     enable_cache_report: true
+    enable_metrics: true
     enable_cuda_graph: true
 
 workloads:
+  shared_prefix_rag:
+    requests: 8
+    concurrency: 8
+    prefix_words: 1500
+    output_tokens: 16
   open_qps:
     requests: 24
     concurrency: 8

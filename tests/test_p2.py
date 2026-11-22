@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import json
+import time
 from pathlib import Path
 
 import httpx
@@ -15,6 +17,7 @@ from llm_bench.p2.metrics import (
     summarize_serving_metrics,
     summarize_sglang_serving_metrics,
 )
+from llm_bench.p2.sampling import MetricsSampler
 from llm_bench.p2.sglang import SGLangServer, SGLangServerConfig
 from llm_bench.p2.triton_ref import rmsnorm_reference, vector_add_reference
 from llm_bench.p2.vllm import VLLMServer, VLLMServerConfig
@@ -266,6 +269,17 @@ def test_vllm_health_timeout_is_explicit(monkeypatch, tmp_path: Path) -> None:
         server.start(timeout_s=0.01)
 
 
+def test_metrics_sampler_collects_during_load() -> None:
+    with MetricsSampler(
+        lambda: "metric 1\n",
+        lambda _: {"value": 1},
+        interval_s=0.01,
+    ) as sampler:
+        time.sleep(0.035)
+    assert len(sampler.samples) >= 2
+    assert sampler.errors == []
+
+
 def test_openai_request_contract_uses_local_endpoint() -> None:
     client = LocalLLM("http://127.0.0.1:8000/v1", "Qwen/Qwen3-1.7B")
     payload = client.build_payload(
@@ -297,5 +311,28 @@ def test_gpu_configs_are_parseable_and_declare_expected_backend() -> None:
     sglang = yaml.safe_load(
         Path("configs/sglang_backends.yaml").read_text(encoding="utf-8")
     )
-    assert sglang["sglang"]["qwen3_1_7b_radix"]["enable_radix_cache"] is True
-    assert sglang["sglang"]["qwen3_1_7b_no_radix"]["enable_radix_cache"] is False
+    assert sglang["sglang"]["qwen3_0_6b_radix"]["enable_radix_cache"] is True
+    assert sglang["sglang"]["qwen3_0_6b_no_radix"]["enable_radix_cache"] is False
+
+
+def test_tracked_remote_summaries_are_sanitized_and_complete() -> None:
+    summary_text = Path("reports/p2/vllm_summary.json").read_text(encoding="utf-8")
+    assert "/root" not in summary_text
+    summary = json.loads(summary_text)
+    assert len(summary["runs"]) == 5
+    assert summary["runs"]["vllm_long_prefix"]["log_facts"][
+        "gpu_kv_cache_tokens"
+    ] == 170496
+    comparisons = json.loads(
+        Path("reports/p2/derived_comparisons.json").read_text(encoding="utf-8")
+    )
+    assert comparisons["prefix_cache_long"]["cache_hit_rate_on"] == pytest.approx(
+        0.86522,
+        abs=1e-5,
+    )
+    graph = comparisons["cuda_graph"]
+    assert graph["ttft_p95_reduction_pct"] == pytest.approx(59.1489, abs=1e-3)
+    triton = json.loads(
+        Path("reports/p2/triton_rmsnorm_gpu.json").read_text(encoding="utf-8")
+    )
+    assert [item["dtype"] for item in triton["results"]] == ["fp32", "fp16", "bf16"]

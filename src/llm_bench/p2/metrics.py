@@ -146,6 +146,10 @@ def summarize_serving_metrics(text: str) -> dict[str, Any]:
             samples,
             {"vllm:request_success_total"},
         ),
+        "process_resident_memory_bytes": _gauge(
+            samples,
+            {"process_resident_memory_bytes"},
+        ),
         "ttft_histogram_bucket_count": _gauge(
             samples,
             {"vllm:time_to_first_token_seconds_count"},

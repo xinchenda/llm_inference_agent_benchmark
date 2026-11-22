@@ -17,19 +17,19 @@ Audited 2026-11-23 without reading or outputting credentials.
   `sha256:20fdb089454afbb324efa4110a2c025ff7b27cc1a086e07aa580b18df8ad1ce1`;
   it was not pulled or built locally.
 - Colima and Lima binaries installed; no running VM or instance.
-- No currently available Linux/NVIDIA serving endpoint or execution entry was
-  found in this repository.
+- A remote Linux RTX 4090D session was used for the P2 vLLM and Triton
+  measurements. No host identity is stored in the repository.
 
 | Capability | Local | Remote/current | Implemented | Execution status |
 | --- | --- | --- | --- | --- |
-| NVIDIA RTX 4090D | No | Not currently available | GPU profile/config | Blocked |
-| CUDA/NVCC | No | Not verified | Environment validator | Blocked |
-| vLLM | No | Not verified | Adapter, config, smoke script, metrics parser | Code ready; run blocked |
-| vLLM Serving Metrics | No live server | Not verified | `/metrics` parser and report fields | Run blocked |
+| NVIDIA RTX 4090D | No | Yes, 24 GB; driver 595.71.05 | GPU profile/config | Executed |
+| CUDA/NVCC | No | CUDA runtime used by torch 2.14+cu130 | Environment validator | Executed through Python runtime |
+| vLLM | No | 0.34.0 | Adapter, config, smoke script, metrics parser | Executed |
+| vLLM Serving Metrics | No live local server | `/metrics` HTTP 200 | `/metrics` parser and report fields | Executed |
 | Same-GPU llama.cpp vs vLLM | No | Not verified | Hardware-separated comparison gate | Run blocked |
 | Nsight Systems | No | Not verified | Profiling script and analysis runbook | Run blocked |
-| Triton | No macOS wheel | Not verified | Correctness reference, CUDA kernel script | Local run impossible |
-| SGLang | No | Not verified | Adapter, RadixAttention config, smoke script | Code ready; run blocked |
+| Triton | No macOS wheel | Real fp32/fp16/bf16 GPU run | Correctness reference, CUDA kernel script | Executed |
+| SGLang | No | 0.5.10.post1 installed in a shared env | Adapter, RadixAttention config, smoke script | Runtime result pending |
 | Docker/NVIDIA container | CLI only; no daemon | No GPU VM | Pinned Dockerfile and Compose | Build/run blocked |
 
 ## Classification
@@ -40,22 +40,22 @@ Audited 2026-11-23 without reading or outputting credentials.
 - Apple Metal llama.cpp results from P0/P1.
 - Docker client, Colima, and Lima executables.
 
-### Implemented but uncompiled/unmeasured
+### Implemented and measured
 
-- vLLM lifecycle adapter and command construction.
-- SGLang OpenAI-compatible lifecycle adapter with RadixAttention controls.
 - vLLM Prometheus metric parsing.
-- Cross-hardware comparison guard.
-- Docker image and Compose definition.
-- Nsight Systems profiling command.
-- Triton correctness/performance script.
+- vLLM Prefix Cache on/off and CUDA Graph/eager comparisons.
+- Triton RMSNorm correctness and performance for fp32/fp16/bf16.
+
+### Implemented but not measured
+
+- SGLang OpenAI-compatible lifecycle adapter with RadixAttention controls.
+- Docker image build and Compose launch.
+- Nsight Systems profile.
+- Same-GPU llama.cpp CUDA versus vLLM comparison.
 
 ### Blocked
 
-- Any claim of RTX 4090D vLLM latency, throughput, memory, CUDA Graph benefit,
-  Nsight timeline, or Triton kernel performance.
-- Building or running the CUDA container on this Mac.
+- Nsight timeline.
+- SGLang timings in a clean environment.
 - Same-hardware llama.cpp/vLLM comparison.
-
-No P2 GPU result is reported until a Linux/NVIDIA execution environment is
-provided and the scripts complete on that environment.
+- Docker GPU build on this Mac.

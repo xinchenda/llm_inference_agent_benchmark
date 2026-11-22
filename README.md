@@ -269,8 +269,9 @@ was not rerun.
 
 ## Current limitations
 
-- The measured backend is `llama.cpp` on Apple Metal. A vLLM adapter is a clear
-  extension path, not a completed local measurement.
+- The main P0/P1 backend is `llama.cpp` on Apple Metal. P2 vLLM measurements were
+  executed separately on an NVIDIA RTX 4090D and are never merged into the Mac
+  performance table.
 - The Docker/Linux path is supplied but could not be executed on this Mac because
   Docker is not installed.
 - The service limiter is process-local. Multi-replica production deployment
@@ -284,12 +285,11 @@ was not rerun.
 - Goodput and p95 comparisons describe this Mac and this fixed local workload.
   They are not GPU-serving or production-SLA results.
 
-## P2 GPU readiness
+## P2 GPU serving
 
-The local Mac has no NVIDIA GPU, CUDA, Nsight Systems, vLLM, SGLang, or Triton.
-Docker is installed as a client, but its daemon and Compose plugin are not
-available. A historical RTX 4090D training record does not provide a currently
-reachable serving endpoint.
+The local Mac still has no NVIDIA GPU or CUDA. P2 was executed on a remote Linux
+RTX 4090D with driver 595.71.05, vLLM 0.34.0, PyTorch 2.14+cu130, and
+Qwen3-0.6B.
 
 The repository now contains:
 
@@ -299,9 +299,28 @@ The repository now contains:
 - A same-workload comparison gate that refuses cross-hardware ratios.
 - Nsight Systems and Triton GPU validation scripts.
 - A capability audit and GPU-host runbook.
+- Raw-result summaries with source hashes and no remote host identity.
 
-No vLLM, CUDA Graph, Nsight, Triton, or RTX 4090D serving number is reported
-until the scripts execute on a Linux/NVIDIA host.
+Measured vLLM results:
+
+- 1500-word shared prefix, 8 requests.
+- Prefix Cache off: response TTFT mean `0.12329 s`; no cache counter.
+- Prefix Cache on: hit rate `0.86522`, response TTFT mean `0.11799 s`.
+- Mean TTFT reduction was `4.30%`; p95 histogram TTFT was slightly worse
+  (`0.092 s` off, `0.096 s` on). Cache reuse is confirmed, but the latency gain
+  is small for this 0.6B workload.
+- CUDA Graph: TTFT p95 `0.096 s`, TPOT `0.002425 s`, E2E p95 `0.285 s`.
+- Eager: TTFT p95 `0.235 s`, TPOT `0.023692 s`, E2E p95 `0.490 s`.
+
+GPU Triton RMSNorm completed for fp32/fp16/bf16. Triton was `0.0388 ms`,
+`0.0227 ms`, and `0.0213 ms`, corresponding to `1.94x`, `2.08x`, and `2.31x`
+speedups over PyTorch eager. Maximum absolute errors were `1.91e-6`, `0.0078125`,
+and `0.0625`.
+
+SGLang 0.5.10.post1 is installed in a shared environment, but that installation
+downgraded PyTorch and may invalidate vLLM. SGLang timing results were therefore
+not produced in that environment. Nsight installation failed and no timeline is
+claimed. A same-GPU llama.cpp versus vLLM comparison also remains pending.
 
 ## Deliverables
 
@@ -316,6 +335,11 @@ until the scripts execute on a Linux/NVIDIA host.
 - [Best-so-far curves](reports/experiments/best_so_far.csv)
 - [Agent tool failure analysis](reports/agent_failure_analysis.md)
 - [P2 capability matrix](reports/p2_capability_matrix.md)
+- [P2 validation report](reports/p2_validation_report.md)
+- [P2 remote result documentation](reports/p2/README.md)
+- [Sanitized vLLM result summary](reports/p2/vllm_summary.json)
+- [Derived vLLM comparisons](reports/p2/derived_comparisons.json)
+- [GPU Triton RMSNorm result](reports/p2/triton_rmsnorm_gpu.json)
 - [P2 GPU runbook](docs/p2_gpu_runbook.md)
 - [Architecture and failure handling](docs/architecture.md)
 - [Open-source decision record](docs/open_source_research.md)

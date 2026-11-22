@@ -8,14 +8,18 @@ import yaml
 
 from llm_bench.llm import LocalLLM
 from llm_bench.p2.metrics import summarize_serving_metrics
+from llm_bench.p2.sampling import MetricsSampler
 from llm_bench.p2.vllm import VLLMServer, VLLMServerConfig
 
 
 def main() -> None:
     parser = argparse.ArgumentParser(description="Run a real vLLM smoke test and metrics probe")
     parser.add_argument("--config", default="configs/vllm_backends.yaml")
-    parser.add_argument("--candidate", default="qwen3_1_7b")
+    parser.add_argument("--candidate", default="qwen3_0_6b_prefix")
     parser.add_argument("--output", type=Path, default=Path("artifacts/p2/vllm_smoke.json"))
+    parser.add_argument("--requests", type=int, default=8)
+    parser.add_argument("--prefix-words", type=int, default=1500)
+    parser.add_argument("--max-tokens", type=int, default=16)
     args = parser.parse_args()
     payload = yaml.safe_load(Path(args.config).read_text(encoding="utf-8"))
     raw = payload["vllm"][args.candidate]
@@ -30,34 +34,45 @@ def main() -> None:
             temperature=0,
         )
         before = summarize_serving_metrics(server.metrics_text())
-        shared_prefix = "Atlas limit is 42. " + ("technical evidence " * 200)
+        shared_prefix = "Atlas limit is 42. " + (
+            "technical evidence " * args.prefix_words
+        )
         responses = []
-        for index in range(3):
-            response = llm.generate(
-                "Answer briefly. /no_think",
-                f"{shared_prefix}\nQuestion {index}: What is the Atlas limit?",
-                max_tokens=16,
-                disable_cache=False,
-                cache_prompt=True,
-            )
-            responses.append(
-                {
-                    "latency_s": response.latency_s,
-                    "ttft_s": response.ttft_s,
-                    "prompt_tokens": response.prompt_tokens,
-                    "completion_tokens": response.completion_tokens,
-                    "cache_n": response.timings.get("cache_n"),
-                    "text": response.text,
-                }
-            )
+        with MetricsSampler(
+            server.metrics_text,
+            summarize_serving_metrics,
+        ) as sampler:
+            for index in range(args.requests):
+                response = llm.generate(
+                    "Answer briefly. /no_think",
+                    f"{shared_prefix}\nQuestion {index}: What is the Atlas limit?",
+                    max_tokens=args.max_tokens,
+                    disable_cache=False,
+                    cache_prompt=True,
+                )
+                responses.append(
+                    {
+                        "latency_s": response.latency_s,
+                        "ttft_s": response.ttft_s,
+                        "prompt_tokens": response.prompt_tokens,
+                        "completion_tokens": response.completion_tokens,
+                        "cache_n": response.timings.get("cache_n"),
+                        "text": response.text,
+                    }
+                )
         after = summarize_serving_metrics(server.metrics_text())
         result = {
             "backend": "vllm",
             "model": config.model,
             "command": config.command(),
             "cold_start_s": server.cold_start_s,
+            "request_count": args.requests,
+            "prefix_words": args.prefix_words,
+            "max_tokens": args.max_tokens,
             "metrics_before": before,
             "metrics_after": after,
+            "metrics_during": sampler.samples,
+            "metrics_sampling_errors": sampler.errors,
             "responses": responses,
         }
         args.output.parent.mkdir(parents=True, exist_ok=True)

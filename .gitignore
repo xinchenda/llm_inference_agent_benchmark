@@ -10,6 +10,7 @@ models/
 artifacts/
 logs/
 local_notes/
+.p2_remote/
 reviews/
 reports/rsi_agent_project_card.md
 *.log

@@ -1,0 +1,40 @@
+{
+  "kernel": "triton_rmsnorm",
+  "status": "complete",
+  "device": "NVIDIA GeForce RTX 4090 D",
+  "rows": 4096,
+  "hidden": 1024,
+  "results": [
+    {
+      "dtype": "fp32",
+      "max_abs_error": 1.9073486328125e-06,
+      "pytorch_eager_ms": 0.07518032663879362,
+      "torch_compile_ms": 0.04231616563071458,
+      "triton_ms": 0.03879410459807044,
+      "triton_speedup_vs_eager": 1.9379317403431697,
+      "triton_speedup_vs_compile": 1.090788563600958,
+      "effective_bandwidth_gb_s": 1297.4045546730679
+    },
+    {
+      "dtype": "fp16",
+      "max_abs_error": 0.0078125,
+      "pytorch_eager_ms": 0.0473765390455176,
+      "torch_compile_ms": 0.019955085596008896,
+      "triton_ms": 0.022723333560861647,
+      "triton_speedup_vs_eager": 2.0849290848380755,
+      "triton_speedup_vs_compile": 0.8781759746016868,
+      "effective_bandwidth_gb_s": 1107.4882095356495
+    },
+    {
+      "dtype": "bf16",
+      "max_abs_error": 0.0625,
+      "pytorch_eager_ms": 0.049167951677854246,
+      "torch_compile_ms": 0.023459608724633735,
+      "triton_ms": 0.021269523621802882,
+      "triton_speedup_vs_eager": 2.311662101705623,
+      "triton_speedup_vs_compile": 1.1029682254183564,
+      "effective_bandwidth_gb_s": 1183.1870072634401
+    }
+  ],
+  "source_sha256": "8ce6030e257814c0be211fb255e2687389b0072b723047d0af6ea4d3ca429438"
+}

@@ -1,0 +1,8 @@
+{
+  "gpu": "NVIDIA GeForce RTX 4090 D",
+  "vram_gb": 24,
+  "driver": "595.71.05",
+  "vllm": "0.34.0",
+  "torch": "2.14+cu130",
+  "model": "Qwen3-0.6B"
+}
