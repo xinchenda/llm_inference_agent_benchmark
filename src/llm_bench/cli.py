@@ -6,6 +6,7 @@ import json
 import platform
 import subprocess
 import sys
+from pathlib import Path
 from typing import Any
 
 import uvicorn
@@ -18,6 +19,8 @@ from llm_bench.config import (
     resolve_path,
 )
 from llm_bench.evaluation import recompute_text_metrics, run_evaluation
+from llm_bench.experiment.report import build_experiment_report
+from llm_bench.experiment.runner import run_experiment_from_file
 from llm_bench.llm import LlamaServer, LocalLLM, choose_device
 from llm_bench.performance import run_performance
 from llm_bench.reporting import build_reports
@@ -84,6 +87,30 @@ def command_eval(args: argparse.Namespace) -> None:
 def command_perf(args: argparse.Namespace) -> None:
     rows = asyncio.run(run_performance(_config(args)))
     print(json.dumps(rows, ensure_ascii=False, indent=2))
+
+
+def command_experiment_run(args: argparse.Namespace) -> None:
+    config = _config(args)
+    summary = asyncio.run(
+        run_experiment_from_file(
+            Path(args.spec),
+            config,
+        )
+    )
+    print(json.dumps(summary, ensure_ascii=False, indent=2))
+
+
+def command_experiment_report(args: argparse.Namespace) -> None:
+    config = _config(args)
+    ledger = Path(args.ledger)
+    if not ledger.is_absolute():
+        ledger = PROJECT_ROOT / ledger
+    output_dir = (
+        Path(args.output)
+        if args.output
+        else resolve_path(config, "paths.artifacts").parent / "reports" / "experiments"
+    )
+    print(build_experiment_report(ledger, output_dir))
 
 
 def command_recompute_metrics(args: argparse.Namespace) -> None:
@@ -209,6 +236,19 @@ def build_parser() -> argparse.ArgumentParser:
     performance_sub = performance.add_subparsers(dest="perf_command", required=True)
     performance_run = performance_sub.add_parser("run")
     performance_run.set_defaults(func=command_perf)
+
+    experiment = subparsers.add_parser("experiment", help="Run optimization experiments")
+    experiment_sub = experiment.add_subparsers(dest="experiment_command", required=True)
+    experiment_run = experiment_sub.add_parser("run")
+    experiment_run.add_argument("--spec", default="configs/experiments_p0_p1.yaml")
+    experiment_run.set_defaults(func=command_experiment_run)
+    experiment_report = experiment_sub.add_parser("report")
+    experiment_report.add_argument(
+        "--ledger",
+        default="artifacts/experiments/p0_p1_local_20261122/ledger.sqlite",
+    )
+    experiment_report.add_argument("--output")
+    experiment_report.set_defaults(func=command_experiment_report)
 
     metrics = subparsers.add_parser("metrics", help="Recompute text-only metrics")
     metrics_sub = metrics.add_subparsers(dest="metrics_command", required=True)

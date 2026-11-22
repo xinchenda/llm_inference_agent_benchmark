@@ -1,0 +1,230 @@
+{
+  "trial-5f088c3ba6f67fa450ae": [
+    {
+      "distance": 0.12927329190531026,
+      "family_match": true,
+      "trial_id": "trial-766318216a5b2b52f948",
+      "candidate_id": "q06_q8_q8_c4096_p1_cp_off",
+      "strategy": "random",
+      "goodput": 1.51306669391977,
+      "p95_latency_s": 4.032242047006729,
+      "peak_rss_mb": 1187.5859375,
+      "artifact_path": "artifacts/experiments/p0_p1_rsi_prefix_v3_20261123/runs/trial-766318216a5b2b52f948"
+    },
+    {
+      "distance": 0.13113854513636705,
+      "family_match": true,
+      "trial_id": "trial-38f3c11adfe7aed36b0a",
+      "candidate_id": "q06_q8_q8_c4096_p1_cp_off",
+      "strategy": "grid",
+      "goodput": 1.5491542366415634,
+      "p95_latency_s": 3.6823800241923887,
+      "peak_rss_mb": 1138.6796875,
+      "artifact_path": "artifacts/experiments/p0_p1_rsi_prefix_v3_20261123/runs/trial-38f3c11adfe7aed36b0a"
+    },
+    {
+      "distance": 0.24807545339770362,
+      "family_match": true,
+      "trial_id": "trial-033ecbfbee6efa93d5a1",
+      "candidate_id": "q06_f16_c4096_p1_cp_off",
+      "strategy": "baseline_anchor",
+      "goodput": 1.435899935524053,
+      "p95_latency_s": 4.196296943235211,
+      "peak_rss_mb": 1332.75,
+      "artifact_path": "artifacts/experiments/p0_p1_rsi_prefix_v3_20261123/runs/trial-033ecbfbee6efa93d5a1"
+    },
+    {
+      "distance": 0.4771732464754388,
+      "family_match": true,
+      "trial_id": "trial-bc4b9608040cf538a67b",
+      "candidate_id": "q06_f16_c4096_p1_cp_off",
+      "strategy": "default",
+      "goodput": 1.7562967716395348,
+      "p95_latency_s": 3.98149471883662,
+      "peak_rss_mb": 1420.2734375,
+      "artifact_path": "artifacts/experiments/p0_p1_rsi_prefix_v3_20261123/runs/trial-bc4b9608040cf538a67b"
+    },
+    {
+      "distance": 0.5243208985304929,
+      "family_match": true,
+      "trial_id": "trial-89d0361cfafa85a558ae",
+      "candidate_id": "q06_f16_c4096_p1_cp_off",
+      "strategy": "agent",
+      "goodput": 1.6877902450602127,
+      "p95_latency_s": 3.951798494707327,
+      "peak_rss_mb": 1542.2734375,
+      "artifact_path": "artifacts/experiments/p0_p1_rsi_prefix_v3_20261123/runs/trial-89d0361cfafa85a558ae"
+    }
+  ],
+  "trial-13fc5f60f146c94831a7": [
+    {
+      "distance": 0.2940200097570126,
+      "family_match": true,
+      "trial_id": "trial-24da0c645cc87eab57a2",
+      "candidate_id": "q06_q8_q8_c4096_p1_cp_on",
+      "strategy": "random",
+      "goodput": 3.102051523229176,
+      "p95_latency_s": 1.766847504477482,
+      "peak_rss_mb": 1162.9375,
+      "artifact_path": "artifacts/experiments/p0_p1_rsi_prefix_v3_20261123/runs/trial-24da0c645cc87eab57a2"
+    },
+    {
+      "distance": 0.3111639610729469,
+      "family_match": true,
+      "trial_id": "trial-f079c2ff18852b7fc1fc",
+      "candidate_id": "q06_q8_q8_c4096_p1_cp_on",
+      "strategy": "random",
+      "goodput": 3.0791988858669237,
+      "p95_latency_s": 1.7862496030167674,
+      "peak_rss_mb": 1201.6953125,
+      "artifact_path": "artifacts/experiments/p0_p1_rsi_prefix_v3_20261123/runs/trial-f079c2ff18852b7fc1fc"
+    },
+    {
+      "distance": 0.4453229053179687,
+      "family_match": true,
+      "trial_id": "trial-e51ab4951dc05a80139e",
+      "candidate_id": "q06_f16_c4096_p1_cp_on",
+      "strategy": "random",
+      "goodput": 2.9387961281659276,
+      "p95_latency_s": 1.9520567291416226,
+      "peak_rss_mb": 1497.40625,
+      "artifact_path": "artifacts/experiments/p0_p1_rsi_prefix_v3_20261123/runs/trial-e51ab4951dc05a80139e"
+    },
+    {
+      "distance": 0.5933560035005715,
+      "family_match": true,
+      "trial_id": "trial-b547ab5dc128885ff322",
+      "candidate_id": "q06_f16_c4096_p1_cp_on",
+      "strategy": "ucb1",
+      "goodput": 2.8137808264544377,
+      "p95_latency_s": 2.2286144585348664,
+      "peak_rss_mb": 1574.59375,
+      "artifact_path": "artifacts/experiments/p0_p1_rsi_prefix_v3_20261123/runs/trial-b547ab5dc128885ff322"
+    },
+    {
+      "distance": 0.6194521317104311,
+      "family_match": true,
+      "trial_id": "trial-5c4a6f2ccabf0ec5363c",
+      "candidate_id": "q06_q8_q8_c4096_p1_cp_on",
+      "strategy": "grid",
+      "goodput": 2.2801220326381966,
+      "p95_latency_s": 2.669424967386294,
+      "peak_rss_mb": 1201.421875,
+      "artifact_path": "artifacts/experiments/p0_p1_rsi_prefix_v3_20261123/runs/trial-5c4a6f2ccabf0ec5363c"
+    }
+  ],
+  "trial-b1a06fad7721899438db": [
+    {
+      "distance": 0.3139048401494462,
+      "family_match": true,
+      "trial_id": "trial-e39e2bcfa8ef62972ca1",
+      "candidate_id": "q17_q4_q8_q8_c4096_p2_b512_ub128_cp_on",
+      "strategy": "ucb1",
+      "goodput": 1.8750285128086854,
+      "p95_latency_s": 3.703558807214722,
+      "peak_rss_mb": 1492.4375,
+      "artifact_path": "artifacts/experiments/p0_p1_rsi_prefix_v3_20261123/runs/trial-e39e2bcfa8ef62972ca1"
+    },
+    {
+      "distance": 0.5344329907273533,
+      "family_match": false,
+      "trial_id": "trial-1c09f5c6ec80d5bb880b",
+      "candidate_id": "q06_f16_c4096_p1_cp_off",
+      "strategy": "agent",
+      "goodput": 1.8147757859976614,
+      "p95_latency_s": 3.5595299313659776,
+      "peak_rss_mb": 1524.0859375,
+      "artifact_path": "artifacts/experiments/p0_p1_rsi_prefix_v3_20261123/runs/trial-1c09f5c6ec80d5bb880b"
+    },
+    {
+      "distance": 0.5345104843111865,
+      "family_match": false,
+      "trial_id": "trial-855133442e33f7ac39c1",
+      "candidate_id": "q06_f16_c4096_p1_cp_off",
+      "strategy": "default",
+      "goodput": 1.904510185185786,
+      "p95_latency_s": 3.594441267789807,
+      "peak_rss_mb": 1459.3515625,
+      "artifact_path": "artifacts/experiments/p0_p1_rsi_prefix_v3_20261123/runs/trial-855133442e33f7ac39c1"
+    },
+    {
+      "distance": 0.5699017594491247,
+      "family_match": false,
+      "trial_id": "trial-e9440062e30baa81b879",
+      "candidate_id": "q06_f16_c4096_p1_cp_off",
+      "strategy": "ucb1",
+      "goodput": 1.7239186299719613,
+      "p95_latency_s": 3.612722363544162,
+      "peak_rss_mb": 1573.109375,
+      "artifact_path": "artifacts/experiments/p0_p1_rsi_prefix_v3_20261123/runs/trial-e9440062e30baa81b879"
+    },
+    {
+      "distance": 0.6720141777609357,
+      "family_match": true,
+      "trial_id": "trial-3b81f2d825f2a1528a78",
+      "candidate_id": "q17_q4_f16_c4096_p2_b256_ub64_cp_on",
+      "strategy": "grid",
+      "goodput": 1.6562057034115414,
+      "p95_latency_s": 5.00554146746872,
+      "peak_rss_mb": 1750.3125,
+      "artifact_path": "artifacts/experiments/p0_p1_rsi_prefix_v3_20261123/runs/trial-3b81f2d825f2a1528a78"
+    }
+  ],
+  "trial-e39e2bcfa8ef62972ca1": [
+    {
+      "distance": 0.3173552684735619,
+      "family_match": false,
+      "trial_id": "trial-855133442e33f7ac39c1",
+      "candidate_id": "q06_f16_c4096_p1_cp_off",
+      "strategy": "default",
+      "goodput": 1.904510185185786,
+      "p95_latency_s": 3.594441267789807,
+      "peak_rss_mb": 1459.3515625,
+      "artifact_path": "artifacts/experiments/p0_p1_rsi_prefix_v3_20261123/runs/trial-855133442e33f7ac39c1"
+    },
+    {
+      "distance": 0.3419897541339659,
+      "family_match": true,
+      "trial_id": "trial-b1a06fad7721899438db",
+      "candidate_id": "q17_q4_f16_c4096_p2_b256_ub64_cp_on",
+      "strategy": "ucb1",
+      "goodput": 1.9439543925860132,
+      "p95_latency_s": 3.3533370716846544,
+      "peak_rss_mb": 1806.84375,
+      "artifact_path": "artifacts/experiments/p0_p1_rsi_prefix_v3_20261123/runs/trial-b1a06fad7721899438db"
+    },
+    {
+      "distance": 0.3422294881484032,
+      "family_match": false,
+      "trial_id": "trial-1c09f5c6ec80d5bb880b",
+      "candidate_id": "q06_f16_c4096_p1_cp_off",
+      "strategy": "agent",
+      "goodput": 1.8147757859976614,
+      "p95_latency_s": 3.5595299313659776,
+      "peak_rss_mb": 1524.0859375,
+      "artifact_path": "artifacts/experiments/p0_p1_rsi_prefix_v3_20261123/runs/trial-1c09f5c6ec80d5bb880b"
+    },
+    {
+      "distance": 0.4091712824092707,
+      "family_match": false,
+      "trial_id": "trial-e9440062e30baa81b879",
+      "candidate_id": "q06_f16_c4096_p1_cp_off",
+      "strategy": "ucb1",
+      "goodput": 1.7239186299719613,
+      "p95_latency_s": 3.612722363544162,
+      "peak_rss_mb": 1573.109375,
+      "artifact_path": "artifacts/experiments/p0_p1_rsi_prefix_v3_20261123/runs/trial-e9440062e30baa81b879"
+    },
+    {
+      "distance": 0.4367214199229345,
+      "family_match": false,
+      "trial_id": "trial-bc4b9608040cf538a67b",
+      "candidate_id": "q06_f16_c4096_p1_cp_off",
+      "strategy": "default",
+      "goodput": 1.7562967716395348,
+      "p95_latency_s": 3.98149471883662,
+      "peak_rss_mb": 1420.2734375,
+      "artifact_path": "artifacts/experiments/p0_p1_rsi_prefix_v3_20261123/runs/trial-bc4b9608040cf538a67b"
+    }
+  ]
+}

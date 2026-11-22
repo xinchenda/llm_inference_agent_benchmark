@@ -1,0 +1,14 @@
+{
+  "hardware": {
+    "logical_cores": 10,
+    "machine": "arm64",
+    "memory_gb": 16.0,
+    "physical_cores": 10,
+    "processor": "arm"
+  },
+  "runtime": {
+    "llama_server": "version: 1.0.0 (build 12359, commit b1b770d90)\nbuilt with AppleClang 21.0.0.21000401 for Darwin arm64",
+    "platform": "macOS-26.6.2-arm64-arm-64bit",
+    "python": "3.12.15 (main, Sep 30 2026, 22:04:19) [Clang 21.0.0 (clang-2100.3.34.2)]"
+  }
+}

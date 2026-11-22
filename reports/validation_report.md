@@ -213,3 +213,144 @@ Retrieved: none
 - The Linux aarch64 image was built and its CLI/environment entrypoint was
   executed successfully. Model weights remain mounted at runtime rather than
   baked into the image.
+
+## P0/P1 experiment optimization
+
+Validated 2026-11-22/23 on the same Apple M4 / 16 GB host.
+
+The final strategy experiment is `p0_p1_rsi_prefix_v3_20261123`. Its immutable
+SQLite ledger contains 36 real trials: one baseline anchor and seven equal-budget
+trials for each of `default`, `grid`, `random`, `ucb1`, and `agent`. All trials
+run four fixed loads:
+
+- `interactive`: short input and output.
+- `rag_reading`: fixed long evidence context at a target of 2.0 requests/s.
+- `batch_generation`: concurrent longer output.
+- `prefix_cache_rag`: shared long document with different final questions.
+
+Every trial runs a deterministic quality gate before performance and repeats
+each workload twice. All 36 trials passed the exact-answer, critical-fact, JSON,
+and timeout gates.
+
+| Strategy | Trials | Quality passed | Best utility | Selected candidate |
+| --- | ---: | ---: | ---: | --- |
+| default | 7 | 7 | 0.63800 | `q06_f16_c4096_p1_cp_off` |
+| grid | 7 | 7 | 1.08436 | `q06_f16_c8192_p4_b128_ub64_cp_on` |
+| random | 7 | 7 | 1.61242 | `q06_q8_q8_c4096_p1_cp_on` |
+| ucb1 | 7 | 7 | 1.36733 | `q06_q8_q8_c4096_p1_cp_on` |
+| agent | 7 | 7 | 1.27079 | `q06_f16_c8192_p4_b128_ub64_cp_on` |
+
+All strategies begin at the same unoptimized f16 `cache_prompt=False` candidate.
+The fixed-QPS scheduler measured `1.981-2.007 requests/s` against its 2.0
+requests/s target.
+
+After two diagnostic rounds, the RSI Agent pruned low-value branches and locked
+the high-recommendation parallel/prefix-cache candidate instead of traversing
+every option. It improved its own best-so-far utility by 140.58% over the
+unoptimized start. Random and UCB1 found higher utilities in this run; the report
+keeps the measured ranking. Structured Reflection/Memory classified 19 trials
+with no material bottleneck, 10 with RSS pressure, and 7 with TTFT pressure.
+There were no negative runtime experiences in the final strategy run;
+unit/integration tests exercise quality-failure rollback and negative-memory
+persistence.
+
+The Pareto frontier contains five quality-passing points. The highest-goodput
+point was a random parallel f16 trial with mean workload goodput
+`3.24512 requests/s`, worst workload p95 `3.09120 s`, and peak process-tree RSS
+`1907.98 MiB`. Full p50/p95/p99, TTFT, TPOT/ITL, output tokens/s,
+goodput, repeat variability, bootstrap intervals, Reflection/Memory, and
+similar-history evidence are under `reports/experiments/`.
+
+### Prefix Cache ablation
+
+A separate lightweight experiment `prefix_cache_ablation_20261123` contains five
+real trials and three repeats of a shared-prefix workload. Candidate pairs use
+identical context, parallel, batch, and ubatch settings; only cache_prompt and
+KV cache type differ.
+
+| KV cache | Hit rate on/off | TTFT p50 reduction | TTFT p95 reduction | Goodput change | RSS change | Error rate |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| f16/f16 | 0.936 / 0 | 92.32% | 67.15% | +422.02% | +4.14% | 0 |
+| q8_0/q8_0 | 0.936 / 0 | 93.25% | 66.35% | +478.31% | +5.13% | 0 |
+
+All requests in these pairs provided valid `timings.cache_n`; there were zero
+missing cache observations. The hit rate is:
+
+```text
+sum(valid cache_n) / sum(valid prompt_tokens)
+```
+
+The first request of each run is a cache miss and later shared-prefix requests
+measure approximately 1,573 cached prompt tokens. TTFT reduction is reported
+separately from the measured cache hit rate; neither is extrapolated beyond the
+local shared-prefix workload.
+
+### Extra llama.cpp parameters
+
+The same-model search passes and validates:
+
+- `--batch-size`
+- `--ubatch-size`
+- `--flash-attn`
+- `--cache-type-k`
+- `--cache-type-v`
+- `--parallel`
+- request-level `cache_prompt`
+
+The controlled cache space is f16/f16 and q8_0/q8_0. Quantized K/V cache requires
+Flash Attention, and batch size must be divisible by ubatch size. Unsupported
+combinations are rejected before a process starts.
+
+### Engineering defect found during real execution
+
+The first development experiment used `context_size=2048` with four llama.cpp
+slots. llama.cpp divided that context across slots, leaving only about 512
+tokens per request and rejecting long RAG requests with HTTP 400. That run is
+retained outside the final ledger. The executor now:
+
+- Requires candidate context to support the fixed long workload per slot.
+- Captures HTTP error bodies from the local model service.
+- Fails a trial when a performance workload has no successful SLO response.
+- Uses final candidate contexts of `8192/4` and `4096/2` slots where needed.
+
+### Reproducibility evidence
+
+```bash
+.venv/bin/python -m pytest
+# 60 passed
+
+.venv/bin/ruff check src tests scripts
+# All checks passed!
+
+./llm-bench --config configs/default.yaml experiment run \
+  --spec configs/experiments_p0_p1.yaml
+
+./llm-bench --config configs/default.yaml experiment report \
+  --ledger artifacts/experiments/p0_p1_rsi_prefix_v3_20261123/ledger.sqlite
+
+./llm-bench --config configs/default.yaml experiment run \
+  --spec configs/prefix_cache_ablation.yaml
+
+./llm-bench --config configs/default.yaml experiment report \
+  --ledger artifacts/experiments/prefix_cache_ablation_20261123/ledger.sqlite \
+  --output reports/prefix_cache
+```
+
+Derived outputs:
+
+- `reports/experiments/experiment_report.md`
+- `reports/experiments/strategy_comparison.csv`
+- `reports/experiments/trial_metrics.csv`
+- `reports/experiments/best_so_far.csv`
+- `reports/experiments/pareto_frontier.csv`
+- `reports/experiments/similar_history.json`
+- `reports/experiments/reflections.json`
+- `reports/experiments/figures/best_so_far.png`
+- `reports/experiments/figures/pareto.png`
+- `reports/prefix_cache/experiment_report.md`
+- `reports/prefix_cache/cache_ablation_pairs.csv`
+- `reports/prefix_cache/cache_ablation_trials.csv`
+- `reports/prefix_cache/figures/cache_ablation.png`
+
+P2, distributed serving, vLLM, SGLang, CUDA, and NPU were not run and are not
+reported as completed.

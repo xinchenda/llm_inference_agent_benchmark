@@ -55,3 +55,31 @@ it is not required to prove this benchmark's core behavior.
 - Transformers: https://github.com/huggingface/transformers
 - Sentence Transformers: https://github.com/huggingface/sentence-transformers
 
+## llama.cpp serving controls
+
+The P0/P1 optimizer uses the installed `llama-server --help` and upstream
+llama.cpp documentation/source to validate the following controls:
+
+- `--batch-size` and `--ubatch-size`; batch size must be divisible by ubatch
+  size.
+- `--flash-attn=on|off|auto`.
+- `--cache-type-k` and `--cache-type-v`; the controlled local matrix uses f16
+  and q8_0.
+- `--parallel` for server slots. The total context is divided across slots, so a
+  long request needs enough context per slot.
+- Request-level `cache_prompt` for prompt-prefix reuse.
+
+Upstream source also requires Flash Attention for a quantized V cache. The
+candidate validator enforces this rule before process startup.
+
+Sources:
+
+- https://github.com/ggml-org/llama.cpp/blob/master/tools/server/README.md
+- https://github.com/ggml-org/llama.cpp/blob/master/common/arg.cpp
+- https://github.com/ggml-org/llama.cpp/blob/master/src/llama-context.cpp
+
+No upstream implementation is claimed as original. The project contribution is
+the experiment specification, candidate validation, deterministic executor,
+immutable ledger, quality-first gates, RSI reflection memory, equal-budget
+policy comparison, and reporting.
+

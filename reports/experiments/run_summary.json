@@ -1,0 +1,16 @@
+{
+  "spec_id": "p0_p1_rsi_prefix_v3_20261123",
+  "spec_hash": "5b826bf799c50b73c954c21ead3647fe7252e1ae2dcc801bf3ca0e4fb17ad4bf",
+  "strategy_trials": {
+    "default": 7,
+    "grid": 7,
+    "random": 7,
+    "ucb1": 7,
+    "agent": 7
+  },
+  "duplicates": 0,
+  "started_at": "2026-11-22T16:37:38.468095+00:00",
+  "exported_trials": 36,
+  "finished_at": "2026-11-22T16:51:41.654785+00:00",
+  "ledger": "artifacts/experiments/p0_p1_rsi_prefix_v3_20261123/ledger.sqlite"
+}

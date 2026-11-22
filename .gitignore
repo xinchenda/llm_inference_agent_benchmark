@@ -9,6 +9,7 @@ __pycache__/
 models/
 artifacts/
 logs/
+local_notes/
 *.log
 *.pid
 build/

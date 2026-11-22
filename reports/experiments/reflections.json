@@ -1,0 +1,1733 @@
+[
+  {
+    "reflection_id": "reflection-trial-033ecbfbee6efa93d5a1",
+    "trial_id": "trial-033ecbfbee6efa93d5a1",
+    "spec_id": "p0_p1_rsi_prefix_v3_20261123",
+    "strategy": "baseline_anchor",
+    "candidate_id": "q06_f16_c4096_p1_cp_off",
+    "positive_experience": true,
+    "negative_experience": false,
+    "memory_summary": "q06_f16_c4096_p1_cp_off: no_material_bottleneck; recommended legal candidates=['none']",
+    "created_at": "2026-11-22T16:38:06.712437+00:00",
+    "bottleneck_categories": [
+      "no_material_bottleneck"
+    ],
+    "evidence": {
+      "baseline_max_rss_mb": 1332.75,
+      "workloads": {
+        "batch_generation": {
+          "goodput_requests_per_second": 1.3736761829614554,
+          "latency_p95_s": 2.7954214299330484,
+          "peak_process_tree_rss_mb": 1332.75,
+          "ttft_p95_s": 2.406301801803056
+        },
+        "interactive": {
+          "goodput_requests_per_second": 2.6706355204400722,
+          "latency_p95_s": 0.4558274094364606,
+          "peak_process_tree_rss_mb": 1205.3046875,
+          "ttft_p95_s": 0.2330415218602866
+        },
+        "prefix_cache_rag": {
+          "goodput_requests_per_second": 1.0134427945988538,
+          "latency_p95_s": 1.0920210896292701,
+          "peak_process_tree_rss_mb": 1308.2890625,
+          "ttft_p95_s": 0.9590847791172563
+        },
+        "rag_reading": {
+          "goodput_requests_per_second": 0.6858452440958301,
+          "latency_p95_s": 4.196296943235211,
+          "peak_process_tree_rss_mb": 1204.6640625,
+          "ttft_p95_s": 3.911338930320926
+        }
+      }
+    },
+    "recommended_candidate_ids": []
+  },
+  {
+    "reflection_id": "reflection-trial-855133442e33f7ac39c1",
+    "trial_id": "trial-855133442e33f7ac39c1",
+    "spec_id": "p0_p1_rsi_prefix_v3_20261123",
+    "strategy": "default",
+    "candidate_id": "q06_f16_c4096_p1_cp_off",
+    "positive_experience": true,
+    "negative_experience": false,
+    "memory_summary": "q06_f16_c4096_p1_cp_off: no_material_bottleneck; recommended legal candidates=['q06_f16_c4096_p1_cp_off']",
+    "created_at": "2026-11-22T16:38:31.085542+00:00",
+    "bottleneck_categories": [
+      "no_material_bottleneck"
+    ],
+    "evidence": {
+      "baseline_max_rss_mb": 1332.75,
+      "workloads": {
+        "batch_generation": {
+          "goodput_requests_per_second": 1.5563011144435452,
+          "latency_p95_s": 2.4717047070385885,
+          "peak_process_tree_rss_mb": 1459.3515625,
+          "ttft_p95_s": 2.0911067173932674
+        },
+        "interactive": {
+          "goodput_requests_per_second": 4.264902656276789,
+          "latency_p95_s": 0.25806806173641234,
+          "peak_process_tree_rss_mb": 1265.4765625,
+          "ttft_p95_s": 0.13543123439885674
+        },
+        "prefix_cache_rag": {
+          "goodput_requests_per_second": 1.0259881278655043,
+          "latency_p95_s": 1.0318669753149152,
+          "peak_process_tree_rss_mb": 1380.703125,
+          "ttft_p95_s": 0.9075248690322042
+        },
+        "rag_reading": {
+          "goodput_requests_per_second": 0.7708488421573061,
+          "latency_p95_s": 3.594441267789807,
+          "peak_process_tree_rss_mb": 1273.3984375,
+          "ttft_p95_s": 3.3480457612895402
+        }
+      }
+    },
+    "recommended_candidate_ids": [
+      "q06_f16_c4096_p1_cp_off"
+    ]
+  },
+  {
+    "reflection_id": "reflection-trial-bc4b9608040cf538a67b",
+    "trial_id": "trial-bc4b9608040cf538a67b",
+    "spec_id": "p0_p1_rsi_prefix_v3_20261123",
+    "strategy": "default",
+    "candidate_id": "q06_f16_c4096_p1_cp_off",
+    "positive_experience": true,
+    "negative_experience": false,
+    "memory_summary": "q06_f16_c4096_p1_cp_off: no_material_bottleneck; recommended legal candidates=['q06_f16_c4096_p1_cp_off']",
+    "created_at": "2026-11-22T16:38:57.539385+00:00",
+    "bottleneck_categories": [
+      "no_material_bottleneck"
+    ],
+    "evidence": {
+      "baseline_max_rss_mb": 1332.75,
+      "workloads": {
+        "batch_generation": {
+          "goodput_requests_per_second": 1.3533419122188224,
+          "latency_p95_s": 2.8525963615044017,
+          "peak_process_tree_rss_mb": 1420.2734375,
+          "ttft_p95_s": 2.4897882762481456
+        },
+        "interactive": {
+          "goodput_requests_per_second": 3.988718029366768,
+          "latency_p95_s": 0.27623960305936635,
+          "peak_process_tree_rss_mb": 1264.5390625,
+          "ttft_p95_s": 0.14495109060080721
+        },
+        "prefix_cache_rag": {
+          "goodput_requests_per_second": 0.9691277680689492,
+          "latency_p95_s": 1.116694912360981,
+          "peak_process_tree_rss_mb": 1375.53125,
+          "ttft_p95_s": 0.9976420164108276
+        },
+        "rag_reading": {
+          "goodput_requests_per_second": 0.7139993769035999,
+          "latency_p95_s": 3.98149471883662,
+          "peak_process_tree_rss_mb": 1273.2578125,
+          "ttft_p95_s": 3.709827698860317
+        }
+      }
+    },
+    "recommended_candidate_ids": [
+      "q06_f16_c4096_p1_cp_off"
+    ]
+  },
+  {
+    "reflection_id": "reflection-trial-b759f198c14a1555eb37",
+    "trial_id": "trial-b759f198c14a1555eb37",
+    "spec_id": "p0_p1_rsi_prefix_v3_20261123",
+    "strategy": "default",
+    "candidate_id": "q06_f16_c4096_p1_cp_off",
+    "positive_experience": true,
+    "negative_experience": false,
+    "memory_summary": "q06_f16_c4096_p1_cp_off: ttft_bottleneck; recommended legal candidates=['q06_f16_c4096_p1_cp_on', 'q06_q8_q8_c4096_p1_cp_on', 'q06_q8_q8_c4096_p1_cp_off', 'q06_f16_c8192_p4_b128_ub64_cp_on', 'q17_q4_f16_c4096_p2_b256_ub64_cp_on', 'q17_q4_q8_q8_c4096_p2_b512_ub128_cp_on']",
+    "created_at": "2026-11-22T16:39:31.460328+00:00",
+    "bottleneck_categories": [
+      "ttft_bottleneck"
+    ],
+    "evidence": {
+      "baseline_max_rss_mb": 1332.75,
+      "workloads": {
+        "batch_generation": {
+          "goodput_requests_per_second": 1.153358494934202,
+          "latency_p95_s": 3.418862510740291,
+          "peak_process_tree_rss_mb": 1359.2890625,
+          "ttft_p95_s": 2.918583630013745
+        },
+        "interactive": {
+          "goodput_requests_per_second": 3.692508881078309,
+          "latency_p95_s": 0.3141995141864754,
+          "peak_process_tree_rss_mb": 1263.640625,
+          "ttft_p95_s": 0.16366986779030412
+        },
+        "prefix_cache_rag": {
+          "goodput_requests_per_second": 0.7304606230972797,
+          "latency_p95_s": 1.4763576255645603,
+          "peak_process_tree_rss_mb": 1366.25,
+          "ttft_p95_s": 1.321857058722526
+        },
+        "rag_reading": {
+          "goodput_requests_per_second": 0.5337117149300368,
+          "latency_p95_s": 5.838051311601884,
+          "peak_process_tree_rss_mb": 1202.7578125,
+          "ttft_p95_s": 5.4317452919436615
+        }
+      }
+    },
+    "recommended_candidate_ids": [
+      "q06_f16_c4096_p1_cp_on",
+      "q06_q8_q8_c4096_p1_cp_on",
+      "q06_q8_q8_c4096_p1_cp_off",
+      "q06_f16_c8192_p4_b128_ub64_cp_on",
+      "q17_q4_f16_c4096_p2_b256_ub64_cp_on",
+      "q17_q4_q8_q8_c4096_p2_b512_ub128_cp_on"
+    ]
+  },
+  {
+    "reflection_id": "reflection-trial-b9f7c98b76d59caadc2f",
+    "trial_id": "trial-b9f7c98b76d59caadc2f",
+    "spec_id": "p0_p1_rsi_prefix_v3_20261123",
+    "strategy": "default",
+    "candidate_id": "q06_f16_c4096_p1_cp_off",
+    "positive_experience": true,
+    "negative_experience": false,
+    "memory_summary": "q06_f16_c4096_p1_cp_off: ttft_bottleneck; recommended legal candidates=['q06_f16_c4096_p1_cp_on', 'q06_q8_q8_c4096_p1_cp_on', 'q06_q8_q8_c4096_p1_cp_off', 'q06_f16_c8192_p4_b128_ub64_cp_on', 'q17_q4_f16_c4096_p2_b256_ub64_cp_on', 'q17_q4_q8_q8_c4096_p2_b512_ub128_cp_on']",
+    "created_at": "2026-11-22T16:40:05.416096+00:00",
+    "bottleneck_categories": [
+      "ttft_bottleneck"
+    ],
+    "evidence": {
+      "baseline_max_rss_mb": 1332.75,
+      "workloads": {
+        "batch_generation": {
+          "goodput_requests_per_second": 1.0733964725630003,
+          "latency_p95_s": 3.586955994099844,
+          "peak_process_tree_rss_mb": 1383.34375,
+          "ttft_p95_s": 3.1504372366704043
+        },
+        "interactive": {
+          "goodput_requests_per_second": 2.352002725091099,
+          "latency_p95_s": 0.5221785294124857,
+          "peak_process_tree_rss_mb": 1267.09375,
+          "ttft_p95_s": 0.2890154879773036
+        },
+        "prefix_cache_rag": {
+          "goodput_requests_per_second": 0.786286253444178,
+          "latency_p95_s": 1.4357311313506216,
+          "peak_process_tree_rss_mb": 1245.328125,
+          "ttft_p95_s": 1.2885505059966817
+        },
+        "rag_reading": {
+          "goodput_requests_per_second": 0.5783910704612747,
+          "latency_p95_s": 5.253111063467804,
+          "peak_process_tree_rss_mb": 1275.5234375,
+          "ttft_p95_s": 4.920793872862122
+        }
+      }
+    },
+    "recommended_candidate_ids": [
+      "q06_f16_c4096_p1_cp_on",
+      "q06_q8_q8_c4096_p1_cp_on",
+      "q06_q8_q8_c4096_p1_cp_off",
+      "q06_f16_c8192_p4_b128_ub64_cp_on",
+      "q17_q4_f16_c4096_p2_b256_ub64_cp_on",
+      "q17_q4_q8_q8_c4096_p2_b512_ub128_cp_on"
+    ]
+  },
+  {
+    "reflection_id": "reflection-trial-c5140a855b13dccd920c",
+    "trial_id": "trial-c5140a855b13dccd920c",
+    "spec_id": "p0_p1_rsi_prefix_v3_20261123",
+    "strategy": "default",
+    "candidate_id": "q06_f16_c4096_p1_cp_off",
+    "positive_experience": true,
+    "negative_experience": false,
+    "memory_summary": "q06_f16_c4096_p1_cp_off: ttft_bottleneck; recommended legal candidates=['q06_f16_c4096_p1_cp_on', 'q06_q8_q8_c4096_p1_cp_on', 'q06_q8_q8_c4096_p1_cp_off', 'q06_f16_c8192_p4_b128_ub64_cp_on', 'q17_q4_f16_c4096_p2_b256_ub64_cp_on', 'q17_q4_q8_q8_c4096_p2_b512_ub128_cp_on']",
+    "created_at": "2026-11-22T16:40:36.828498+00:00",
+    "bottleneck_categories": [
+      "ttft_bottleneck"
+    ],
+    "evidence": {
+      "baseline_max_rss_mb": 1332.75,
+      "workloads": {
+        "batch_generation": {
+          "goodput_requests_per_second": 1.1951965995521763,
+          "latency_p95_s": 3.2410646420670672,
+          "peak_process_tree_rss_mb": 1393.234375,
+          "ttft_p95_s": 2.850413063704036
+        },
+        "interactive": {
+          "goodput_requests_per_second": 2.416614952038011,
+          "latency_p95_s": 0.6459488341701216,
+          "peak_process_tree_rss_mb": 1265.890625,
+          "ttft_p95_s": 0.29432622407330195
+        },
+        "prefix_cache_rag": {
+          "goodput_requests_per_second": 0.8279337394157126,
+          "latency_p95_s": 1.2940358561929317,
+          "peak_process_tree_rss_mb": 1366.3671875,
+          "ttft_p95_s": 1.148072793940082
+        },
+        "rag_reading": {
+          "goodput_requests_per_second": 0.6210304628019822,
+          "latency_p95_s": 4.807897450088057,
+          "peak_process_tree_rss_mb": 1274.5234375,
+          "ttft_p95_s": 4.531889089837204
+        }
+      }
+    },
+    "recommended_candidate_ids": [
+      "q06_f16_c4096_p1_cp_on",
+      "q06_q8_q8_c4096_p1_cp_on",
+      "q06_q8_q8_c4096_p1_cp_off",
+      "q06_f16_c8192_p4_b128_ub64_cp_on",
+      "q17_q4_f16_c4096_p2_b256_ub64_cp_on",
+      "q17_q4_q8_q8_c4096_p2_b512_ub128_cp_on"
+    ]
+  },
+  {
+    "reflection_id": "reflection-trial-a214861bcc54597aa483",
+    "trial_id": "trial-a214861bcc54597aa483",
+    "spec_id": "p0_p1_rsi_prefix_v3_20261123",
+    "strategy": "default",
+    "candidate_id": "q06_f16_c4096_p1_cp_off",
+    "positive_experience": true,
+    "negative_experience": false,
+    "memory_summary": "q06_f16_c4096_p1_cp_off: ttft_bottleneck; recommended legal candidates=['q06_f16_c4096_p1_cp_on', 'q06_q8_q8_c4096_p1_cp_on', 'q06_q8_q8_c4096_p1_cp_off', 'q06_f16_c8192_p4_b128_ub64_cp_on', 'q17_q4_f16_c4096_p2_b256_ub64_cp_on', 'q17_q4_q8_q8_c4096_p2_b512_ub128_cp_on']",
+    "created_at": "2026-11-22T16:41:09.335067+00:00",
+    "bottleneck_categories": [
+      "ttft_bottleneck"
+    ],
+    "evidence": {
+      "baseline_max_rss_mb": 1332.75,
+      "workloads": {
+        "batch_generation": {
+          "goodput_requests_per_second": 1.1789371482984725,
+          "latency_p95_s": 3.253364541439805,
+          "peak_process_tree_rss_mb": 1427.375,
+          "ttft_p95_s": 2.8066117133246733
+        },
+        "interactive": {
+          "goodput_requests_per_second": 2.8973973459251257,
+          "latency_p95_s": 0.5352055094321257,
+          "peak_process_tree_rss_mb": 1264.40625,
+          "ttft_p95_s": 0.2912967999698594
+        },
+        "prefix_cache_rag": {
+          "goodput_requests_per_second": 0.7319768230742424,
+          "latency_p95_s": 1.5156278962269425,
+          "peak_process_tree_rss_mb": 1351.5,
+          "ttft_p95_s": 1.3647951559862121
+        },
+        "rag_reading": {
+          "goodput_requests_per_second": 0.6115930883003138,
+          "latency_p95_s": 4.881929535511881,
+          "peak_process_tree_rss_mb": 1249.5,
+          "ttft_p95_s": 4.557470362528692
+        }
+      }
+    },
+    "recommended_candidate_ids": [
+      "q06_f16_c4096_p1_cp_on",
+      "q06_q8_q8_c4096_p1_cp_on",
+      "q06_q8_q8_c4096_p1_cp_off",
+      "q06_f16_c8192_p4_b128_ub64_cp_on",
+      "q17_q4_f16_c4096_p2_b256_ub64_cp_on",
+      "q17_q4_q8_q8_c4096_p2_b512_ub128_cp_on"
+    ]
+  },
+  {
+    "reflection_id": "reflection-trial-2725b64f9a54979c02cc",
+    "trial_id": "trial-2725b64f9a54979c02cc",
+    "spec_id": "p0_p1_rsi_prefix_v3_20261123",
+    "strategy": "default",
+    "candidate_id": "q06_f16_c4096_p1_cp_off",
+    "positive_experience": true,
+    "negative_experience": false,
+    "memory_summary": "q06_f16_c4096_p1_cp_off: ttft_bottleneck; recommended legal candidates=['q06_f16_c4096_p1_cp_on', 'q06_q8_q8_c4096_p1_cp_on', 'q06_q8_q8_c4096_p1_cp_off', 'q06_f16_c8192_p4_b128_ub64_cp_on', 'q17_q4_f16_c4096_p2_b256_ub64_cp_on', 'q17_q4_q8_q8_c4096_p2_b512_ub128_cp_on']",
+    "created_at": "2026-11-22T16:41:42.595990+00:00",
+    "bottleneck_categories": [
+      "ttft_bottleneck"
+    ],
+    "evidence": {
+      "baseline_max_rss_mb": 1332.75,
+      "workloads": {
+        "batch_generation": {
+          "goodput_requests_per_second": 1.1805598650139,
+          "latency_p95_s": 3.2391918773297217,
+          "peak_process_tree_rss_mb": 1399.6171875,
+          "ttft_p95_s": 2.7486934418906452
+        },
+        "interactive": {
+          "goodput_requests_per_second": 2.293987906173405,
+          "latency_p95_s": 0.5565407254151068,
+          "peak_process_tree_rss_mb": 1264.7734375,
+          "ttft_p95_s": 0.31684828180586916
+        },
+        "prefix_cache_rag": {
+          "goodput_requests_per_second": 0.7907185245292692,
+          "latency_p95_s": 1.3671736583812164,
+          "peak_process_tree_rss_mb": 1364.0,
+          "ttft_p95_s": 1.231998764234595
+        },
+        "rag_reading": {
+          "goodput_requests_per_second": 0.5652574895767912,
+          "latency_p95_s": 5.403089006256778,
+          "peak_process_tree_rss_mb": 1273.25,
+          "ttft_p95_s": 5.092017652187495
+        }
+      }
+    },
+    "recommended_candidate_ids": [
+      "q06_f16_c4096_p1_cp_on",
+      "q06_q8_q8_c4096_p1_cp_on",
+      "q06_q8_q8_c4096_p1_cp_off",
+      "q06_f16_c8192_p4_b128_ub64_cp_on",
+      "q17_q4_f16_c4096_p2_b256_ub64_cp_on",
+      "q17_q4_q8_q8_c4096_p2_b512_ub128_cp_on"
+    ]
+  },
+  {
+    "reflection_id": "reflection-trial-847c3593a1715d179d32",
+    "trial_id": "trial-847c3593a1715d179d32",
+    "spec_id": "p0_p1_rsi_prefix_v3_20261123",
+    "strategy": "grid",
+    "candidate_id": "q06_f16_c4096_p1_cp_off",
+    "positive_experience": true,
+    "negative_experience": false,
+    "memory_summary": "q06_f16_c4096_p1_cp_off: ttft_bottleneck; recommended legal candidates=['q06_f16_c4096_p1_cp_on', 'q06_q8_q8_c4096_p1_cp_on', 'q06_q8_q8_c4096_p1_cp_off', 'q06_f16_c8192_p4_b128_ub64_cp_on', 'q17_q4_f16_c4096_p2_b256_ub64_cp_on', 'q17_q4_q8_q8_c4096_p2_b512_ub128_cp_on']",
+    "created_at": "2026-11-22T16:42:15.592406+00:00",
+    "bottleneck_categories": [
+      "ttft_bottleneck"
+    ],
+    "evidence": {
+      "baseline_max_rss_mb": 1332.75,
+      "workloads": {
+        "batch_generation": {
+          "goodput_requests_per_second": 1.1657792681239019,
+          "latency_p95_s": 3.2700857904972507,
+          "peak_process_tree_rss_mb": 1453.40625,
+          "ttft_p95_s": 2.7660818175296296
+        },
+        "interactive": {
+          "goodput_requests_per_second": 2.4445719288421612,
+          "latency_p95_s": 0.5056391267222352,
+          "peak_process_tree_rss_mb": 1265.0390625,
+          "ttft_p95_s": 0.27281601643189785
+        },
+        "prefix_cache_rag": {
+          "goodput_requests_per_second": 0.7698002928600739,
+          "latency_p95_s": 1.3519556665094568,
+          "peak_process_tree_rss_mb": 1387.09375,
+          "ttft_p95_s": 1.1839161083335057
+        },
+        "rag_reading": {
+          "goodput_requests_per_second": 0.5829697248320056,
+          "latency_p95_s": 5.197884573612828,
+          "peak_process_tree_rss_mb": 1273.640625,
+          "ttft_p95_s": 4.8813783923862495
+        }
+      }
+    },
+    "recommended_candidate_ids": [
+      "q06_f16_c4096_p1_cp_on",
+      "q06_q8_q8_c4096_p1_cp_on",
+      "q06_q8_q8_c4096_p1_cp_off",
+      "q06_f16_c8192_p4_b128_ub64_cp_on",
+      "q17_q4_f16_c4096_p2_b256_ub64_cp_on",
+      "q17_q4_q8_q8_c4096_p2_b512_ub128_cp_on"
+    ]
+  },
+  {
+    "reflection_id": "reflection-trial-5dbb8282a541dce1389b",
+    "trial_id": "trial-5dbb8282a541dce1389b",
+    "spec_id": "p0_p1_rsi_prefix_v3_20261123",
+    "strategy": "grid",
+    "candidate_id": "q06_f16_c4096_p1_cp_on",
+    "positive_experience": true,
+    "negative_experience": false,
+    "memory_summary": "q06_f16_c4096_p1_cp_on: no_material_bottleneck; recommended legal candidates=['q06_f16_c4096_p1_cp_on']",
+    "created_at": "2026-11-22T16:42:33.540475+00:00",
+    "bottleneck_categories": [
+      "no_material_bottleneck"
+    ],
+    "evidence": {
+      "baseline_max_rss_mb": 1332.75,
+      "workloads": {
+        "batch_generation": {
+          "goodput_requests_per_second": 1.5748801191443982,
+          "latency_p95_s": 2.7024690757272762,
+          "peak_process_tree_rss_mb": 1573.0234375,
+          "ttft_p95_s": 2.2556686717667613
+        },
+        "interactive": {
+          "goodput_requests_per_second": 3.1252765684320343,
+          "latency_p95_s": 0.45801722184987737,
+          "peak_process_tree_rss_mb": 1264.8984375,
+          "ttft_p95_s": 0.17158922583330422
+        },
+        "prefix_cache_rag": {
+          "goodput_requests_per_second": 2.988941555664124,
+          "latency_p95_s": 0.9004178378032519,
+          "peak_process_tree_rss_mb": 1515.9765625,
+          "ttft_p95_s": 0.7661255958257243
+        },
+        "rag_reading": {
+          "goodput_requests_per_second": 1.6793629930902916,
+          "latency_p95_s": 1.2220988803426736,
+          "peak_process_tree_rss_mb": 1273.296875,
+          "ttft_p95_s": 0.8748042407794856
+        }
+      }
+    },
+    "recommended_candidate_ids": [
+      "q06_f16_c4096_p1_cp_on"
+    ]
+  },
+  {
+    "reflection_id": "reflection-trial-5c4a6f2ccabf0ec5363c",
+    "trial_id": "trial-5c4a6f2ccabf0ec5363c",
+    "spec_id": "p0_p1_rsi_prefix_v3_20261123",
+    "strategy": "grid",
+    "candidate_id": "q06_q8_q8_c4096_p1_cp_on",
+    "positive_experience": true,
+    "negative_experience": false,
+    "memory_summary": "q06_q8_q8_c4096_p1_cp_on: no_material_bottleneck; recommended legal candidates=['q06_q8_q8_c4096_p1_cp_on']",
+    "created_at": "2026-11-22T16:42:50.527246+00:00",
+    "bottleneck_categories": [
+      "no_material_bottleneck"
+    ],
+    "evidence": {
+      "baseline_max_rss_mb": 1332.75,
+      "workloads": {
+        "batch_generation": {
+          "goodput_requests_per_second": 1.4875235838545122,
+          "latency_p95_s": 2.669424967386294,
+          "peak_process_tree_rss_mb": 1189.2890625,
+          "ttft_p95_s": 2.1813707945519125
+        },
+        "interactive": {
+          "goodput_requests_per_second": 2.9396271343407268,
+          "latency_p95_s": 0.5329119060654193,
+          "peak_process_tree_rss_mb": 1023.0390625,
+          "ttft_p95_s": 0.19341906016925348
+        },
+        "prefix_cache_rag": {
+          "goodput_requests_per_second": 2.773099573194155,
+          "latency_p95_s": 0.7757006769999861,
+          "peak_process_tree_rss_mb": 1201.421875,
+          "ttft_p95_s": 0.639834126830101
+        },
+        "rag_reading": {
+          "goodput_requests_per_second": 1.9202378391633923,
+          "latency_p95_s": 1.1043554697651414,
+          "peak_process_tree_rss_mb": 1028.59375,
+          "ttft_p95_s": 0.9536186173791065
+        }
+      }
+    },
+    "recommended_candidate_ids": [
+      "q06_q8_q8_c4096_p1_cp_on"
+    ]
+  },
+  {
+    "reflection_id": "reflection-trial-38f3c11adfe7aed36b0a",
+    "trial_id": "trial-38f3c11adfe7aed36b0a",
+    "spec_id": "p0_p1_rsi_prefix_v3_20261123",
+    "strategy": "grid",
+    "candidate_id": "q06_q8_q8_c4096_p1_cp_off",
+    "positive_experience": true,
+    "negative_experience": false,
+    "memory_summary": "q06_q8_q8_c4096_p1_cp_off: no_material_bottleneck; recommended legal candidates=['q06_q8_q8_c4096_p1_cp_on']",
+    "created_at": "2026-11-22T16:43:17.780500+00:00",
+    "bottleneck_categories": [
+      "no_material_bottleneck"
+    ],
+    "evidence": {
+      "baseline_max_rss_mb": 1332.75,
+      "workloads": {
+        "batch_generation": {
+          "goodput_requests_per_second": 1.354253209932903,
+          "latency_p95_s": 2.8319154436350797,
+          "peak_process_tree_rss_mb": 1138.6796875,
+          "ttft_p95_s": 2.420031672704499
+        },
+        "interactive": {
+          "goodput_requests_per_second": 3.202298969986864,
+          "latency_p95_s": 0.3352086312137544,
+          "peak_process_tree_rss_mb": 1024.75,
+          "ttft_p95_s": 0.17010845622280613
+        },
+        "prefix_cache_rag": {
+          "goodput_requests_per_second": 0.8786872891361162,
+          "latency_p95_s": 1.2938750078668817,
+          "peak_process_tree_rss_mb": 1113.3671875,
+          "ttft_p95_s": 1.1423240770353003
+        },
+        "rag_reading": {
+          "goodput_requests_per_second": 0.7613774775103703,
+          "latency_p95_s": 3.6823800241923887,
+          "peak_process_tree_rss_mb": 1030.171875,
+          "ttft_p95_s": 3.563998088845983
+        }
+      }
+    },
+    "recommended_candidate_ids": [
+      "q06_q8_q8_c4096_p1_cp_on"
+    ]
+  },
+  {
+    "reflection_id": "reflection-trial-d66a6ddfff2a13cc412d",
+    "trial_id": "trial-d66a6ddfff2a13cc412d",
+    "spec_id": "p0_p1_rsi_prefix_v3_20261123",
+    "strategy": "grid",
+    "candidate_id": "q06_f16_c8192_p4_b128_ub64_cp_on",
+    "positive_experience": true,
+    "negative_experience": false,
+    "memory_summary": "q06_f16_c8192_p4_b128_ub64_cp_on: rss_memory_pressure; recommended legal candidates=['q06_f16_c4096_p1_cp_on', 'q06_f16_c4096_p1_cp_off', 'q06_q8_q8_c4096_p1_cp_on', 'q06_q8_q8_c4096_p1_cp_off', 'q17_q4_q8_q8_c4096_p2_b512_ub128_cp_on']",
+    "created_at": "2026-11-22T16:43:35.706082+00:00",
+    "bottleneck_categories": [
+      "rss_memory_pressure"
+    ],
+    "evidence": {
+      "baseline_max_rss_mb": 1332.75,
+      "workloads": {
+        "batch_generation": {
+          "goodput_requests_per_second": 3.4395783121426327,
+          "latency_p95_s": 1.3865148696233518,
+          "peak_process_tree_rss_mb": 1759.8671875,
+          "ttft_p95_s": 0.6271868125419132
+        },
+        "interactive": {
+          "goodput_requests_per_second": 3.7355718818824433,
+          "latency_p95_s": 0.2828540969872847,
+          "peak_process_tree_rss_mb": 1721.34375,
+          "ttft_p95_s": 0.12860325530637057
+        },
+        "prefix_cache_rag": {
+          "goodput_requests_per_second": 2.845084516281694,
+          "latency_p95_s": 0.7146223064512014,
+          "peak_process_tree_rss_mb": 1840.71875,
+          "ttft_p95_s": 0.5688008819008246
+        },
+        "rag_reading": {
+          "goodput_requests_per_second": 1.347045826547316,
+          "latency_p95_s": 3.697468392411247,
+          "peak_process_tree_rss_mb": 1752.7890625,
+          "ttft_p95_s": 3.112616512668319
+        }
+      }
+    },
+    "recommended_candidate_ids": [
+      "q06_f16_c4096_p1_cp_on",
+      "q06_f16_c4096_p1_cp_off",
+      "q06_q8_q8_c4096_p1_cp_on",
+      "q06_q8_q8_c4096_p1_cp_off",
+      "q17_q4_q8_q8_c4096_p2_b512_ub128_cp_on"
+    ]
+  },
+  {
+    "reflection_id": "reflection-trial-3b81f2d825f2a1528a78",
+    "trial_id": "trial-3b81f2d825f2a1528a78",
+    "spec_id": "p0_p1_rsi_prefix_v3_20261123",
+    "strategy": "grid",
+    "candidate_id": "q17_q4_f16_c4096_p2_b256_ub64_cp_on",
+    "positive_experience": true,
+    "negative_experience": false,
+    "memory_summary": "q17_q4_f16_c4096_p2_b256_ub64_cp_on: rss_memory_pressure; recommended legal candidates=['q06_f16_c4096_p1_cp_on', 'q06_f16_c4096_p1_cp_off', 'q06_q8_q8_c4096_p1_cp_on', 'q06_q8_q8_c4096_p1_cp_off', 'q06_f16_c8192_p4_b128_ub64_cp_on', 'q17_q4_q8_q8_c4096_p2_b512_ub128_cp_on']",
+    "created_at": "2026-11-22T16:44:06.517719+00:00",
+    "bottleneck_categories": [
+      "rss_memory_pressure"
+    ],
+    "evidence": {
+      "baseline_max_rss_mb": 1332.75,
+      "workloads": {
+        "batch_generation": {
+          "goodput_requests_per_second": 0.8675570993100781,
+          "latency_p95_s": 5.00554146746872,
+          "peak_process_tree_rss_mb": 1740.3046875,
+          "ttft_p95_s": 3.3716723301564344
+        },
+        "interactive": {
+          "goodput_requests_per_second": 2.3521522914279664,
+          "latency_p95_s": 0.5412896948982961,
+          "peak_process_tree_rss_mb": 1698.390625,
+          "ttft_p95_s": 0.2888750104466453
+        },
+        "prefix_cache_rag": {
+          "goodput_requests_per_second": 2.0247473386280332,
+          "latency_p95_s": 1.7111396412597968,
+          "peak_process_tree_rss_mb": 1750.3125,
+          "ttft_p95_s": 1.5001553829060865
+        },
+        "rag_reading": {
+          "goodput_requests_per_second": 1.3803660842800878,
+          "latency_p95_s": 3.6440031734178775,
+          "peak_process_tree_rss_mb": 1729.4296875,
+          "ttft_p95_s": 3.2944105417816902
+        }
+      }
+    },
+    "recommended_candidate_ids": [
+      "q06_f16_c4096_p1_cp_on",
+      "q06_f16_c4096_p1_cp_off",
+      "q06_q8_q8_c4096_p1_cp_on",
+      "q06_q8_q8_c4096_p1_cp_off",
+      "q06_f16_c8192_p4_b128_ub64_cp_on",
+      "q17_q4_q8_q8_c4096_p2_b512_ub128_cp_on"
+    ]
+  },
+  {
+    "reflection_id": "reflection-trial-f922d743a6ce51126b35",
+    "trial_id": "trial-f922d743a6ce51126b35",
+    "spec_id": "p0_p1_rsi_prefix_v3_20261123",
+    "strategy": "grid",
+    "candidate_id": "q17_q4_q8_q8_c4096_p2_b512_ub128_cp_on",
+    "positive_experience": true,
+    "negative_experience": false,
+    "memory_summary": "q17_q4_q8_q8_c4096_p2_b512_ub128_cp_on: no_material_bottleneck; recommended legal candidates=['q06_f16_c8192_p4_b128_ub64_cp_on']",
+    "created_at": "2026-11-22T16:44:39.140368+00:00",
+    "bottleneck_categories": [
+      "no_material_bottleneck"
+    ],
+    "evidence": {
+      "baseline_max_rss_mb": 1332.75,
+      "workloads": {
+        "batch_generation": {
+          "goodput_requests_per_second": 0.8626622706717609,
+          "latency_p95_s": 5.063006033422425,
+          "peak_process_tree_rss_mb": 1525.3828125,
+          "ttft_p95_s": 3.7741494781919753
+        },
+        "interactive": {
+          "goodput_requests_per_second": 1.866906596051657,
+          "latency_p95_s": 0.6113469789619557,
+          "peak_process_tree_rss_mb": 1474.15625,
+          "ttft_p95_s": 0.3029538737959228
+        },
+        "prefix_cache_rag": {
+          "goodput_requests_per_second": 1.4369406832807365,
+          "latency_p95_s": 1.8183010559994726,
+          "peak_process_tree_rss_mb": 1497.25,
+          "ttft_p95_s": 1.5064471291145307
+        },
+        "rag_reading": {
+          "goodput_requests_per_second": 1.365488428548489,
+          "latency_p95_s": 3.9158575188601388,
+          "peak_process_tree_rss_mb": 1519.8828125,
+          "ttft_p95_s": 3.6799307220848276
+        }
+      }
+    },
+    "recommended_candidate_ids": [
+      "q06_f16_c8192_p4_b128_ub64_cp_on"
+    ]
+  },
+  {
+    "reflection_id": "reflection-trial-241a14138948a7ca945c",
+    "trial_id": "trial-241a14138948a7ca945c",
+    "spec_id": "p0_p1_rsi_prefix_v3_20261123",
+    "strategy": "random",
+    "candidate_id": "q06_f16_c4096_p1_cp_off",
+    "positive_experience": true,
+    "negative_experience": false,
+    "memory_summary": "q06_f16_c4096_p1_cp_off: ttft_bottleneck; recommended legal candidates=['q06_f16_c4096_p1_cp_on', 'q06_q8_q8_c4096_p1_cp_on', 'q06_q8_q8_c4096_p1_cp_off', 'q06_f16_c8192_p4_b128_ub64_cp_on', 'q17_q4_f16_c4096_p2_b256_ub64_cp_on', 'q17_q4_q8_q8_c4096_p2_b512_ub128_cp_on']",
+    "created_at": "2026-11-22T16:45:11.545846+00:00",
+    "bottleneck_categories": [
+      "ttft_bottleneck"
+    ],
+    "evidence": {
+      "baseline_max_rss_mb": 1332.75,
+      "workloads": {
+        "batch_generation": {
+          "goodput_requests_per_second": 1.2678695875898578,
+          "latency_p95_s": 3.0028455655206923,
+          "peak_process_tree_rss_mb": 1351.109375,
+          "ttft_p95_s": 2.5005953521118496
+        },
+        "interactive": {
+          "goodput_requests_per_second": 2.2856868910277397,
+          "latency_p95_s": 0.5021636885125189,
+          "peak_process_tree_rss_mb": 1231.9140625,
+          "ttft_p95_s": 0.2533477177610621
+        },
+        "prefix_cache_rag": {
+          "goodput_requests_per_second": 0.8167417818159572,
+          "latency_p95_s": 1.3415149562293665,
+          "peak_process_tree_rss_mb": 1300.7421875,
+          "ttft_p95_s": 1.2036001744214446
+        },
+        "rag_reading": {
+          "goodput_requests_per_second": 0.6140386530694455,
+          "latency_p95_s": 4.854489627364091,
+          "peak_process_tree_rss_mb": 1217.640625,
+          "ttft_p95_s": 4.561602922074963
+        }
+      }
+    },
+    "recommended_candidate_ids": [
+      "q06_f16_c4096_p1_cp_on",
+      "q06_q8_q8_c4096_p1_cp_on",
+      "q06_q8_q8_c4096_p1_cp_off",
+      "q06_f16_c8192_p4_b128_ub64_cp_on",
+      "q17_q4_f16_c4096_p2_b256_ub64_cp_on",
+      "q17_q4_q8_q8_c4096_p2_b512_ub128_cp_on"
+    ]
+  },
+  {
+    "reflection_id": "reflection-trial-1c97f1bde0061ba1e35d",
+    "trial_id": "trial-1c97f1bde0061ba1e35d",
+    "spec_id": "p0_p1_rsi_prefix_v3_20261123",
+    "strategy": "random",
+    "candidate_id": "q06_f16_c4096_p1_cp_on",
+    "positive_experience": true,
+    "negative_experience": false,
+    "memory_summary": "q06_f16_c4096_p1_cp_on: no_material_bottleneck; recommended legal candidates=['q06_f16_c4096_p1_cp_on']",
+    "created_at": "2026-11-22T16:45:28.545209+00:00",
+    "bottleneck_categories": [
+      "no_material_bottleneck"
+    ],
+    "evidence": {
+      "baseline_max_rss_mb": 1332.75,
+      "workloads": {
+        "batch_generation": {
+          "goodput_requests_per_second": 1.4951015507108796,
+          "latency_p95_s": 2.756883780029602,
+          "peak_process_tree_rss_mb": 1363.9296875,
+          "ttft_p95_s": 2.3086039500078184
+        },
+        "interactive": {
+          "goodput_requests_per_second": 4.870837391496362,
+          "latency_p95_s": 0.21723815008299424,
+          "peak_process_tree_rss_mb": 1266.296875,
+          "ttft_p95_s": 0.09836645702598616
+        },
+        "prefix_cache_rag": {
+          "goodput_requests_per_second": 3.0673308767643217,
+          "latency_p95_s": 0.7776940188137814,
+          "peak_process_tree_rss_mb": 1344.078125,
+          "ttft_p95_s": 0.6280113350832834
+        },
+        "rag_reading": {
+          "goodput_requests_per_second": 1.5806021989970105,
+          "latency_p95_s": 1.4712659374228678,
+          "peak_process_tree_rss_mb": 1274.859375,
+          "ttft_p95_s": 1.1440587499178947
+        }
+      }
+    },
+    "recommended_candidate_ids": [
+      "q06_f16_c4096_p1_cp_on"
+    ]
+  },
+  {
+    "reflection_id": "reflection-trial-766318216a5b2b52f948",
+    "trial_id": "trial-766318216a5b2b52f948",
+    "spec_id": "p0_p1_rsi_prefix_v3_20261123",
+    "strategy": "random",
+    "candidate_id": "q06_q8_q8_c4096_p1_cp_off",
+    "positive_experience": true,
+    "negative_experience": false,
+    "memory_summary": "q06_q8_q8_c4096_p1_cp_off: no_material_bottleneck; recommended legal candidates=['q06_f16_c4096_p1_cp_on']",
+    "created_at": "2026-11-22T16:45:56.894662+00:00",
+    "bottleneck_categories": [
+      "no_material_bottleneck"
+    ],
+    "evidence": {
+      "baseline_max_rss_mb": 1332.75,
+      "workloads": {
+        "batch_generation": {
+          "goodput_requests_per_second": 1.4030647143568835,
+          "latency_p95_s": 2.803583791479468,
+          "peak_process_tree_rss_mb": 1187.5859375,
+          "ttft_p95_s": 2.4402985924039964
+        },
+        "interactive": {
+          "goodput_requests_per_second": 3.083942260522548,
+          "latency_p95_s": 0.3926257789833471,
+          "peak_process_tree_rss_mb": 1023.625,
+          "ttft_p95_s": 0.19619125006720423
+        },
+        "prefix_cache_rag": {
+          "goodput_requests_per_second": 0.8582238223058678,
+          "latency_p95_s": 1.3002846666378902,
+          "peak_process_tree_rss_mb": 1113.6484375,
+          "ttft_p95_s": 1.1655350149841979
+        },
+        "rag_reading": {
+          "goodput_requests_per_second": 0.7070359784937806,
+          "latency_p95_s": 4.032242047006729,
+          "peak_process_tree_rss_mb": 1028.84375,
+          "ttft_p95_s": 3.9094759474392045
+        }
+      }
+    },
+    "recommended_candidate_ids": [
+      "q06_f16_c4096_p1_cp_on"
+    ]
+  },
+  {
+    "reflection_id": "reflection-trial-24da0c645cc87eab57a2",
+    "trial_id": "trial-24da0c645cc87eab57a2",
+    "spec_id": "p0_p1_rsi_prefix_v3_20261123",
+    "strategy": "random",
+    "candidate_id": "q06_q8_q8_c4096_p1_cp_on",
+    "positive_experience": true,
+    "negative_experience": false,
+    "memory_summary": "q06_q8_q8_c4096_p1_cp_on: no_material_bottleneck; recommended legal candidates=['q06_q8_q8_c4096_p1_cp_on']",
+    "created_at": "2026-11-22T16:46:09.829065+00:00",
+    "bottleneck_categories": [
+      "no_material_bottleneck"
+    ],
+    "evidence": {
+      "baseline_max_rss_mb": 1332.75,
+      "workloads": {
+        "batch_generation": {
+          "goodput_requests_per_second": 2.1895523965030916,
+          "latency_p95_s": 1.766847504477482,
+          "peak_process_tree_rss_mb": 1160.578125,
+          "ttft_p95_s": 1.4016893594409336
+        },
+        "interactive": {
+          "goodput_requests_per_second": 4.67668637035219,
+          "latency_p95_s": 0.2325564607279375,
+          "peak_process_tree_rss_mb": 1023.71875,
+          "ttft_p95_s": 0.09790404721861705
+        },
+        "prefix_cache_rag": {
+          "goodput_requests_per_second": 3.4774008175815077,
+          "latency_p95_s": 0.7993222645716741,
+          "peak_process_tree_rss_mb": 1162.9375,
+          "ttft_p95_s": 0.6905728018376976
+        },
+        "rag_reading": {
+          "goodput_requests_per_second": 2.0645665084799143,
+          "latency_p95_s": 0.9434672167990356,
+          "peak_process_tree_rss_mb": 1031.4140625,
+          "ttft_p95_s": 0.8341686585918069
+        }
+      }
+    },
+    "recommended_candidate_ids": [
+      "q06_q8_q8_c4096_p1_cp_on"
+    ]
+  },
+  {
+    "reflection_id": "reflection-trial-e51ab4951dc05a80139e",
+    "trial_id": "trial-e51ab4951dc05a80139e",
+    "spec_id": "p0_p1_rsi_prefix_v3_20261123",
+    "strategy": "random",
+    "candidate_id": "q06_f16_c4096_p1_cp_on",
+    "positive_experience": true,
+    "negative_experience": false,
+    "memory_summary": "q06_f16_c4096_p1_cp_on: no_material_bottleneck; recommended legal candidates=['q06_q8_q8_c4096_p1_cp_on']",
+    "created_at": "2026-11-22T16:46:23.216656+00:00",
+    "bottleneck_categories": [
+      "no_material_bottleneck"
+    ],
+    "evidence": {
+      "baseline_max_rss_mb": 1332.75,
+      "workloads": {
+        "batch_generation": {
+          "goodput_requests_per_second": 2.022134735178943,
+          "latency_p95_s": 1.9520567291416226,
+          "peak_process_tree_rss_mb": 1497.40625,
+          "ttft_p95_s": 1.5825670414837076
+        },
+        "interactive": {
+          "goodput_requests_per_second": 4.379510416296116,
+          "latency_p95_s": 0.24045534392353146,
+          "peak_process_tree_rss_mb": 1264.703125,
+          "ttft_p95_s": 0.10721753769321367
+        },
+        "prefix_cache_rag": {
+          "goodput_requests_per_second": 3.4591050926132207,
+          "latency_p95_s": 0.5714795605512336,
+          "peak_process_tree_rss_mb": 1398.53125,
+          "ttft_p95_s": 0.45619296452496194
+        },
+        "rag_reading": {
+          "goodput_requests_per_second": 1.8944342685754303,
+          "latency_p95_s": 0.9486310064094141,
+          "peak_process_tree_rss_mb": 1273.5390625,
+          "ttft_p95_s": 0.695497454109136
+        }
+      }
+    },
+    "recommended_candidate_ids": [
+      "q06_q8_q8_c4096_p1_cp_on"
+    ]
+  },
+  {
+    "reflection_id": "reflection-trial-f079c2ff18852b7fc1fc",
+    "trial_id": "trial-f079c2ff18852b7fc1fc",
+    "spec_id": "p0_p1_rsi_prefix_v3_20261123",
+    "strategy": "random",
+    "candidate_id": "q06_q8_q8_c4096_p1_cp_on",
+    "positive_experience": true,
+    "negative_experience": false,
+    "memory_summary": "q06_q8_q8_c4096_p1_cp_on: no_material_bottleneck; recommended legal candidates=['q06_q8_q8_c4096_p1_cp_on']",
+    "created_at": "2026-11-22T16:46:36.158202+00:00",
+    "bottleneck_categories": [
+      "no_material_bottleneck"
+    ],
+    "evidence": {
+      "baseline_max_rss_mb": 1332.75,
+      "workloads": {
+        "batch_generation": {
+          "goodput_requests_per_second": 2.166723509586048,
+          "latency_p95_s": 1.7862496030167674,
+          "peak_process_tree_rss_mb": 1189.9140625,
+          "ttft_p95_s": 1.4406770864385177
+        },
+        "interactive": {
+          "goodput_requests_per_second": 4.877413386278347,
+          "latency_p95_s": 0.21609238635282962,
+          "peak_process_tree_rss_mb": 1023.671875,
+          "ttft_p95_s": 0.098884792777244
+        },
+        "prefix_cache_rag": {
+          "goodput_requests_per_second": 3.1523461132447053,
+          "latency_p95_s": 0.6502898600883782,
+          "peak_process_tree_rss_mb": 1201.6953125,
+          "ttft_p95_s": 0.5271109683904797
+        },
+        "rag_reading": {
+          "goodput_requests_per_second": 2.120312534358594,
+          "latency_p95_s": 0.8596903229132294,
+          "peak_process_tree_rss_mb": 1029.390625,
+          "ttft_p95_s": 0.7476059804786928
+        }
+      }
+    },
+    "recommended_candidate_ids": [
+      "q06_q8_q8_c4096_p1_cp_on"
+    ]
+  },
+  {
+    "reflection_id": "reflection-trial-d65b6048e96aa8348cba",
+    "trial_id": "trial-d65b6048e96aa8348cba",
+    "spec_id": "p0_p1_rsi_prefix_v3_20261123",
+    "strategy": "random",
+    "candidate_id": "q06_f16_c8192_p4_b128_ub64_cp_on",
+    "positive_experience": true,
+    "negative_experience": false,
+    "memory_summary": "q06_f16_c8192_p4_b128_ub64_cp_on: rss_memory_pressure; recommended legal candidates=['q06_f16_c4096_p1_cp_on', 'q06_f16_c4096_p1_cp_off', 'q06_q8_q8_c4096_p1_cp_on', 'q06_q8_q8_c4096_p1_cp_off', 'q17_q4_q8_q8_c4096_p2_b512_ub128_cp_on']",
+    "created_at": "2026-11-22T16:46:52.077058+00:00",
+    "bottleneck_categories": [
+      "rss_memory_pressure"
+    ],
+    "evidence": {
+      "baseline_max_rss_mb": 1332.75,
+      "workloads": {
+        "batch_generation": {
+          "goodput_requests_per_second": 4.404142058754506,
+          "latency_p95_s": 1.127029901847709,
+          "peak_process_tree_rss_mb": 1907.984375,
+          "ttft_p95_s": 0.6169158592703752
+        },
+        "interactive": {
+          "goodput_requests_per_second": 4.404282188046203,
+          "latency_p95_s": 0.24501935438020156,
+          "peak_process_tree_rss_mb": 1720.328125,
+          "ttft_p95_s": 0.11265266272239387
+        },
+        "prefix_cache_rag": {
+          "goodput_requests_per_second": 2.7612128241046756,
+          "latency_p95_s": 0.6969701394438743,
+          "peak_process_tree_rss_mb": 1850.953125,
+          "ttft_p95_s": 0.5366129086352884
+        },
+        "rag_reading": {
+          "goodput_requests_per_second": 1.410858191970157,
+          "latency_p95_s": 3.091201132757124,
+          "peak_process_tree_rss_mb": 1768.3125,
+          "ttft_p95_s": 2.6021640410646794
+        }
+      }
+    },
+    "recommended_candidate_ids": [
+      "q06_f16_c4096_p1_cp_on",
+      "q06_f16_c4096_p1_cp_off",
+      "q06_q8_q8_c4096_p1_cp_on",
+      "q06_q8_q8_c4096_p1_cp_off",
+      "q17_q4_q8_q8_c4096_p2_b512_ub128_cp_on"
+    ]
+  },
+  {
+    "reflection_id": "reflection-trial-e9440062e30baa81b879",
+    "trial_id": "trial-e9440062e30baa81b879",
+    "spec_id": "p0_p1_rsi_prefix_v3_20261123",
+    "strategy": "ucb1",
+    "candidate_id": "q06_f16_c4096_p1_cp_off",
+    "positive_experience": true,
+    "negative_experience": false,
+    "memory_summary": "q06_f16_c4096_p1_cp_off: no_material_bottleneck; recommended legal candidates=['q06_f16_c4096_p1_cp_off']",
+    "created_at": "2026-11-22T16:47:18.061091+00:00",
+    "bottleneck_categories": [
+      "no_material_bottleneck"
+    ],
+    "evidence": {
+      "baseline_max_rss_mb": 1332.75,
+      "workloads": {
+        "batch_generation": {
+          "goodput_requests_per_second": 1.6029975911298018,
+          "latency_p95_s": 2.387227782537229,
+          "peak_process_tree_rss_mb": 1573.109375,
+          "ttft_p95_s": 2.0192801968543788
+        },
+        "interactive": {
+          "goodput_requests_per_second": 3.6986935815310864,
+          "latency_p95_s": 0.29263391688000406,
+          "peak_process_tree_rss_mb": 1264.4453125,
+          "ttft_p95_s": 0.15448432565899567
+        },
+        "prefix_cache_rag": {
+          "goodput_requests_per_second": 0.8270302047582321,
+          "latency_p95_s": 1.2504121768288314,
+          "peak_process_tree_rss_mb": 1422.90625,
+          "ttft_p95_s": 1.1052337246481327
+        },
+        "rag_reading": {
+          "goodput_requests_per_second": 0.7669531424687251,
+          "latency_p95_s": 3.612722363544162,
+          "peak_process_tree_rss_mb": 1273.109375,
+          "ttft_p95_s": 3.3635095906560304
+        }
+      }
+    },
+    "recommended_candidate_ids": [
+      "q06_f16_c4096_p1_cp_off"
+    ]
+  },
+  {
+    "reflection_id": "reflection-trial-90e647caa6d6f99dc334",
+    "trial_id": "trial-90e647caa6d6f99dc334",
+    "spec_id": "p0_p1_rsi_prefix_v3_20261123",
+    "strategy": "ucb1",
+    "candidate_id": "q06_f16_c8192_p4_b128_ub64_cp_on",
+    "positive_experience": true,
+    "negative_experience": false,
+    "memory_summary": "q06_f16_c8192_p4_b128_ub64_cp_on: rss_memory_pressure; recommended legal candidates=['q06_f16_c4096_p1_cp_on', 'q06_f16_c4096_p1_cp_off', 'q06_q8_q8_c4096_p1_cp_on', 'q06_q8_q8_c4096_p1_cp_off', 'q17_q4_q8_q8_c4096_p2_b512_ub128_cp_on']",
+    "created_at": "2026-11-22T16:47:37.426233+00:00",
+    "bottleneck_categories": [
+      "rss_memory_pressure"
+    ],
+    "evidence": {
+      "baseline_max_rss_mb": 1332.75,
+      "workloads": {
+        "batch_generation": {
+          "goodput_requests_per_second": 3.05523417676191,
+          "latency_p95_s": 1.683086026890669,
+          "peak_process_tree_rss_mb": 1714.8359375,
+          "ttft_p95_s": 1.0082814334542491
+        },
+        "interactive": {
+          "goodput_requests_per_second": 3.9036744709513993,
+          "latency_p95_s": 0.2764951854362152,
+          "peak_process_tree_rss_mb": 1677.2578125,
+          "ttft_p95_s": 0.1201484460500069
+        },
+        "prefix_cache_rag": {
+          "goodput_requests_per_second": 2.4207342760007022,
+          "latency_p95_s": 0.8690152663271874,
+          "peak_process_tree_rss_mb": 1649.46875,
+          "ttft_p95_s": 0.6890727620106191
+        },
+        "rag_reading": {
+          "goodput_requests_per_second": 1.1983188082887066,
+          "latency_p95_s": 3.743459973600693,
+          "peak_process_tree_rss_mb": 1765.5,
+          "ttft_p95_s": 3.1099905466544437
+        }
+      }
+    },
+    "recommended_candidate_ids": [
+      "q06_f16_c4096_p1_cp_on",
+      "q06_f16_c4096_p1_cp_off",
+      "q06_q8_q8_c4096_p1_cp_on",
+      "q06_q8_q8_c4096_p1_cp_off",
+      "q17_q4_q8_q8_c4096_p2_b512_ub128_cp_on"
+    ]
+  },
+  {
+    "reflection_id": "reflection-trial-b547ab5dc128885ff322",
+    "trial_id": "trial-b547ab5dc128885ff322",
+    "spec_id": "p0_p1_rsi_prefix_v3_20261123",
+    "strategy": "ucb1",
+    "candidate_id": "q06_f16_c4096_p1_cp_on",
+    "positive_experience": true,
+    "negative_experience": false,
+    "memory_summary": "q06_f16_c4096_p1_cp_on: no_material_bottleneck; recommended legal candidates=['q06_f16_c4096_p1_cp_on']",
+    "created_at": "2026-11-22T16:47:52.768116+00:00",
+    "bottleneck_categories": [
+      "no_material_bottleneck"
+    ],
+    "evidence": {
+      "baseline_max_rss_mb": 1332.75,
+      "workloads": {
+        "batch_generation": {
+          "goodput_requests_per_second": 1.8226992289127346,
+          "latency_p95_s": 2.2286144585348664,
+          "peak_process_tree_rss_mb": 1574.59375,
+          "ttft_p95_s": 1.8441693197004496
+        },
+        "interactive": {
+          "goodput_requests_per_second": 4.44851133258252,
+          "latency_p95_s": 0.23389389006188138,
+          "peak_process_tree_rss_mb": 1266.140625,
+          "ttft_p95_s": 0.10742786579066887
+        },
+        "prefix_cache_rag": {
+          "goodput_requests_per_second": 3.23339137548693,
+          "latency_p95_s": 0.7563315834384411,
+          "peak_process_tree_rss_mb": 1441.4453125,
+          "ttft_p95_s": 0.6353162524756043
+        },
+        "rag_reading": {
+          "goodput_requests_per_second": 1.750521368835566,
+          "latency_p95_s": 1.1458087827544658,
+          "peak_process_tree_rss_mb": 1274.7734375,
+          "ttft_p95_s": 0.8802049888297916
+        }
+      }
+    },
+    "recommended_candidate_ids": [
+      "q06_f16_c4096_p1_cp_on"
+    ]
+  },
+  {
+    "reflection_id": "reflection-trial-5f088c3ba6f67fa450ae",
+    "trial_id": "trial-5f088c3ba6f67fa450ae",
+    "spec_id": "p0_p1_rsi_prefix_v3_20261123",
+    "strategy": "ucb1",
+    "candidate_id": "q06_q8_q8_c4096_p1_cp_off",
+    "positive_experience": true,
+    "negative_experience": false,
+    "memory_summary": "q06_q8_q8_c4096_p1_cp_off: no_material_bottleneck; recommended legal candidates=['q06_f16_c4096_p1_cp_on']",
+    "created_at": "2026-11-22T16:48:21.044810+00:00",
+    "bottleneck_categories": [
+      "no_material_bottleneck"
+    ],
+    "evidence": {
+      "baseline_max_rss_mb": 1332.75,
+      "workloads": {
+        "batch_generation": {
+          "goodput_requests_per_second": 1.2344950681412197,
+          "latency_p95_s": 3.090201875846833,
+          "peak_process_tree_rss_mb": 1189.25,
+          "ttft_p95_s": 2.4970731664914636
+        },
+        "interactive": {
+          "goodput_requests_per_second": 2.9384187507982165,
+          "latency_p95_s": 0.3584054179955274,
+          "peak_process_tree_rss_mb": 1025.1015625,
+          "ttft_p95_s": 0.19666562099009752
+        },
+        "prefix_cache_rag": {
+          "goodput_requests_per_second": 0.8444347326165951,
+          "latency_p95_s": 1.3488266771892086,
+          "peak_process_tree_rss_mb": 1170.0234375,
+          "ttft_p95_s": 1.175034252507612
+        },
+        "rag_reading": {
+          "goodput_requests_per_second": 0.7526053368608906,
+          "latency_p95_s": 3.7372049038764086,
+          "peak_process_tree_rss_mb": 1030.390625,
+          "ttft_p95_s": 3.6155011749244292
+        }
+      }
+    },
+    "recommended_candidate_ids": [
+      "q06_f16_c4096_p1_cp_on"
+    ]
+  },
+  {
+    "reflection_id": "reflection-trial-13fc5f60f146c94831a7",
+    "trial_id": "trial-13fc5f60f146c94831a7",
+    "spec_id": "p0_p1_rsi_prefix_v3_20261123",
+    "strategy": "ucb1",
+    "candidate_id": "q06_q8_q8_c4096_p1_cp_on",
+    "positive_experience": true,
+    "negative_experience": false,
+    "memory_summary": "q06_q8_q8_c4096_p1_cp_on: no_material_bottleneck; recommended legal candidates=['q06_q8_q8_c4096_p1_cp_on']",
+    "created_at": "2026-11-22T16:48:34.783137+00:00",
+    "bottleneck_categories": [
+      "no_material_bottleneck"
+    ],
+    "evidence": {
+      "baseline_max_rss_mb": 1332.75,
+      "workloads": {
+        "batch_generation": {
+          "goodput_requests_per_second": 1.9432059606499372,
+          "latency_p95_s": 1.968988143187016,
+          "peak_process_tree_rss_mb": 1096.9765625,
+          "ttft_p95_s": 1.5372069343458858
+        },
+        "interactive": {
+          "goodput_requests_per_second": 3.4945764643806996,
+          "latency_p95_s": 0.33560300325043496,
+          "peak_process_tree_rss_mb": 989.5390625,
+          "ttft_p95_s": 0.14499736435245722
+        },
+        "prefix_cache_rag": {
+          "goodput_requests_per_second": 3.39026557270617,
+          "latency_p95_s": 0.6952053194865584,
+          "peak_process_tree_rss_mb": 1070.0546875,
+          "ttft_p95_s": 0.5828235044609754
+        },
+        "rag_reading": {
+          "goodput_requests_per_second": 2.1407447298049638,
+          "latency_p95_s": 0.8768430935451761,
+          "peak_process_tree_rss_mb": 979.4765625,
+          "ttft_p95_s": 0.7561556810862384
+        }
+      }
+    },
+    "recommended_candidate_ids": [
+      "q06_q8_q8_c4096_p1_cp_on"
+    ]
+  },
+  {
+    "reflection_id": "reflection-trial-b1a06fad7721899438db",
+    "trial_id": "trial-b1a06fad7721899438db",
+    "spec_id": "p0_p1_rsi_prefix_v3_20261123",
+    "strategy": "ucb1",
+    "candidate_id": "q17_q4_f16_c4096_p2_b256_ub64_cp_on",
+    "positive_experience": true,
+    "negative_experience": false,
+    "memory_summary": "q17_q4_f16_c4096_p2_b256_ub64_cp_on: rss_memory_pressure; recommended legal candidates=['q06_f16_c4096_p1_cp_on', 'q06_f16_c4096_p1_cp_off', 'q06_q8_q8_c4096_p1_cp_on', 'q06_q8_q8_c4096_p1_cp_off', 'q06_f16_c8192_p4_b128_ub64_cp_on', 'q17_q4_q8_q8_c4096_p2_b512_ub128_cp_on']",
+    "created_at": "2026-11-22T16:48:59.438999+00:00",
+    "bottleneck_categories": [
+      "rss_memory_pressure"
+    ],
+    "evidence": {
+      "baseline_max_rss_mb": 1332.75,
+      "workloads": {
+        "batch_generation": {
+          "goodput_requests_per_second": 1.2342659872496318,
+          "latency_p95_s": 3.3533370716846544,
+          "peak_process_tree_rss_mb": 1806.84375,
+          "ttft_p95_s": 2.4651999186375178
+        },
+        "interactive": {
+          "goodput_requests_per_second": 2.80636117084557,
+          "latency_p95_s": 0.40632751372177156,
+          "peak_process_tree_rss_mb": 1639.8671875,
+          "ttft_p95_s": 0.21386288047069685
+        },
+        "prefix_cache_rag": {
+          "goodput_requests_per_second": 2.265157025186807,
+          "latency_p95_s": 1.3747056878171862,
+          "peak_process_tree_rss_mb": 1767.390625,
+          "ttft_p95_s": 1.1948413042817265
+        },
+        "rag_reading": {
+          "goodput_requests_per_second": 1.4700333870620441,
+          "latency_p95_s": 3.014921868802048,
+          "peak_process_tree_rss_mb": 1719.3203125,
+          "ttft_p95_s": 2.7278163710841907
+        }
+      }
+    },
+    "recommended_candidate_ids": [
+      "q06_f16_c4096_p1_cp_on",
+      "q06_f16_c4096_p1_cp_off",
+      "q06_q8_q8_c4096_p1_cp_on",
+      "q06_q8_q8_c4096_p1_cp_off",
+      "q06_f16_c8192_p4_b128_ub64_cp_on",
+      "q17_q4_q8_q8_c4096_p2_b512_ub128_cp_on"
+    ]
+  },
+  {
+    "reflection_id": "reflection-trial-e39e2bcfa8ef62972ca1",
+    "trial_id": "trial-e39e2bcfa8ef62972ca1",
+    "spec_id": "p0_p1_rsi_prefix_v3_20261123",
+    "strategy": "ucb1",
+    "candidate_id": "q17_q4_q8_q8_c4096_p2_b512_ub128_cp_on",
+    "positive_experience": true,
+    "negative_experience": false,
+    "memory_summary": "q17_q4_q8_q8_c4096_p2_b512_ub128_cp_on: no_material_bottleneck; recommended legal candidates=['q06_q8_q8_c4096_p1_cp_on']",
+    "created_at": "2026-11-22T16:49:25.304378+00:00",
+    "bottleneck_categories": [
+      "no_material_bottleneck"
+    ],
+    "evidence": {
+      "baseline_max_rss_mb": 1332.75,
+      "workloads": {
+        "batch_generation": {
+          "goodput_requests_per_second": 1.1598610443858959,
+          "latency_p95_s": 3.703558807214722,
+          "peak_process_tree_rss_mb": 1492.4375,
+          "ttft_p95_s": 2.4800742052262645
+        },
+        "interactive": {
+          "goodput_requests_per_second": 2.550553202549596,
+          "latency_p95_s": 0.5426424522651359,
+          "peak_process_tree_rss_mb": 1474.6171875,
+          "ttft_p95_s": 0.29733432895736767
+        },
+        "prefix_cache_rag": {
+          "goodput_requests_per_second": 2.394214256907911,
+          "latency_p95_s": 1.3467548879329114,
+          "peak_process_tree_rss_mb": 1440.375,
+          "ttft_p95_s": 1.1821352605242281
+        },
+        "rag_reading": {
+          "goodput_requests_per_second": 1.3954855473913392,
+          "latency_p95_s": 3.458297942194622,
+          "peak_process_tree_rss_mb": 1473.6328125,
+          "ttft_p95_s": 3.2801582377869636
+        }
+      }
+    },
+    "recommended_candidate_ids": [
+      "q06_q8_q8_c4096_p1_cp_on"
+    ]
+  },
+  {
+    "reflection_id": "reflection-trial-89d0361cfafa85a558ae",
+    "trial_id": "trial-89d0361cfafa85a558ae",
+    "spec_id": "p0_p1_rsi_prefix_v3_20261123",
+    "strategy": "agent",
+    "candidate_id": "q06_f16_c4096_p1_cp_off",
+    "positive_experience": true,
+    "negative_experience": false,
+    "memory_summary": "q06_f16_c4096_p1_cp_off: no_material_bottleneck; recommended legal candidates=['q06_f16_c4096_p1_cp_off']",
+    "created_at": "2026-11-22T16:49:51.952921+00:00",
+    "bottleneck_categories": [
+      "no_material_bottleneck"
+    ],
+    "evidence": {
+      "baseline_max_rss_mb": 1332.75,
+      "workloads": {
+        "batch_generation": {
+          "goodput_requests_per_second": 1.439914713000007,
+          "latency_p95_s": 2.6746191323967645,
+          "peak_process_tree_rss_mb": 1542.2734375,
+          "ttft_p95_s": 2.310630872752517
+        },
+        "interactive": {
+          "goodput_requests_per_second": 3.5836846744601605,
+          "latency_p95_s": 0.33123441552743316,
+          "peak_process_tree_rss_mb": 1255.921875,
+          "ttft_p95_s": 0.17499260911718012
+        },
+        "prefix_cache_rag": {
+          "goodput_requests_per_second": 1.0088441047337178,
+          "latency_p95_s": 1.0621877793222665,
+          "peak_process_tree_rss_mb": 1416.203125,
+          "ttft_p95_s": 0.9415753731271252
+        },
+        "rag_reading": {
+          "goodput_requests_per_second": 0.7187174880469652,
+          "latency_p95_s": 3.951798494707327,
+          "peak_process_tree_rss_mb": 1264.3515625,
+          "ttft_p95_s": 3.6799735366716044
+        }
+      }
+    },
+    "recommended_candidate_ids": [
+      "q06_f16_c4096_p1_cp_off"
+    ]
+  },
+  {
+    "reflection_id": "reflection-trial-0783b9d18ae025b69004",
+    "trial_id": "trial-0783b9d18ae025b69004",
+    "spec_id": "p0_p1_rsi_prefix_v3_20261123",
+    "strategy": "agent",
+    "candidate_id": "q06_f16_c8192_p4_b128_ub64_cp_on",
+    "positive_experience": true,
+    "negative_experience": false,
+    "memory_summary": "q06_f16_c8192_p4_b128_ub64_cp_on: rss_memory_pressure; recommended legal candidates=['q06_f16_c4096_p1_cp_on', 'q06_f16_c4096_p1_cp_off', 'q06_q8_q8_c4096_p1_cp_on', 'q06_q8_q8_c4096_p1_cp_off', 'q17_q4_q8_q8_c4096_p2_b512_ub128_cp_on']",
+    "created_at": "2026-11-22T16:50:08.648530+00:00",
+    "bottleneck_categories": [
+      "rss_memory_pressure"
+    ],
+    "evidence": {
+      "baseline_max_rss_mb": 1332.75,
+      "workloads": {
+        "batch_generation": {
+          "goodput_requests_per_second": 3.9700908952194403,
+          "latency_p95_s": 1.2933363572577945,
+          "peak_process_tree_rss_mb": 1818.1796875,
+          "ttft_p95_s": 0.681589396041818
+        },
+        "interactive": {
+          "goodput_requests_per_second": 4.253430754945514,
+          "latency_p95_s": 0.24851561046671122,
+          "peak_process_tree_rss_mb": 1721.390625,
+          "ttft_p95_s": 0.11717305050697177
+        },
+        "prefix_cache_rag": {
+          "goodput_requests_per_second": 2.9585635908951944,
+          "latency_p95_s": 0.7004287753719836,
+          "peak_process_tree_rss_mb": 1860.265625,
+          "ttft_p95_s": 0.5602762313326821
+        },
+        "rag_reading": {
+          "goodput_requests_per_second": 1.3761121742400655,
+          "latency_p95_s": 3.310719876352232,
+          "peak_process_tree_rss_mb": 1774.921875,
+          "ttft_p95_s": 2.798150164645631
+        }
+      }
+    },
+    "recommended_candidate_ids": [
+      "q06_f16_c4096_p1_cp_on",
+      "q06_f16_c4096_p1_cp_off",
+      "q06_q8_q8_c4096_p1_cp_on",
+      "q06_q8_q8_c4096_p1_cp_off",
+      "q17_q4_q8_q8_c4096_p2_b512_ub128_cp_on"
+    ]
+  },
+  {
+    "reflection_id": "reflection-trial-089560f7b27bdaae6c93",
+    "trial_id": "trial-089560f7b27bdaae6c93",
+    "spec_id": "p0_p1_rsi_prefix_v3_20261123",
+    "strategy": "agent",
+    "candidate_id": "q06_f16_c8192_p4_b128_ub64_cp_on",
+    "positive_experience": true,
+    "negative_experience": false,
+    "memory_summary": "q06_f16_c8192_p4_b128_ub64_cp_on: rss_memory_pressure; recommended legal candidates=['q06_f16_c4096_p1_cp_on', 'q06_f16_c4096_p1_cp_off', 'q06_q8_q8_c4096_p1_cp_on', 'q06_q8_q8_c4096_p1_cp_off', 'q17_q4_q8_q8_c4096_p2_b512_ub128_cp_on']",
+    "created_at": "2026-11-22T16:50:26.779019+00:00",
+    "bottleneck_categories": [
+      "rss_memory_pressure"
+    ],
+    "evidence": {
+      "baseline_max_rss_mb": 1332.75,
+      "workloads": {
+        "batch_generation": {
+          "goodput_requests_per_second": 3.708647293079424,
+          "latency_p95_s": 1.4532007145811803,
+          "peak_process_tree_rss_mb": 1741.890625,
+          "ttft_p95_s": 0.926643641886767
+        },
+        "interactive": {
+          "goodput_requests_per_second": 4.029181479715885,
+          "latency_p95_s": 0.2722038211300969,
+          "peak_process_tree_rss_mb": 1722.71875,
+          "ttft_p95_s": 0.12356425537727772
+        },
+        "prefix_cache_rag": {
+          "goodput_requests_per_second": 2.9119526581135724,
+          "latency_p95_s": 0.7917966020293533,
+          "peak_process_tree_rss_mb": 1797.84375,
+          "ttft_p95_s": 0.6519146982114762
+        },
+        "rag_reading": {
+          "goodput_requests_per_second": 1.16590555642428,
+          "latency_p95_s": 3.693503838300239,
+          "peak_process_tree_rss_mb": 1770.4140625,
+          "ttft_p95_s": 3.0352213886450046
+        }
+      }
+    },
+    "recommended_candidate_ids": [
+      "q06_f16_c4096_p1_cp_on",
+      "q06_f16_c4096_p1_cp_off",
+      "q06_q8_q8_c4096_p1_cp_on",
+      "q06_q8_q8_c4096_p1_cp_off",
+      "q17_q4_q8_q8_c4096_p2_b512_ub128_cp_on"
+    ]
+  },
+  {
+    "reflection_id": "reflection-trial-21b9f738a78ad194ea28",
+    "trial_id": "trial-21b9f738a78ad194ea28",
+    "spec_id": "p0_p1_rsi_prefix_v3_20261123",
+    "strategy": "agent",
+    "candidate_id": "q06_f16_c8192_p4_b128_ub64_cp_on",
+    "positive_experience": true,
+    "negative_experience": false,
+    "memory_summary": "q06_f16_c8192_p4_b128_ub64_cp_on: rss_memory_pressure; recommended legal candidates=['q06_f16_c4096_p1_cp_on', 'q06_f16_c4096_p1_cp_off', 'q06_q8_q8_c4096_p1_cp_on', 'q06_q8_q8_c4096_p1_cp_off', 'q17_q4_q8_q8_c4096_p2_b512_ub128_cp_on']",
+    "created_at": "2026-11-22T16:50:43.259915+00:00",
+    "bottleneck_categories": [
+      "rss_memory_pressure"
+    ],
+    "evidence": {
+      "baseline_max_rss_mb": 1332.75,
+      "workloads": {
+        "batch_generation": {
+          "goodput_requests_per_second": 3.833074827138578,
+          "latency_p95_s": 1.1887339240056463,
+          "peak_process_tree_rss_mb": 1821.8984375,
+          "ttft_p95_s": 0.5816257409518585
+        },
+        "interactive": {
+          "goodput_requests_per_second": 4.015262589106152,
+          "latency_p95_s": 0.25619756754022094,
+          "peak_process_tree_rss_mb": 1720.1171875,
+          "ttft_p95_s": 0.1248077925411053
+        },
+        "prefix_cache_rag": {
+          "goodput_requests_per_second": 3.1931039881717496,
+          "latency_p95_s": 0.6759965708013623,
+          "peak_process_tree_rss_mb": 1855.3203125,
+          "ttft_p95_s": 0.5518332602921873
+        },
+        "rag_reading": {
+          "goodput_requests_per_second": 1.3919225480827326,
+          "latency_p95_s": 3.4059529467718677,
+          "peak_process_tree_rss_mb": 1768.578125,
+          "ttft_p95_s": 2.9054268302512356
+        }
+      }
+    },
+    "recommended_candidate_ids": [
+      "q06_f16_c4096_p1_cp_on",
+      "q06_f16_c4096_p1_cp_off",
+      "q06_q8_q8_c4096_p1_cp_on",
+      "q06_q8_q8_c4096_p1_cp_off",
+      "q17_q4_q8_q8_c4096_p2_b512_ub128_cp_on"
+    ]
+  },
+  {
+    "reflection_id": "reflection-trial-d476992151d722bbcdb2",
+    "trial_id": "trial-d476992151d722bbcdb2",
+    "spec_id": "p0_p1_rsi_prefix_v3_20261123",
+    "strategy": "agent",
+    "candidate_id": "q06_f16_c8192_p4_b128_ub64_cp_on",
+    "positive_experience": true,
+    "negative_experience": false,
+    "memory_summary": "q06_f16_c8192_p4_b128_ub64_cp_on: rss_memory_pressure; recommended legal candidates=['q06_f16_c4096_p1_cp_on', 'q06_f16_c4096_p1_cp_off', 'q06_q8_q8_c4096_p1_cp_on', 'q06_q8_q8_c4096_p1_cp_off', 'q17_q4_q8_q8_c4096_p2_b512_ub128_cp_on']",
+    "created_at": "2026-11-22T16:50:59.385792+00:00",
+    "bottleneck_categories": [
+      "rss_memory_pressure"
+    ],
+    "evidence": {
+      "baseline_max_rss_mb": 1332.75,
+      "workloads": {
+        "batch_generation": {
+          "goodput_requests_per_second": 3.6494410636405634,
+          "latency_p95_s": 1.2291301762801594,
+          "peak_process_tree_rss_mb": 1733.9296875,
+          "ttft_p95_s": 0.6196543186670169
+        },
+        "interactive": {
+          "goodput_requests_per_second": 4.058525308635486,
+          "latency_p95_s": 0.2601851208601147,
+          "peak_process_tree_rss_mb": 1721.03125,
+          "ttft_p95_s": 0.13051675780443475
+        },
+        "prefix_cache_rag": {
+          "goodput_requests_per_second": 3.0814532622085853,
+          "latency_p95_s": 0.7151403685566038,
+          "peak_process_tree_rss_mb": 1742.59375,
+          "ttft_p95_s": 0.5830865665804594
+        },
+        "rag_reading": {
+          "goodput_requests_per_second": 1.412429682098717,
+          "latency_p95_s": 3.100506724184379,
+          "peak_process_tree_rss_mb": 1747.390625,
+          "ttft_p95_s": 2.5552655543666334
+        }
+      }
+    },
+    "recommended_candidate_ids": [
+      "q06_f16_c4096_p1_cp_on",
+      "q06_f16_c4096_p1_cp_off",
+      "q06_q8_q8_c4096_p1_cp_on",
+      "q06_q8_q8_c4096_p1_cp_off",
+      "q17_q4_q8_q8_c4096_p2_b512_ub128_cp_on"
+    ]
+  },
+  {
+    "reflection_id": "reflection-trial-765713b8ceb570e0b572",
+    "trial_id": "trial-765713b8ceb570e0b572",
+    "spec_id": "p0_p1_rsi_prefix_v3_20261123",
+    "strategy": "agent",
+    "candidate_id": "q06_f16_c8192_p4_b128_ub64_cp_on",
+    "positive_experience": true,
+    "negative_experience": false,
+    "memory_summary": "q06_f16_c8192_p4_b128_ub64_cp_on: rss_memory_pressure; recommended legal candidates=['q06_f16_c4096_p1_cp_on', 'q06_f16_c4096_p1_cp_off', 'q06_q8_q8_c4096_p1_cp_on', 'q06_q8_q8_c4096_p1_cp_off', 'q17_q4_q8_q8_c4096_p2_b512_ub128_cp_on']",
+    "created_at": "2026-11-22T16:51:17.202715+00:00",
+    "bottleneck_categories": [
+      "rss_memory_pressure"
+    ],
+    "evidence": {
+      "baseline_max_rss_mb": 1332.75,
+      "workloads": {
+        "batch_generation": {
+          "goodput_requests_per_second": 4.351726911623473,
+          "latency_p95_s": 1.1396852309815586,
+          "peak_process_tree_rss_mb": 1762.8125,
+          "ttft_p95_s": 0.6266447738744318
+        },
+        "interactive": {
+          "goodput_requests_per_second": 3.552153117564268,
+          "latency_p95_s": 0.31243814850458873,
+          "peak_process_tree_rss_mb": 1685.484375,
+          "ttft_p95_s": 0.14748120438307524
+        },
+        "prefix_cache_rag": {
+          "goodput_requests_per_second": 2.6271756545170426,
+          "latency_p95_s": 0.8433047190308571,
+          "peak_process_tree_rss_mb": 1705.6015625,
+          "ttft_p95_s": 0.7032761441078037
+        },
+        "rag_reading": {
+          "goodput_requests_per_second": 1.3676953794524316,
+          "latency_p95_s": 3.584087655460462,
+          "peak_process_tree_rss_mb": 1709.9609375,
+          "ttft_p95_s": 3.024819053336978
+        }
+      }
+    },
+    "recommended_candidate_ids": [
+      "q06_f16_c4096_p1_cp_on",
+      "q06_f16_c4096_p1_cp_off",
+      "q06_q8_q8_c4096_p1_cp_on",
+      "q06_q8_q8_c4096_p1_cp_off",
+      "q17_q4_q8_q8_c4096_p2_b512_ub128_cp_on"
+    ]
+  },
+  {
+    "reflection_id": "reflection-trial-1c09f5c6ec80d5bb880b",
+    "trial_id": "trial-1c09f5c6ec80d5bb880b",
+    "spec_id": "p0_p1_rsi_prefix_v3_20261123",
+    "strategy": "agent",
+    "candidate_id": "q06_f16_c4096_p1_cp_off",
+    "positive_experience": true,
+    "negative_experience": false,
+    "memory_summary": "q06_f16_c4096_p1_cp_off: no_material_bottleneck; recommended legal candidates=['q06_f16_c8192_p4_b128_ub64_cp_on']",
+    "created_at": "2026-11-22T16:51:41.632532+00:00",
+    "bottleneck_categories": [
+      "no_material_bottleneck"
+    ],
+    "evidence": {
+      "baseline_max_rss_mb": 1332.75,
+      "workloads": {
+        "batch_generation": {
+          "goodput_requests_per_second": 1.658819445353219,
+          "latency_p95_s": 2.336164733069017,
+          "peak_process_tree_rss_mb": 1524.0859375,
+          "ttft_p95_s": 2.0153004716848955
+        },
+        "interactive": {
+          "goodput_requests_per_second": 3.704902783967878,
+          "latency_p95_s": 0.27475072499364617,
+          "peak_process_tree_rss_mb": 1265.109375,
+          "ttft_p95_s": 0.15525351645192131
+        },
+        "prefix_cache_rag": {
+          "goodput_requests_per_second": 1.122741946084978,
+          "latency_p95_s": 0.9401778023457155,
+          "peak_process_tree_rss_mb": 1400.1015625,
+          "ttft_p95_s": 0.8246033211937174
+        },
+        "rag_reading": {
+          "goodput_requests_per_second": 0.7726389685845707,
+          "latency_p95_s": 3.5595299313659776,
+          "peak_process_tree_rss_mb": 1240.859375,
+          "ttft_p95_s": 3.3085280701983715
+        }
+      }
+    },
+    "recommended_candidate_ids": [
+      "q06_f16_c8192_p4_b128_ub64_cp_on"
+    ]
+  }
+]

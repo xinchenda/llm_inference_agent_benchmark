@@ -1,0 +1,5 @@
+strategy,sequence_no,trial_id,candidate_id,trial_utility,best_utility,best_candidate,best_trial_id
+grid,1,trial-030f59884a1da99c4d20,cache_f16_on,3.5597466908499875,3.5597466908499875,cache_f16_on,trial-030f59884a1da99c4d20
+grid,2,trial-c134b39e549428aaed7f,cache_f16_off,1.9846070971066363,3.5597466908499875,cache_f16_on,trial-030f59884a1da99c4d20
+grid,3,trial-437eda8dc67b3b725fbb,cache_q8_on,3.2922896001509367,3.5597466908499875,cache_f16_on,trial-030f59884a1da99c4d20
+grid,4,trial-c438908f7a28670c68be,cache_q8_off,1.5039251165418182,3.5597466908499875,cache_f16_on,trial-030f59884a1da99c4d20

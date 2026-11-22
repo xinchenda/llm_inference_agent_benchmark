@@ -1,0 +1,6 @@
+trial_id,strategy,candidate_id,model_id,cache_prompt,cache_type_k,cache_type_v,context_size,parallel,batch_size,ubatch_size,flash_attn,cache_hit_rate,cache_evidence_valid,invalid_cache_observations,ttft_p50_s,ttft_p95_s,goodput_requests_per_second,peak_process_tree_rss_mb,error_rate
+trial-ec14ce3774ad0f6929b0,baseline_anchor,cache_f16_on,qwen3_0_6b_q8,True,f16,f16,4096,1,512,128,auto,0.936286344074735,True,0,0.13024674984626472,0.5563063123651469,2.820515664891642,1267.0520833333333,0.0
+trial-030f59884a1da99c4d20,grid,cache_f16_on,qwen3_0_6b_q8,True,f16,f16,4096,1,512,128,auto,0.936286344074735,True,0,0.14079279149882495,0.7472068402372921,2.547994713246348,1270.703125,0.0
+trial-c134b39e549428aaed7f,grid,cache_f16_off,qwen3_0_6b_q8,False,f16,f16,4096,1,512,128,auto,0.0,True,0,1.7639410556294024,1.9840528051912163,0.5142031286681652,1218.46875,0.0
+trial-437eda8dc67b3b725fbb,grid,cache_q8_on,qwen3_0_6b_q8,True,q8_0,q8_0,4096,1,512,128,on,0.936286344074735,True,0,0.1269253750021259,0.704993357649073,2.8213021759962182,1026.6614583333333,0.0
+trial-c438908f7a28670c68be,grid,cache_q8_off,qwen3_0_6b_q8,False,q8_0,q8_0,4096,1,512,128,on,0.0,True,0,1.8798335208557546,2.095116142222347,0.4878521532107512,976.5520833333334,0.0

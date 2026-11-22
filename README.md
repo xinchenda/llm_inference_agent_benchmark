@@ -3,7 +3,8 @@
 This repository evaluates pretrained open-weight language models for a local
 document assistant. It covers inference serving, quantized model comparison,
 cited RAG, a controlled tool-using agent, fixed quality questions, latency and
-memory measurements, and reproducible reports.
+memory measurements, deterministic experiment optimization, and reproducible
+reports.
 
 It does **not** train, fine-tune, or generate image models. Image capabilities
 are outside the core project.
@@ -46,6 +47,18 @@ set, context, generation settings, and command used.
   tool execution returns 502 with the partial trace.
 - Unit and integration tests for malformed JSON, no evidence, timeout, illegal
   tool arguments, duplicate calls, long documents, and idempotent requests.
+- A quality-gated experiment optimizer with immutable SQLite evidence, resource
+  locking, dynamic ports, health checks, process-tree cleanup, controlled
+  retry, and explicit failure classification.
+- Three fixed serving loads: interactive chat, RAG-shaped long-context reading,
+  and concurrent batch generation.
+- Equal-budget `default`, `grid`, `random`, `ucb1`, and history-driven `agent`
+  strategies. The Agent explores every untested legal candidate, records
+  structured Reflection/Memory, and can select only registered configurations.
+- Repeated trials, percentile-bootstrap intervals, TTFT, TPOT/ITL, p50/p95/p99,
+  output tokens/s, process-tree RSS, fixed-QPS achieved rate, and goodput.
+- Pareto analysis, best-so-far curves, similar-history retrieval, and an
+  automatically generated optimization report.
 
 ## Quick start
 
@@ -90,6 +103,19 @@ Run model/context/concurrency performance tests:
 
 ```bash
 ./llm-bench perf run
+```
+
+Run the quality-gated P0/P1 optimization experiment and build its report:
+
+```bash
+./llm-bench experiment run --spec configs/experiments_p0_p1.yaml
+./llm-bench experiment report \
+  --ledger artifacts/experiments/p0_p1_rsi_prefix_v3_20261123/ledger.sqlite
+
+./llm-bench experiment run --spec configs/prefix_cache_ablation.yaml
+./llm-bench experiment report \
+  --ledger artifacts/experiments/prefix_cache_ablation_20261123/ledger.sqlite \
+  --output reports/prefix_cache
 ```
 
 Start the model and FastAPI service with one command:
@@ -146,6 +172,14 @@ llama-server (Metal/CUDA/CPU)
   -> OpenAI-compatible local API
   -> FastAPI /ask and /agent
   -> JSON/CSV results, metrics, figures, validation report
+
+ExperimentSpec (immutable candidate and load space)
+  -> default/grid/random/ucb1/agent policy (one legal candidate)
+  -> resource lock, dynamic port, isolated llama-server process
+  -> deterministic quality gate
+  -> closed-loop or fixed-QPS repeated performance runs
+  -> append-only SQLite ledger
+  -> Pareto, stability, best-so-far, similar-history report
 ```
 
 The design favors explicit interfaces over a large framework dependency. See
@@ -176,6 +210,51 @@ The performance report includes:
 - Local incremental cost: USD 0 for the open-source self-hosted stack, with
   hardware purchase and electricity explicitly excluded
 
+The P0/P1 optimizer additionally reports:
+
+- Fixed-QPS target versus measured request-arrival rate
+- TPOT/ITL, p99 latency, output tokens/s, process-tree RSS, and goodput
+- Repeat variability and deterministic 95% bootstrap intervals
+- Quality-gated Pareto points and equal-budget strategy curves
+- Similar historical trials and deterministic Agent policy reasons
+- Shared-prefix Cache ablation with request-level llama.cpp `cache_n`
+- Structured bottleneck reflections, negative memory, and legal-candidate fallback
+
+### Actual P0/P1 local result
+
+The final audit run contains 36 immutable trial records: one common unoptimized
+anchor and seven scored trials for each of five strategies. All 36 passed the
+fixed quality gates. The fixed-QPS workload targeted 2.0 requests/s and measured
+an arrival rate of 1.981-2.007 requests/s.
+
+| Strategy | Best quality-passing utility | Selected candidate |
+| --- | ---: | --- |
+| default | 0.63800 | `q06_f16_c4096_p1_cp_off` |
+| grid | 1.08436 | `q06_f16_c8192_p4_b128_ub64_cp_on` |
+| random | 1.61242 | `q06_q8_q8_c4096_p1_cp_on` |
+| ucb1 | 1.36733 | `q06_q8_q8_c4096_p1_cp_on` |
+| agent | 1.27079 | `q06_f16_c8192_p4_b128_ub64_cp_on` |
+
+All strategies begin from the same `cp_off` configuration. After two diagnostic
+rounds the RSI Agent prunes low-value branches and locks a high-recommendation
+candidate instead of traversing every option. It improved its own best-so-far by
+140.58% over the unoptimized start, but random and UCB1 found higher utilities in
+this run. Structured reflections classified 19 trials with no material
+bottleneck, 10 with RSS pressure, and 7 with TTFT pressure.
+
+The separate shared-prefix ablation used the same 0.6B model and identical
+batch/context settings for each enabled/disabled pair:
+
+| KV cache | Hit rate on/off | TTFT p50 reduction | TTFT p95 reduction | Goodput change | Error rate |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| f16/f16 | 0.936 / 0 | 92.32% | 67.15% | +422.02% | 0 |
+| q8_0/q8_0 | 0.936 / 0 | 93.25% | 66.35% | +478.31% | 0 |
+
+Both evidence-valid cache configurations had zero missing `cache_n`
+observations. These are local shared-prefix results, not universal cache-hit
+claims. Complete evidence is in [reports/experiments/experiment_report.md](reports/experiments/experiment_report.md)
+and [reports/prefix_cache/experiment_report.md](reports/prefix_cache/experiment_report.md).
+
 ## Reproducibility and controls
 
 - Temperature 0, seed 42, fixed maximum output tokens, and a fixed question set
@@ -197,10 +276,23 @@ The performance report includes:
 - The cross-encoder and answer model are intentionally small. The benchmark
   measures this constrained local configuration rather than claiming frontier
   model quality.
+- The experimental quality gates are fast deterministic proxies. They verify an
+  exact answer, a critical fact, JSON structure, and timeout behavior but do not
+  replace the separate 100-question quality evaluation.
+- Goodput and p95 comparisons describe this Mac and this fixed local workload.
+  They are not GPU-serving or production-SLA results.
 
 ## Deliverables
 
 - [Validation report](reports/validation_report.md)
+- [P0/P1 optimization report](reports/experiments/experiment_report.md)
+- [Prefix Cache ablation report](reports/prefix_cache/experiment_report.md)
+- [Automated experiment matrix](configs/experiments_p0_p1.yaml)
+- [Focused cache matrix](configs/prefix_cache_ablation.yaml)
+- [Strategy comparison](reports/experiments/strategy_comparison.csv)
+- [Stability intervals](reports/experiments/trial_metrics.csv)
+- [Pareto frontier](reports/experiments/pareto_frontier.csv)
+- [Best-so-far curves](reports/experiments/best_so_far.csv)
 - [Agent tool failure analysis](reports/agent_failure_analysis.md)
 - [Architecture and failure handling](docs/architecture.md)
 - [Open-source decision record](docs/open_source_research.md)

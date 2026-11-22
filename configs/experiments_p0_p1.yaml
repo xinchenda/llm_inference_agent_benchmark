@@ -1,0 +1,143 @@
+schema_version: 1
+experiment_id: p0_p1_rsi_prefix_v3_20261123
+seed: 42
+# Seven trials per strategy cover all legal candidates once under grid while
+# limiting the intentionally slow uncached long-prefix workload on this Mac.
+baseline_candidate: q06_f16_c4096_p1_cp_off
+trials_per_strategy: 7
+repeats_per_trial: 2
+warmup_requests: 1
+max_retries: 1
+service_start_timeout_s: 120
+request_timeout_s: 180
+
+strategies:
+  - default
+  - grid
+  - random
+  - ucb1
+  - agent
+
+candidates:
+  - id: q06_f16_c4096_p1_cp_on
+    model_id: qwen3_0_6b_q8
+    context_size: 4096
+    parallel: 1
+    batch_size: 512
+    ubatch_size: 128
+    flash_attn: auto
+    cache_type_k: f16
+    cache_type_v: f16
+    cache_prompt: true
+  - id: q06_f16_c4096_p1_cp_off
+    model_id: qwen3_0_6b_q8
+    context_size: 4096
+    parallel: 1
+    batch_size: 512
+    ubatch_size: 128
+    flash_attn: auto
+    cache_type_k: f16
+    cache_type_v: f16
+    cache_prompt: false
+  - id: q06_q8_q8_c4096_p1_cp_on
+    model_id: qwen3_0_6b_q8
+    context_size: 4096
+    parallel: 1
+    batch_size: 512
+    ubatch_size: 128
+    flash_attn: "on"
+    cache_type_k: q8_0
+    cache_type_v: q8_0
+    cache_prompt: true
+  - id: q06_q8_q8_c4096_p1_cp_off
+    model_id: qwen3_0_6b_q8
+    context_size: 4096
+    parallel: 1
+    batch_size: 512
+    ubatch_size: 128
+    flash_attn: "on"
+    cache_type_k: q8_0
+    cache_type_v: q8_0
+    cache_prompt: false
+  - id: q06_f16_c8192_p4_b128_ub64_cp_on
+    model_id: qwen3_0_6b_q8
+    context_size: 8192
+    parallel: 4
+    batch_size: 128
+    ubatch_size: 64
+    flash_attn: "off"
+    cache_type_k: f16
+    cache_type_v: f16
+    cache_prompt: true
+  - id: q17_q4_f16_c4096_p2_b256_ub64_cp_on
+    model_id: qwen3_1_7b_q4
+    context_size: 4096
+    parallel: 2
+    batch_size: 256
+    ubatch_size: 64
+    flash_attn: auto
+    cache_type_k: f16
+    cache_type_v: f16
+    cache_prompt: true
+  - id: q17_q4_q8_q8_c4096_p2_b512_ub128_cp_on
+    model_id: qwen3_1_7b_q4
+    context_size: 4096
+    parallel: 2
+    batch_size: 512
+    ubatch_size: 128
+    flash_attn: "on"
+    cache_type_k: q8_0
+    cache_type_v: q8_0
+    cache_prompt: true
+
+workloads:
+  - id: interactive
+    prompt_words: 64
+    output_tokens: 16
+    requests: 4
+    load_mode: closed
+    concurrency: 1
+    latency_slo_s: 2.0
+    quality:
+      prompt: "Reply with exactly READY and nothing else."
+      expected_exact: READY
+  - id: rag_reading
+    prompt_words: 1024
+    output_tokens: 32
+    requests: 4
+    load_mode: open_qps
+    target_qps: 2.0
+    concurrency: 4
+    latency_slo_s: 10.0
+    quality:
+      prompt: "Reference fact: Atlas limit is 42. What is the Atlas limit? Reply with the number only."
+      expected_contains:
+        - "42"
+      critical_fact: "Atlas limit is 42"
+  - id: batch_generation
+    prompt_words: 256
+    output_tokens: 64
+    requests: 4
+    load_mode: closed
+    concurrency: 4
+    latency_slo_s: 20.0
+    quality:
+      prompt: 'Return exactly one JSON object: {"status":"ok"}'
+      expected_json:
+        status: ok
+  - id: prefix_cache_rag
+    prompt_words: 800
+    output_tokens: 16
+    requests: 3
+    load_mode: closed
+    concurrency: 1
+    latency_slo_s: 10.0
+    quality:
+      prompt: "Reference fact: Atlas limit is 42. What is the Atlas limit? Reply with the number only."
+      expected_contains:
+        - "42"
+      critical_fact: "Atlas limit is 42"
+
+statistics:
+  bootstrap_resamples: 1000
+  confidence_level: 0.95

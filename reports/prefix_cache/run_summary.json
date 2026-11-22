@@ -1,0 +1,12 @@
+{
+  "spec_id": "prefix_cache_ablation_20261123",
+  "spec_hash": "069dfdfb24c5bec34d580dd1431a939ca0bb9e8f6c5a6961d43ac7f667743b04",
+  "strategy_trials": {
+    "grid": 4
+  },
+  "duplicates": 0,
+  "started_at": "2026-11-22T16:27:43.954507+00:00",
+  "exported_trials": 5,
+  "finished_at": "2026-11-22T16:29:47.341923+00:00",
+  "ledger": "artifacts/experiments/prefix_cache_ablation_20261123/ledger.sqlite"
+}

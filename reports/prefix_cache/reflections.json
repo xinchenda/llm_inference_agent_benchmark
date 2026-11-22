@@ -1,0 +1,230 @@
+[
+  {
+    "reflection_id": "reflection-trial-ec14ce3774ad0f6929b0",
+    "trial_id": "trial-ec14ce3774ad0f6929b0",
+    "spec_id": "prefix_cache_ablation_20261123",
+    "strategy": "baseline_anchor",
+    "candidate_id": "cache_f16_on",
+    "negative_experience": false,
+    "memory_summary": "cache_f16_on: no_material_bottleneck; recommended legal candidates=['none']",
+    "created_at": "2026-11-22T16:27:55.942315+00:00",
+    "bottleneck_categories": [
+      "no_material_bottleneck"
+    ],
+    "evidence": {
+      "baseline_max_rss_mb": 1267.0520833333333,
+      "workloads": {
+        "batch_generation": {
+          "goodput_requests_per_second": 4.167173579982237,
+          "latency_p95_s": 0.46655975560812896,
+          "peak_process_tree_rss_mb": 1261.5572916666667,
+          "ttft_p95_s": 0.31363576765482626
+        },
+        "interactive": {
+          "goodput_requests_per_second": 10.108440647538515,
+          "latency_p95_s": 0.102494039797845,
+          "peak_process_tree_rss_mb": 1225.5,
+          "ttft_p95_s": 0.07188352593996872
+        },
+        "prefix_cache_rag": {
+          "goodput_requests_per_second": 2.820515664891642,
+          "latency_p95_s": 0.7444733194618797,
+          "peak_process_tree_rss_mb": 1267.0520833333333,
+          "ttft_p95_s": 0.5563063123651469
+        },
+        "rag_reading": {
+          "goodput_requests_per_second": 3.2558131722891885,
+          "latency_p95_s": 0.1313073084068795,
+          "peak_process_tree_rss_mb": 1228.375,
+          "ttft_p95_s": 0.09627758639398963
+        }
+      }
+    },
+    "recommended_candidate_ids": [],
+    "positive_experience": false
+  },
+  {
+    "reflection_id": "reflection-trial-030f59884a1da99c4d20",
+    "trial_id": "trial-030f59884a1da99c4d20",
+    "spec_id": "prefix_cache_ablation_20261123",
+    "strategy": "grid",
+    "candidate_id": "cache_f16_on",
+    "negative_experience": false,
+    "memory_summary": "cache_f16_on: no_material_bottleneck; recommended legal candidates=['cache_f16_on']",
+    "created_at": "2026-11-22T16:28:09.225853+00:00",
+    "bottleneck_categories": [
+      "no_material_bottleneck"
+    ],
+    "evidence": {
+      "baseline_max_rss_mb": 1267.0520833333333,
+      "workloads": {
+        "batch_generation": {
+          "goodput_requests_per_second": 5.463118938594931,
+          "latency_p95_s": 0.3539156068814919,
+          "peak_process_tree_rss_mb": 1265.2239583333333,
+          "ttft_p95_s": 0.2402728247533863
+        },
+        "interactive": {
+          "goodput_requests_per_second": 8.687782252780027,
+          "latency_p95_s": 0.1156125349070256,
+          "peak_process_tree_rss_mb": 1229.1979166666667,
+          "ttft_p95_s": 0.0819700013846159
+        },
+        "prefix_cache_rag": {
+          "goodput_requests_per_second": 2.547994713246348,
+          "latency_p95_s": 0.9614006978614876,
+          "peak_process_tree_rss_mb": 1270.703125,
+          "ttft_p95_s": 0.7472068402372921
+        },
+        "rag_reading": {
+          "goodput_requests_per_second": 3.273568884895076,
+          "latency_p95_s": 0.1320487735637774,
+          "peak_process_tree_rss_mb": 1232.078125,
+          "ttft_p95_s": 0.09970046995828548
+        }
+      }
+    },
+    "recommended_candidate_ids": [
+      "cache_f16_on"
+    ],
+    "positive_experience": false
+  },
+  {
+    "reflection_id": "reflection-trial-c134b39e549428aaed7f",
+    "trial_id": "trial-c134b39e549428aaed7f",
+    "spec_id": "prefix_cache_ablation_20261123",
+    "strategy": "grid",
+    "candidate_id": "cache_f16_off",
+    "negative_experience": false,
+    "memory_summary": "cache_f16_off: no_material_bottleneck; recommended legal candidates=['cache_f16_on']",
+    "created_at": "2026-11-22T16:28:50.410894+00:00",
+    "bottleneck_categories": [
+      "no_material_bottleneck"
+    ],
+    "evidence": {
+      "baseline_max_rss_mb": 1267.0520833333333,
+      "workloads": {
+        "batch_generation": {
+          "goodput_requests_per_second": 4.100781869901529,
+          "latency_p95_s": 0.4776254382527744,
+          "peak_process_tree_rss_mb": 1264.6510416666667,
+          "ttft_p95_s": 0.3402161589746053
+        },
+        "interactive": {
+          "goodput_requests_per_second": 7.012615759180188,
+          "latency_p95_s": 0.1550584546678389,
+          "peak_process_tree_rss_mb": 1226.25,
+          "ttft_p95_s": 0.11612180466763673
+        },
+        "prefix_cache_rag": {
+          "goodput_requests_per_second": 0.5142031286681652,
+          "latency_p95_s": 2.1269986907330654,
+          "peak_process_tree_rss_mb": 1218.46875,
+          "ttft_p95_s": 1.9840528051912163
+        },
+        "rag_reading": {
+          "goodput_requests_per_second": 2.6508024800889705,
+          "latency_p95_s": 0.327204886606584,
+          "peak_process_tree_rss_mb": 1231.4791666666667,
+          "ttft_p95_s": 0.26372428555041555
+        }
+      }
+    },
+    "recommended_candidate_ids": [
+      "cache_f16_on"
+    ],
+    "positive_experience": false
+  },
+  {
+    "reflection_id": "reflection-trial-437eda8dc67b3b725fbb",
+    "trial_id": "trial-437eda8dc67b3b725fbb",
+    "spec_id": "prefix_cache_ablation_20261123",
+    "strategy": "grid",
+    "candidate_id": "cache_q8_on",
+    "negative_experience": false,
+    "memory_summary": "cache_q8_on: no_material_bottleneck; recommended legal candidates=['cache_f16_on']",
+    "created_at": "2026-11-22T16:29:02.894647+00:00",
+    "bottleneck_categories": [
+      "no_material_bottleneck"
+    ],
+    "evidence": {
+      "baseline_max_rss_mb": 1267.0520833333333,
+      "workloads": {
+        "batch_generation": {
+          "goodput_requests_per_second": 5.051914865774806,
+          "latency_p95_s": 0.38268955652602016,
+          "peak_process_tree_rss_mb": 1022.5260416666666,
+          "ttft_p95_s": 0.25431939099604883
+        },
+        "interactive": {
+          "goodput_requests_per_second": 7.242558997431755,
+          "latency_p95_s": 0.14236589196758964,
+          "peak_process_tree_rss_mb": 1002.9947916666666,
+          "ttft_p95_s": 0.09760877514102806
+        },
+        "prefix_cache_rag": {
+          "goodput_requests_per_second": 2.8213021759962182,
+          "latency_p95_s": 0.8691140589459488,
+          "peak_process_tree_rss_mb": 1026.6614583333333,
+          "ttft_p95_s": 0.704993357649073
+        },
+        "rag_reading": {
+          "goodput_requests_per_second": 3.2436524294067177,
+          "latency_p95_s": 0.14069398199984182,
+          "peak_process_tree_rss_mb": 1004.84375,
+          "ttft_p95_s": 0.10500496307698388
+        }
+      }
+    },
+    "recommended_candidate_ids": [
+      "cache_f16_on"
+    ],
+    "positive_experience": false
+  },
+  {
+    "reflection_id": "reflection-trial-c438908f7a28670c68be",
+    "trial_id": "trial-c438908f7a28670c68be",
+    "spec_id": "prefix_cache_ablation_20261123",
+    "strategy": "grid",
+    "candidate_id": "cache_q8_off",
+    "negative_experience": false,
+    "memory_summary": "cache_q8_off: no_material_bottleneck; recommended legal candidates=['cache_f16_on']",
+    "created_at": "2026-11-22T16:29:47.338101+00:00",
+    "bottleneck_categories": [
+      "no_material_bottleneck"
+    ],
+    "evidence": {
+      "baseline_max_rss_mb": 1267.0520833333333,
+      "workloads": {
+        "batch_generation": {
+          "goodput_requests_per_second": 3.3394055874751274,
+          "latency_p95_s": 0.581494084900866,
+          "peak_process_tree_rss_mb": 984.2604166666666,
+          "ttft_p95_s": 0.42106862627745917
+        },
+        "interactive": {
+          "goodput_requests_per_second": 4.938054388747666,
+          "latency_p95_s": 0.20509086096814522,
+          "peak_process_tree_rss_mb": 1004.8697916666666,
+          "ttft_p95_s": 0.15911285860153537
+        },
+        "prefix_cache_rag": {
+          "goodput_requests_per_second": 0.4878521532107512,
+          "latency_p95_s": 2.297356156205448,
+          "peak_process_tree_rss_mb": 976.5520833333334,
+          "ttft_p95_s": 2.095116142222347
+        },
+        "rag_reading": {
+          "goodput_requests_per_second": 2.549776619057334,
+          "latency_p95_s": 0.3207927129076173,
+          "peak_process_tree_rss_mb": 993.25,
+          "ttft_p95_s": 0.2591424472785244
+        }
+      }
+    },
+    "recommended_candidate_ids": [
+      "cache_f16_on"
+    ],
+    "positive_experience": false
+  }
+]

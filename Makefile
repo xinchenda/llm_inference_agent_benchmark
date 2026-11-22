@@ -4,7 +4,7 @@ LLM_BENCH ?= ./llm-bench
 MODEL ?= qwen3_1_7b_q4
 PORT ?= 8000
 
-.PHONY: setup install models corpus index eval perf serve test lint all clean-results
+.PHONY: setup install models corpus index eval perf experiment experiment-report prefix-cache prefix-cache-report serve test lint all clean-results
 
 setup:
 	python3.12 -m venv .venv
@@ -32,6 +32,21 @@ eval:
 
 perf:
 	$(LLM_BENCH) --config configs/default.yaml perf run
+
+experiment:
+	$(LLM_BENCH) --config configs/default.yaml experiment run --spec configs/experiments_p0_p1.yaml
+
+experiment-report:
+	$(LLM_BENCH) --config configs/default.yaml experiment report \
+		--ledger artifacts/experiments/p0_p1_rsi_prefix_v3_20261123/ledger.sqlite
+
+prefix-cache:
+	$(LLM_BENCH) --config configs/default.yaml experiment run --spec configs/prefix_cache_ablation.yaml
+
+prefix-cache-report:
+	$(LLM_BENCH) --config configs/default.yaml experiment report \
+		--ledger artifacts/experiments/prefix_cache_ablation_20261123/ledger.sqlite \
+		--output reports/prefix_cache
 
 report:
 	$(LLM_BENCH) --config configs/default.yaml report build

@@ -1,0 +1,6 @@
+strategy,trials,quality_passed_trials,best_utility,best_candidate,best_trial_id
+default,7,7,0.6380032215699337,q06_f16_c4096_p1_cp_off,trial-855133442e33f7ac39c1
+grid,7,7,1.0843624686745286,q06_f16_c8192_p4_b128_ub64_cp_on,trial-d66a6ddfff2a13cc412d
+random,7,7,1.6124175795888973,q06_q8_q8_c4096_p1_cp_on,trial-f079c2ff18852b7fc1fc
+ucb1,7,7,1.3673282109726546,q06_q8_q8_c4096_p1_cp_on,trial-13fc5f60f146c94831a7
+agent,7,7,1.2707902045419983,q06_f16_c8192_p4_b128_ub64_cp_on,trial-0783b9d18ae025b69004

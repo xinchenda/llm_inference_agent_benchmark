@@ -37,12 +37,22 @@ class LlamaServer:
         port: int = 8080,
         context_size: int = 8192,
         parallel: int = 2,
+        batch_size: int = 2048,
+        ubatch_size: int = 512,
+        flash_attn: str = "auto",
+        cache_type_k: str = "f16",
+        cache_type_v: str = "f16",
         log_path: Path | None = None,
     ) -> None:
         self.model_path = model_path
         self.port = port
         self.context_size = context_size
         self.parallel = parallel
+        self.batch_size = batch_size
+        self.ubatch_size = ubatch_size
+        self.flash_attn = flash_attn
+        self.cache_type_k = cache_type_k
+        self.cache_type_v = cache_type_v
         self.log_path = log_path or Path(f"llama-server-{port}.log")
         self.process: subprocess.Popen[str] | None = None
         self.cold_start_s: float | None = None
@@ -59,24 +69,7 @@ class LlamaServer:
             raise FileNotFoundError(f"Missing {self.model_path}. Run ./scripts/download_models.sh")
         self.log_path.parent.mkdir(parents=True, exist_ok=True)
         self._log_handle = self.log_path.open("w", encoding="utf-8")
-        command = [
-            "llama-server",
-            "--model",
-            str(self.model_path),
-            "--host",
-            "127.0.0.1",
-            "--port",
-            str(self.port),
-            "--ctx-size",
-            str(self.context_size),
-            "--parallel",
-            str(self.parallel),
-            "--n-gpu-layers",
-            "99",
-            "--jinja",
-            "--no-webui",
-            "--metrics",
-        ]
+        command = self.command()
         started = time.perf_counter()
         self.process = subprocess.Popen(
             command,
@@ -101,6 +94,36 @@ class LlamaServer:
             time.sleep(0.25)
         self.stop()
         raise TimeoutError(f"llama-server did not become ready in {timeout_s}s")
+
+    def command(self) -> list[str]:
+        return [
+            "llama-server",
+            "--model",
+            str(self.model_path),
+            "--host",
+            "127.0.0.1",
+            "--port",
+            str(self.port),
+            "--ctx-size",
+            str(self.context_size),
+            "--parallel",
+            str(self.parallel),
+            "--batch-size",
+            str(self.batch_size),
+            "--ubatch-size",
+            str(self.ubatch_size),
+            "--flash-attn",
+            self.flash_attn,
+            "--cache-type-k",
+            self.cache_type_k,
+            "--cache-type-v",
+            self.cache_type_v,
+            "--n-gpu-layers",
+            "99",
+            "--jinja",
+            "--no-webui",
+            "--metrics",
+        ]
 
     @property
     def rss_mb(self) -> float | None:
@@ -145,6 +168,7 @@ class LocalLLM:
         temperature: float = 0.0,
         top_p: float = 0.8,
         max_tokens: int = 180,
+        cache_prompt: bool | None = None,
     ) -> None:
         self.base_url = base_url.rstrip("/")
         self.model_name = model_name
@@ -153,6 +177,7 @@ class LocalLLM:
         self.temperature = temperature
         self.top_p = top_p
         self.max_tokens = max_tokens
+        self.cache_prompt = cache_prompt
 
     def generate(
         self,
@@ -162,22 +187,16 @@ class LocalLLM:
         max_tokens: int | None = None,
         seed: int = 42,
         disable_cache: bool = False,
+        cache_prompt: bool | None = None,
     ) -> LLMResponse:
-        payload: dict[str, Any] = {
-            "model": self.model_name,
-            "messages": [
-                {"role": "system", "content": system_prompt + "\n/no_think"},
-                {"role": "user", "content": user_prompt},
-            ],
-            "temperature": self.temperature,
-            "top_p": self.top_p,
-            "max_tokens": max_tokens or self.max_tokens,
-            "seed": seed,
-            "stream": True,
-            "stream_options": {"include_usage": True},
-        }
-        if disable_cache:
-            payload["cache_prompt"] = False
+        payload = self.build_payload(
+            system_prompt,
+            user_prompt,
+            max_tokens=max_tokens or self.max_tokens,
+            seed=seed,
+            disable_cache=disable_cache,
+            cache_prompt=cache_prompt,
+        )
         started = time.perf_counter()
         first_token_at: float | None = None
         parts: list[str] = []
@@ -190,7 +209,12 @@ class LocalLLM:
                 headers=self.headers,
                 json=payload,
             ) as response:
-                response.raise_for_status()
+                if response.status_code >= 400:
+                    response.read()
+                    body = response.text[:800].replace("\n", " ")
+                    raise RuntimeError(
+                        f"HTTP {response.status_code} from local model service: {body}"
+                    )
                 for line in response.iter_lines():
                     if not line.startswith("data:"):
                         continue
@@ -221,6 +245,38 @@ class LocalLLM:
             completion_tokens=usage.get("completion_tokens"),
             timings=timings,
         )
+
+    def build_payload(
+        self,
+        system_prompt: str,
+        user_prompt: str,
+        *,
+        max_tokens: int,
+        seed: int,
+        disable_cache: bool,
+        cache_prompt: bool | None,
+    ) -> dict[str, Any]:
+        effective_cache_prompt = (
+            self.cache_prompt if cache_prompt is None else cache_prompt
+        )
+        payload: dict[str, Any] = {
+            "model": self.model_name,
+            "messages": [
+                {"role": "system", "content": system_prompt + "\n/no_think"},
+                {"role": "user", "content": user_prompt},
+            ],
+            "temperature": self.temperature,
+            "top_p": self.top_p,
+            "max_tokens": max_tokens,
+            "seed": seed,
+            "stream": True,
+            "stream_options": {"include_usage": True},
+        }
+        if disable_cache or effective_cache_prompt is False:
+            payload["cache_prompt"] = False
+        elif effective_cache_prompt is True:
+            payload["cache_prompt"] = True
+        return payload
 
     def health(self) -> dict[str, Any]:
         with httpx.Client(timeout=5) as client:
