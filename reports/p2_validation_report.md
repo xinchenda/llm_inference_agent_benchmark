@@ -75,22 +75,32 @@ as evidence that the Mac cannot execute the CUDA path.
 
 ## SGLang
 
-SGLang 0.5.10.post1 was installed, but the shared Python environment changed
-PyTorch to 2.9.1 and may have invalidated the vLLM measurements' environment.
-Therefore:
+SGLang 0.5.10.post1 completed a RadixAttention run with the same Qwen3-0.6B
+model, eight requests, and a 1500-word shared prefix. Context was 4096, CUDA
+Graph was enabled, and `--enable-cache-report` was active.
 
-- The completed vLLM measurements above are preserved and not rerun in the
-  shared environment.
-- SGLang has no performance result in this report yet.
-- `configs/sglang_backends.yaml` is prepared for Qwen3-0.6B, context 4096, eight
-  requests, and a 1500-word shared prefix, with RadixAttention on/off.
-- A clean dependency environment is required before running SGLang and vLLM
-  together.
+| Backend | Cache hit metric | Client TTFT mean | Metrics TTFT p50 | Metrics TTFT p95 | E2E p95 | Cold start |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| vLLM + Prefix Cache | 0.86522 | 0.11799 s | 0.07333 s | 0.096 s | 0.285 s | 34.25 s |
+| SGLang + RadixAttention | 0.99573 | 0.12232 s | 0.06429 s | 0.355 s | 0.355 s | 56.72 s |
+
+SGLang used `sglang:cache_hit_rate`; vLLM used its `prefix_cache_hits` and
+`prefix_cache_queries` counters. The two values measure similar concepts but
+come from different framework metric implementations.
+
+SGLang had the lower p50 TTFT, while vLLM had materially lower p95 TTFT and E2E
+tail latency. Its server log reports `#cached-token=3032` for repeated requests
+and eight successful `/v1/chat/completions` responses.
+
+The SGLang installation changed PyTorch to 2.9.1 in the shared environment and
+may have invalidated vLLM after the measurements. The recorded vLLM run is
+preserved; vLLM will not be rerun until its dedicated 0.34.0 environment is
+restored.
 
 ## Nsight Systems
 
-Status: **NOT RUN**. The package installation failed with a dependency
-configuration error. No timeline, kernel table, Graph-launch analysis, or
+Nsight Systems 2025.3.1 is now installed on the GPU host. A vLLM profile has not
+yet been captured. No timeline, kernel table, Graph-launch analysis, or
 memory-transfer claim is included.
 
 `reports/p2_nsight_status.json` records the missing evidence. The executable

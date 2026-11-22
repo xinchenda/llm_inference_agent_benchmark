@@ -317,10 +317,17 @@ GPU Triton RMSNorm completed for fp32/fp16/bf16. Triton was `0.0388 ms`,
 speedups over PyTorch eager. Maximum absolute errors were `1.91e-6`, `0.0078125`,
 and `0.0625`.
 
-SGLang 0.5.10.post1 is installed in a shared environment, but that installation
-downgraded PyTorch and may invalidate vLLM. SGLang timing results were therefore
-not produced in that environment. Nsight installation failed and no timeline is
-claimed. A same-GPU llama.cpp versus vLLM comparison also remains pending.
+SGLang 0.5.10.post1 completed the same Qwen3-0.6B, 8-request, 1500-word
+RadixAttention workload. It reported cache hit rate `0.99573`, client TTFT mean
+`0.12232 s`, metrics p50 TTFT `0.06429 s`, p95 TTFT `0.355 s`, and E2E p95
+`0.355 s`. Relative to vLLM, SGLang had lower p50 TTFT but higher p95/E2E tail
+latency. The cache metrics use `sglang:cache_hit_rate`, not vLLM's
+hits/queries counters.
+
+The SGLang installation changed PyTorch to 2.9.1 in the shared environment and
+may have invalidated vLLM after measurement. Nsight Systems 2025.3.1 is
+installed, but no capture has completed. A same-GPU llama.cpp versus vLLM
+comparison remains pending.
 
 ## Deliverables
 
@@ -338,6 +345,7 @@ claimed. A same-GPU llama.cpp versus vLLM comparison also remains pending.
 - [P2 validation report](reports/p2_validation_report.md)
 - [P2 remote result documentation](reports/p2/README.md)
 - [Sanitized vLLM result summary](reports/p2/vllm_summary.json)
+- [Sanitized SGLang result summary](reports/p2/sglang_summary.json)
 - [Derived vLLM comparisons](reports/p2/derived_comparisons.json)
 - [GPU Triton RMSNorm result](reports/p2/triton_rmsnorm_gpu.json)
 - [P2 GPU runbook](docs/p2_gpu_runbook.md)

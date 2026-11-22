@@ -20,7 +20,7 @@ class SGLangServerConfig:
     mem_fraction_static: float = 0.85
     max_running_requests: int = 8
     chunked_prefill_size: int = 8192
-    context_length: int | None = None
+    context_length: int = 4096
     enable_radix_cache: bool = True
     enable_cache_report: bool = True
     enable_metrics: bool = True
@@ -41,7 +41,7 @@ class SGLangServerConfig:
             raise ValueError(
                 "chunked_prefill_size must be >= max_running_requests"
             )
-        if self.context_length is not None and self.context_length < 256:
+        if self.context_length < 256:
             raise ValueError("context_length must be >= 256")
 
     def command(self) -> list[str]:
@@ -71,8 +71,7 @@ class SGLangServerConfig:
             command.append("--enable-cache-report")
         if self.enable_metrics:
             command.append("--enable-metrics")
-        if self.context_length is not None:
-            command.extend(["--context-length", str(self.context_length)])
+        command.extend(["--context-length", str(self.context_length)])
         if not self.enable_cuda_graph:
             command.append("--disable-cuda-graph")
         return command

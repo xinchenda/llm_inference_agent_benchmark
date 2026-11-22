@@ -2,7 +2,8 @@ sglang:
   qwen3_0_6b_radix:
     model_path: /root/autodl-tmp/models/Qwen3-0.6B
     tp_size: 1
-    mem_fraction_static: 0.85
+    mem_fraction_static: 0.8
+    context_length: 4096
     max_running_requests: 8
     chunked_prefill_size: 8192
     enable_radix_cache: true
@@ -12,7 +13,8 @@ sglang:
   qwen3_0_6b_no_radix:
     model_path: /root/autodl-tmp/models/Qwen3-0.6B
     tp_size: 1
-    mem_fraction_static: 0.85
+    mem_fraction_static: 0.8
+    context_length: 4096
     max_running_requests: 8
     chunked_prefill_size: 8192
     enable_radix_cache: false

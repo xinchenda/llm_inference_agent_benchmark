@@ -1,0 +1,98 @@
+{
+  "hardware": {
+    "gpu": "NVIDIA GeForce RTX 4090 D",
+    "vram_gb": 24,
+    "driver": "595.71.05"
+  },
+  "runtime": {
+    "version": "0.5.10.post1"
+  },
+  "run": {
+    "source": "sglang_radix.json",
+    "source_sha256": "01ee6170bc7e3e8b39aa92cd8d031a2940125fca0997919faad6bda24c4e589c",
+    "backend": "sglang",
+    "model": "Qwen3-0.6B",
+    "config": {
+      "tp_size": 1,
+      "mem_fraction_static": 0.8,
+      "max_running_requests": 8,
+      "chunked_prefill_size": 8192,
+      "context_length": 4096,
+      "enable_radix_cache": true,
+      "enable_cache_report": true,
+      "enable_metrics": true,
+      "enable_cuda_graph": true
+    },
+    "safe_command_flags": [
+      "-m",
+      "sglang.launch_server",
+      "--model-path",
+      "--host",
+      "127.0.0.1",
+      "--port",
+      "30000",
+      "--tp-size",
+      "1",
+      "--mem-fraction-static",
+      "0.8",
+      "--max-running-requests",
+      "8",
+      "--chunked-prefill-size",
+      "8192",
+      "--enable-cache-report",
+      "--enable-metrics",
+      "--context-length",
+      "4096"
+    ],
+    "cold_start_s": 56.715445660054684,
+    "request_count": 8,
+    "prefix_words": 1500,
+    "max_tokens": 16,
+    "radix_attention": true,
+    "responses": {
+      "requests": 8,
+      "ttft_s": {
+        "count": 8,
+        "mean": 0.12232487951405346,
+        "min": 0.0828943271189928,
+        "max": 0.32635095342993736
+      },
+      "latency_s": {
+        "count": 8,
+        "mean": 0.14960410119965672,
+        "min": 0.11397106572985649,
+        "max": 0.35766876116394997
+      },
+      "prompt_tokens": {
+        "count": 8,
+        "mean": 3045.0,
+        "min": 3045.0,
+        "max": 3045.0
+      },
+      "completion_tokens": {
+        "count": 8,
+        "mean": 16.0,
+        "min": 16.0,
+        "max": 16.0
+      },
+      "cache_n": {
+        "count": 0,
+        "mean": null,
+        "min": null,
+        "max": null
+      }
+    },
+    "serving_metrics_after": {
+      "num_running_reqs": 0.0,
+      "num_queue_reqs": 0.0,
+      "token_usage": 0.018820592669484194,
+      "cache_hit_rate": 0.9957307060755337,
+      "prompt_tokens_total": 24366.0,
+      "generation_tokens_total": 136.0,
+      "ttft_p50_s": 0.0642857142857143,
+      "ttft_p95_s": 0.3549999999999999,
+      "itl_mean_s": 0.0020635890774428844,
+      "e2e_latency_p95_s": 0.3549999999999999
+    }
+  }
+}

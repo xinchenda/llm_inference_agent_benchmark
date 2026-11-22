@@ -27,9 +27,9 @@ Audited 2026-11-23 without reading or outputting credentials.
 | vLLM | No | 0.34.0 | Adapter, config, smoke script, metrics parser | Executed |
 | vLLM Serving Metrics | No live local server | `/metrics` HTTP 200 | `/metrics` parser and report fields | Executed |
 | Same-GPU llama.cpp vs vLLM | No | Not verified | Hardware-separated comparison gate | Run blocked |
-| Nsight Systems | No | Not verified | Profiling script and analysis runbook | Run blocked |
+| Nsight Systems | No | 2025.3.1 installed; capture pending | Profiling script and analysis runbook | Profile pending |
 | Triton | No macOS wheel | Real fp32/fp16/bf16 GPU run | Correctness reference, CUDA kernel script | Executed |
-| SGLang | No | 0.5.10.post1 installed in a shared env | Adapter, RadixAttention config, smoke script | Runtime result pending |
+| SGLang | No | 0.5.10.post1, real Qwen3-0.6B run | Adapter, RadixAttention config, smoke script | Executed |
 | Docker/NVIDIA container | CLI only; no daemon | No GPU VM | Pinned Dockerfile and Compose | Build/run blocked |
 
 ## Classification
@@ -44,18 +44,18 @@ Audited 2026-11-23 without reading or outputting credentials.
 
 - vLLM Prometheus metric parsing.
 - vLLM Prefix Cache on/off and CUDA Graph/eager comparisons.
+- SGLang RadixAttention with the same 8-request shared-prefix workload.
 - Triton RMSNorm correctness and performance for fp32/fp16/bf16.
 
 ### Implemented but not measured
 
-- SGLang OpenAI-compatible lifecycle adapter with RadixAttention controls.
 - Docker image build and Compose launch.
-- Nsight Systems profile.
+- Nsight Systems profile; 2025.3.1 is installed but no capture exists.
 - Same-GPU llama.cpp CUDA versus vLLM comparison.
 
 ### Blocked
 
 - Nsight timeline.
-- SGLang timings in a clean environment.
+- SGLang timing in a clean isolated environment after the shared PyTorch change.
 - Same-hardware llama.cpp/vLLM comparison.
 - Docker GPU build on this Mac.

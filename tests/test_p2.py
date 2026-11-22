@@ -178,6 +178,8 @@ def test_sglang_command_exposes_radix_and_runtime_flags() -> None:
     )
     command = config.command()
     assert "--enable-cache-report" in command
+    assert "--enable-metrics" in command
+    assert command[command.index("--context-length") + 1] == "4096"
     assert "--disable-radix-cache" not in command
     assert command[command.index("--mem-fraction-static") + 1] == "0.85"
     disabled = SGLangServerConfig(
@@ -336,3 +338,11 @@ def test_tracked_remote_summaries_are_sanitized_and_complete() -> None:
         Path("reports/p2/triton_rmsnorm_gpu.json").read_text(encoding="utf-8")
     )
     assert [item["dtype"] for item in triton["results"]] == ["fp32", "fp16", "bf16"]
+    sglang = json.loads(
+        Path("reports/p2/sglang_summary.json").read_text(encoding="utf-8")
+    )
+    assert "/root" not in json.dumps(sglang)
+    assert sglang["run"]["serving_metrics_after"]["cache_hit_rate"] == pytest.approx(
+        0.99573,
+        abs=1e-5,
+    )

@@ -135,13 +135,15 @@ docker run --gpus all --ipc=host --shm-size 32g \
   -v ~/.cache/huggingface:/root/.cache/huggingface \
   lmsysorg/sglang:latest-runtime \
   python3 -m sglang.launch_server \
-  --model-path Qwen/Qwen3-1.7B \
+  --model-path /models/Qwen3-0.6B \
   --host 0.0.0.0 --port 30000 \
   --tp-size 1 \
-  --mem-fraction-static 0.85 \
+  --mem-fraction-static 0.8 \
+  --context-length 4096 \
   --max-running-requests 8 \
   --chunked-prefill-size 8192 \
-  --enable-cache-report
+  --enable-cache-report \
+  --enable-metrics
 ```
 
 RadixAttention is enabled by default in SGLang. Add `--disable-radix-cache`

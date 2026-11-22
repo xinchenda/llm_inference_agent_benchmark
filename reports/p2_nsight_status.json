@@ -1,7 +1,8 @@
 {
-  "status": "not_run",
-  "nsight_systems_available": false,
-  "nvidia_gpu_available": false,
+  "status": "installed_profile_pending",
+  "nsight_systems_version": "2025.3.1",
+  "nsight_systems_available": true,
+  "nvidia_gpu_available": true,
   "script": "scripts/profile_vllm_nsys.sh",
-  "reason": "No local NVIDIA GPU or Nsight Systems installation and no reachable RTX 4090D host."
+  "reason": "Nsight Systems is installed on the GPU host; no vLLM profile has been captured yet."
 }

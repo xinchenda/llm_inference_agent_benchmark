@@ -56,24 +56,13 @@ def log_facts(path: Path) -> dict[str, Any]:
 def summarize_vllm(path: Path) -> dict[str, Any]:
     payload = json.loads(path.read_text(encoding="utf-8"))
     model = Path(payload["model"]).name
-    safe_flags = []
-    skip_model = True
-    for argument in payload.get("command", []):
-        if skip_model:
-            if argument == "serve":
-                safe_flags.append(argument)
-                continue
-            if argument != "vllm" and argument != "serve":
-                skip_model = False
-            continue
-        safe_flags.append(argument)
     after = payload["metrics_after"]
     return {
         "source": path.name,
         "source_sha256": sha256(path),
         "backend": "vllm",
         "model": model,
-        "safe_command_flags": safe_flags,
+        "safe_command_flags": safe_flags(payload.get("command", [])),
         "cold_start_s": payload.get("cold_start_s"),
         "prefix_words": payload.get("prefix_words"),
         "max_tokens": payload.get("max_tokens"),
@@ -95,6 +84,61 @@ def summarize_vllm(path: Path) -> dict[str, Any]:
                 "ttft_p50_s",
                 "ttft_p95_s",
                 "tpot_mean_s",
+                "e2e_latency_p95_s",
+            )
+        },
+    }
+
+
+def safe_flags(command: list[str]) -> list[str]:
+    output = []
+    skip_next_model = False
+    for argument in command:
+        if skip_next_model:
+            skip_next_model = False
+            continue
+        if argument in {"serve", "launch_server"}:
+            output.append(argument)
+            skip_next_model = True
+            continue
+        if Path(argument).is_absolute():
+            continue
+        output.append(argument)
+    return output
+
+
+def summarize_sglang(path: Path) -> dict[str, Any]:
+    payload = json.loads(path.read_text(encoding="utf-8"))
+    after = payload["metrics_after"]
+    return {
+        "source": path.name,
+        "source_sha256": sha256(path),
+        "backend": "sglang",
+        "model": Path(payload["config"]["model_path"]).name,
+        "config": {
+            key: value
+            for key, value in payload["config"].items()
+            if key not in {"model_path", "host", "port"}
+        },
+        "safe_command_flags": safe_flags(payload.get("command", [])),
+        "cold_start_s": payload.get("cold_start_s"),
+        "request_count": payload.get("request_count"),
+        "prefix_words": payload.get("prefix_words"),
+        "max_tokens": payload.get("max_tokens"),
+        "radix_attention": payload.get("radix_attention"),
+        "responses": response_summary(payload.get("responses", [])),
+        "serving_metrics_after": {
+            key: after.get(key)
+            for key in (
+                "num_running_reqs",
+                "num_queue_reqs",
+                "token_usage",
+                "cache_hit_rate",
+                "prompt_tokens_total",
+                "generation_tokens_total",
+                "ttft_p50_s",
+                "ttft_p95_s",
+                "itl_mean_s",
                 "e2e_latency_p95_s",
             )
         },
@@ -127,6 +171,18 @@ def main() -> None:
         json.dumps(vllm_summary, indent=2, ensure_ascii=False) + "\n",
         encoding="utf-8",
     )
+    sglang_path = ROOT / "sglang_radix.json"
+    sglang_summary = {}
+    if sglang_path.exists():
+        sglang_summary = {
+            "hardware": vllm_summary["hardware"],
+            "runtime": {"version": "0.5.10.post1"},
+            "run": summarize_sglang(sglang_path),
+        }
+        (OUTPUT / "sglang_summary.json").write_text(
+            json.dumps(sglang_summary, indent=2, ensure_ascii=False) + "\n",
+            encoding="utf-8",
+        )
     long_off = vllm["vllm_long_no_prefix"]
     long_on = vllm["vllm_long_prefix"]
     short_off = vllm["vllm_no_prefix"]
@@ -205,6 +261,52 @@ def main() -> None:
             ),
         },
     }
+    if sglang_summary:
+        sglang_run = sglang_summary["run"]
+        comparisons["vllm_vs_sglang"] = {
+            "vllm": {
+                "cache_hit_rate": long_on["serving_metrics_after"][
+                    "prefix_cache_hit_rate"
+                ],
+                "response_ttft_mean_s": long_on["responses"]["ttft_s"]["mean"],
+                "histogram_ttft_p50_s": long_on["serving_metrics_after"][
+                    "ttft_p50_s"
+                ],
+                "histogram_ttft_p95_s": long_on["serving_metrics_after"][
+                    "ttft_p95_s"
+                ],
+                "response_latency_mean_s": long_on["responses"]["latency_s"]["mean"],
+                "e2e_p95_s": long_on["serving_metrics_after"][
+                    "e2e_latency_p95_s"
+                ],
+                "cold_start_s": long_on["cold_start_s"],
+            },
+            "sglang": {
+                "cache_hit_rate": sglang_run["serving_metrics_after"][
+                    "cache_hit_rate"
+                ],
+                "response_ttft_mean_s": sglang_run["responses"]["ttft_s"]["mean"],
+                "histogram_ttft_p50_s": sglang_run["serving_metrics_after"][
+                    "ttft_p50_s"
+                ],
+                "histogram_ttft_p95_s": sglang_run["serving_metrics_after"][
+                    "ttft_p95_s"
+                ],
+                "response_latency_mean_s": sglang_run["responses"]["latency_s"][
+                    "mean"
+                ],
+                "e2e_p95_s": sglang_run["serving_metrics_after"][
+                    "e2e_latency_p95_s"
+                ],
+                "cold_start_s": sglang_run["cold_start_s"],
+            },
+            "same_input": True,
+            "metric_names_differ": True,
+            "note": (
+                "Both runs used the same GPU, model, 8 requests, and 1500-word "
+                "shared prefix. Cache metrics use framework-specific names."
+            ),
+        }
     (OUTPUT / "derived_comparisons.json").write_text(
         json.dumps(comparisons, indent=2) + "\n",
         encoding="utf-8",
@@ -220,6 +322,7 @@ def main() -> None:
         json.dumps(
             {
                 "vllm_runs": sorted(vllm),
+                "sglang": "complete" if sglang_summary else "missing",
                 "triton": triton["status"],
                 "derived": comparisons,
             },
