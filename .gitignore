@@ -10,6 +10,8 @@ models/
 artifacts/
 logs/
 local_notes/
+reviews/
+reports/rsi_agent_project_card.md
 *.log
 *.pid
 build/
